@@ -29,8 +29,17 @@ def debpkgver(changelog="../debian/changelog"):
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo', 'sphinx.ext.coverage',
-              'sphinx.ext.doctest', 'sphinx.ext.ifconfig', 'rst2pdf.pdfbuilder']
+extensions = [
+    'sphinx.ext.autodoc', 'sphinx.ext.todo', 'sphinx.ext.coverage',
+    'sphinx.ext.doctest', 'sphinx.ext.ifconfig'
+]
+
+try:
+    import rst2pdf
+
+    extensions.append('rst2pdf.pdfbuilder')
+except ImportError:
+    pass
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
