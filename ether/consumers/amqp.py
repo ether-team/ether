@@ -8,8 +8,8 @@ import logging
 from abc import ABCMeta, abstractmethod
 
 import pika, sys, simplejson
-from vcsamqp.settings import AMQP
-from vcsamqp.payload.common import Payload
+from ether.settings import AMQP
+from ether.payload.common import Payload
 
 LOG = logging.getLogger(__name__)
 

@@ -45,7 +45,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'VCS AMQP'
+project = u'Ether'
 copyright = u'2011, Islam Amer, Ed Bartosh, Anton Beresin'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -166,7 +166,7 @@ html_static_path = ['_static']
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'VCSAMQPdoc'
+htmlhelp_basename = 'Etherdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -180,7 +180,7 @@ htmlhelp_basename = 'VCSAMQPdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'VCSAMQP.tex', u'VCS AMQP Documentation',
+  ('index', 'Ether.tex', u'Ether Documentation',
    u'Islam Amer, Ed Bartosh, Anton Beresin', 'manual'),
 ]
 

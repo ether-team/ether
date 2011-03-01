@@ -3,10 +3,10 @@
 AMQP = {
     "host": "localhost",
     "port": 5672,
-    "user": "vcsamqp",
+    "user": "ether",
     "password": "123",
-    "vhost": "/vcsamqp",
-    "exchange_name": "vcsamqp",
+    "vhost": "/ether",
+    "exchange_name": "ether",
     "exchange_type": "fanout",
     "exchange_durable": True,
     "delivery_mode": 1,

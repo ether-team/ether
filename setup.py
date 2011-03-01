@@ -6,7 +6,7 @@ def debpkgver(changelog="debian/changelog"):
     return open(changelog).readline().split()[1][1:-1]
 
 setup(
-    name="vcsamqp",
+    name="ether",
     version=debpkgver(),
     url='https://github.com/iamer/python-vcs-amqp',
     author='BIFH & OBS teams',

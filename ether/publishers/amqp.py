@@ -10,7 +10,7 @@ from abc import ABCMeta, abstractmethod
 import pika
 import simplejson
 
-from vcsamqp.settings import AMQP
+from ether.settings import AMQP
 
 LOG = logging.getLogger(__name__)
 

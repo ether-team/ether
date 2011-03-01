@@ -12,8 +12,8 @@ For example:
 """
 
 import sys
-from vcsamqp.hooks.git import GitHook
-from vcsamqp.publishers.log import FileLogger
+from ether.hooks.git import GitHook
+from ether.publishers.log import FileLogger
 
 
 GitHook(FileLogger("/tmp/postcommit.log")).postreceive(sys.argv[1], sys.argv[2], sys.argv[3])

@@ -16,11 +16,11 @@ import sys
 
 from optparse import OptionParser
 
-from vcsamqp.settings import AMQP
-from vcsamqp.hooks.svn import SvnHooks
+from ether.settings import AMQP
+from ether.hooks.svn import SvnHooks
 
-from vcsamqp.publishers.log import FileLogger
-from vcsamqp.publishers.amqp import BlockingAMQPPublisher, AsyncAMQPPublisher
+from ether.publishers.log import FileLogger
+from ether.publishers.amqp import BlockingAMQPPublisher, AsyncAMQPPublisher
 
 def parse_args(argv):
     """ Commandline parser """

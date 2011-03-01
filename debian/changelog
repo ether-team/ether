@@ -1,4 +1,10 @@
-python-vcs-amqp (0.1.1) unstable; urgency=low
+python-ether (0.2.0) unstable; urgency=low
+
+  * Renamed project
+
+ -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 01 Mar 2011 16:37:36 +0200
+
+python-ether (0.1.1) unstable; urgency=low
   
   * Declared queue on listener side
   * Declared exchange on sender side
@@ -8,7 +14,7 @@ python-vcs-amqp (0.1.1) unstable; urgency=low
 
  -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 01 Mar 2011 13:20:51 +0200
 
-python-vcs-amqp (0.1.0) unstable; urgency=low
+python-ether (0.1.0) unstable; urgency=low
 
   * Designed project modules hierarchy
   * Implemented and tested working prototype
@@ -17,7 +23,7 @@ python-vcs-amqp (0.1.0) unstable; urgency=low
 
  -- Ed Bartosh <eduard.bartosh@nokia.com>  Fri, 25 Feb 2011 21:15:40 +0200
 
-python-vcs-amqp (0.0.0) unstable; urgency=low
+python-ether (0.0.0) unstable; urgency=low
 
   * Initial release
 
