@@ -76,7 +76,7 @@ class AsyncAMQPListener(BaseAMQPListener):
 
         """
         Setup the connection with the provided configuration.
-        
+
         :param config: Dictionary containing the needed configuration items.
         :type config: dictionary
         """
@@ -140,7 +140,7 @@ class AsyncAMQPListener(BaseAMQPListener):
 
         frame is the response from RabbitMQ"""
 
-        self._channel.queue_bind(queue = self._queue, 
+        self._channel.queue_bind(queue = self._queue,
                                 exchange = self._exchange,
                                 routing_key = self._routing_key,
                                 callback = self.on_queue_bound)
@@ -154,8 +154,8 @@ class AsyncAMQPListener(BaseAMQPListener):
         :type _frame: object
         """
 
-        self._channel.basic_consume(self.receive_payload, 
-                                   queue = self._queue, 
+        self._channel.basic_consume(self.receive_payload,
+                                   queue = self._queue,
                                    no_ack=True)
 
     def receive_payload(self, channel, method, header, body):
