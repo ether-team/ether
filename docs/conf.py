@@ -20,11 +20,6 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'code')))
 
-def debpkgver(changelog="../debian/changelog"):
-    """exctract version from debian/changelog file"""
-    return open(changelog).readline().split(' ')[1][1:-1]
-
-
 # -- General configuration -----------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
@@ -62,7 +57,7 @@ copyright = u'2011, Islam Amer, Ed Bartosh, Anton Beresin'
 # built documents.
 #
 # The short X.Y version.
-version = debpkgver()
+from ether import VERSION_STR as version
 # The full version, including alpha/beta/rc tags.
 release = version
 

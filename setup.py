@@ -1,13 +1,11 @@
 from distutils.core import setup
 from setuptools import find_packages
 
-def debpkgver(changelog="debian/changelog"):
-    """read version from the debian/changelog file"""
-    return open(changelog).readline().split()[1][1:-1]
+from ether import VERSION_STR
 
 setup(
     name="ether",
-    version=debpkgver(),
+    version=VERSION_STR,
     url='https://github.com/iamer/python-vcs-amqp',
     author='BIFH & OBS teams',
     author_email='bifh-team@nokia.com',
