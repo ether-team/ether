@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Senders &mdash; VCS AMQP v0.1.0 documentation</title>
+    <title>Senders &mdash; Ether v0.2.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.1.0',
+        VERSION:     '0.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="VCS AMQP v0.1.0 documentation" href="index.html" />
+    <link rel="top" title="Ether v0.2.0 documentation" href="index.html" />
     <link rel="up" title="Modules and classes" href="modules.html" />
-    <link rel="next" title="Listeners" href="listeners.html" />
+    <link rel="next" title="Listeners" href="consumers.html" />
     <link rel="prev" title="Modules and classes" href="modules.html" /> 
   </head>
   <body>
@@ -38,12 +38,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="listeners.html" title="Listeners"
+          <a href="consumers.html" title="Listeners"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="modules.html" title="Modules and classes"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">VCS AMQP v0.1.0 documentation</a> &raquo;</li>
+        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li>
           <li><a href="modules.html" accesskey="U">Modules and classes</a> &raquo;</li> 
       </ul>
     </div>  
@@ -55,16 +55,16 @@
             
   <div class="section" id="senders">
 <h1>Senders<a class="headerlink" href="#senders" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-vcsamqp.senders.amqp">
-<span id="amqp"></span><h2>amqp<a class="headerlink" href="#module-vcsamqp.senders.amqp" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-ether.publishers.amqp">
+<span id="amqp"></span><h2>amqp<a class="headerlink" href="#module-ether.publishers.amqp" title="Permalink to this headline">¶</a></h2>
 <p>AMQP sender API.</p>
 <dl class="class">
-<dt id="vcsamqp.senders.amqp.BasicAMQPSender">
-<em class="property">class </em><tt class="descclassname">vcsamqp.senders.amqp.</tt><tt class="descname">BasicAMQPSender</tt><big>(</big><em>config={'exchange': ''</em>, <em>'delivery_mode': 1</em>, <em>'queue_auto_delete': False</em>, <em>'vhost': '/vcsamqp'</em>, <em>'host': 'hemeego-sidev-h001.europe.nokia.com'</em>, <em>'user': 'vcsamqp'</em>, <em>'password': '123'</em>, <em>'port': 5672</em>, <em>'queue_exclusive': False</em>, <em>'queue_durable': True</em>, <em>'queue_name': 'vcsamqp-queue'</em>, <em>'routing_key': 'vcsamqp-queue'</em>, <em>'exchange_type': 'topic'}</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.amqp.BasicAMQPSender" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base abstract class for AMQP senders.</p>
+<dt id="ether.publishers.amqp.BasicAMQPPublisher">
+<em class="property">class </em><tt class="descclassname">ether.publishers.amqp.</tt><tt class="descname">BasicAMQPPublisher</tt><big>(</big><em>config={'PUBLISHER': {'queue_durable': True</em>, <em>'queue_auto_delete': False</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': False}</em>, <em>'exchange_name': 'ether'</em>, <em>'delivery_mode': 1</em>, <em>'vhost': '/ether'</em>, <em>'host': 'localhost'</em>, <em>'user': 'ether'</em>, <em>'exchange_durable': True</em>, <em>'port': 5672</em>, <em>'password': '123'</em>, <em>'exchange_type': 'fanout'</em>, <em>'CONSUMER': {'queue_durable': True</em>, <em>'queue_auto_delete': True</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': True}}</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.BasicAMQPPublisher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base abstract class for AMQP publishers.</p>
 <dl class="method">
-<dt id="vcsamqp.senders.amqp.BasicAMQPSender.send_payload">
-<tt class="descname">send_payload</tt><big>(</big><em>payload</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.amqp.BasicAMQPSender.send_payload" title="Permalink to this definition">¶</a></dt>
+<dt id="ether.publishers.amqp.BasicAMQPPublisher.send_payload">
+<tt class="descname">send_payload</tt><big>(</big><em>payload</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.BasicAMQPPublisher.send_payload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send payload to the server.
 Abstract method. Has to be implemented in derived classes.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -80,13 +80,13 @@ Abstract method. Has to be implemented in derived classes.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="vcsamqp.senders.amqp.BlockingAMQPSender">
-<em class="property">class </em><tt class="descclassname">vcsamqp.senders.amqp.</tt><tt class="descname">BlockingAMQPSender</tt><big>(</big><em>config={'exchange': ''</em>, <em>'delivery_mode': 1</em>, <em>'queue_auto_delete': False</em>, <em>'vhost': '/vcsamqp'</em>, <em>'host': 'hemeego-sidev-h001.europe.nokia.com'</em>, <em>'user': 'vcsamqp'</em>, <em>'password': '123'</em>, <em>'port': 5672</em>, <em>'queue_exclusive': False</em>, <em>'queue_durable': True</em>, <em>'queue_name': 'vcsamqp-queue'</em>, <em>'routing_key': 'vcsamqp-queue'</em>, <em>'exchange_type': 'topic'}</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.amqp.BlockingAMQPSender" title="Permalink to this definition">¶</a></dt>
-<dd><p>Blocking (synchronous) sender.
+<dt id="ether.publishers.amqp.BlockingAMQPPublisher">
+<em class="property">class </em><tt class="descclassname">ether.publishers.amqp.</tt><tt class="descname">BlockingAMQPPublisher</tt><big>(</big><em>config={'PUBLISHER': {'queue_durable': True</em>, <em>'queue_auto_delete': False</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': False}</em>, <em>'exchange_name': 'ether'</em>, <em>'delivery_mode': 1</em>, <em>'vhost': '/ether'</em>, <em>'host': 'localhost'</em>, <em>'user': 'ether'</em>, <em>'exchange_durable': True</em>, <em>'port': 5672</em>, <em>'password': '123'</em>, <em>'exchange_type': 'fanout'</em>, <em>'CONSUMER': {'queue_durable': True</em>, <em>'queue_auto_delete': True</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': True}}</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.BlockingAMQPPublisher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blocking (synchronous) publisher.
 Code is borrowed from Pika Blocking demo_send <a class="reference external" href="http://tonyg.github.com/pika/examples.html#id4">example_blocking</a>:</p>
 <dl class="method">
-<dt id="vcsamqp.senders.amqp.BlockingAMQPSender.send_payload">
-<tt class="descname">send_payload</tt><big>(</big><em>payload</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.amqp.BlockingAMQPSender.send_payload" title="Permalink to this definition">¶</a></dt>
+<dt id="ether.publishers.amqp.BlockingAMQPPublisher.send_payload">
+<tt class="descname">send_payload</tt><big>(</big><em>payload</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.BlockingAMQPPublisher.send_payload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send payload to the server using blocking approach.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -101,14 +101,14 @@ Code is borrowed from Pika Blocking demo_send <a class="reference external" href
 </dd></dl>
 
 <dl class="class">
-<dt id="vcsamqp.senders.amqp.AsyncAMQPSender">
-<em class="property">class </em><tt class="descclassname">vcsamqp.senders.amqp.</tt><tt class="descname">AsyncAMQPSender</tt><big>(</big><em>config={'exchange': ''</em>, <em>'delivery_mode': 1</em>, <em>'queue_auto_delete': False</em>, <em>'vhost': '/vcsamqp'</em>, <em>'host': 'hemeego-sidev-h001.europe.nokia.com'</em>, <em>'user': 'vcsamqp'</em>, <em>'password': '123'</em>, <em>'port': 5672</em>, <em>'queue_exclusive': False</em>, <em>'queue_durable': True</em>, <em>'queue_name': 'vcsamqp-queue'</em>, <em>'routing_key': 'vcsamqp-queue'</em>, <em>'exchange_type': 'topic'}</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.amqp.AsyncAMQPSender" title="Permalink to this definition">¶</a></dt>
-<dd><p>Asynchronous Sender.
+<dt id="ether.publishers.amqp.AsyncAMQPPublisher">
+<em class="property">class </em><tt class="descclassname">ether.publishers.amqp.</tt><tt class="descname">AsyncAMQPPublisher</tt><big>(</big><em>config={'PUBLISHER': {'queue_durable': True</em>, <em>'queue_auto_delete': False</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': False}</em>, <em>'exchange_name': 'ether'</em>, <em>'delivery_mode': 1</em>, <em>'vhost': '/ether'</em>, <em>'host': 'localhost'</em>, <em>'user': 'ether'</em>, <em>'exchange_durable': True</em>, <em>'port': 5672</em>, <em>'password': '123'</em>, <em>'exchange_type': 'fanout'</em>, <em>'CONSUMER': {'queue_durable': True</em>, <em>'queue_auto_delete': True</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': True}}</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.AsyncAMQPPublisher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asynchronous Publisher.
 Code is borrowed from Pika Asynchronous demo_send <a class="reference external" href="http://tonyg.github.com/pika/examples.html#demo-send">example_async</a>:</p>
 <p>Methods are placed in the same order as they&#8217;re called by pika</p>
 <dl class="method">
-<dt id="vcsamqp.senders.amqp.AsyncAMQPSender.on_channel_open">
-<tt class="descname">on_channel_open</tt><big>(</big><em>channel</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.amqp.AsyncAMQPSender.on_channel_open" title="Permalink to this definition">¶</a></dt>
+<dt id="ether.publishers.amqp.AsyncAMQPPublisher.on_channel_open">
+<tt class="descname">on_channel_open</tt><big>(</big><em>channel</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.AsyncAMQPPublisher.on_channel_open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Callback. Called when channel has opened.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -121,8 +121,8 @@ Code is borrowed from Pika Asynchronous demo_send <a class="reference external" 
 </dd></dl>
 
 <dl class="method">
-<dt id="vcsamqp.senders.amqp.AsyncAMQPSender.on_connected">
-<tt class="descname">on_connected</tt><big>(</big><em>connection</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.amqp.AsyncAMQPSender.on_connected" title="Permalink to this definition">¶</a></dt>
+<dt id="ether.publishers.amqp.AsyncAMQPPublisher.on_connected">
+<tt class="descname">on_connected</tt><big>(</big><em>connection</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.AsyncAMQPPublisher.on_connected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Callback. Called when we are fully connected to RabbitMQ.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -135,8 +135,8 @@ Code is borrowed from Pika Asynchronous demo_send <a class="reference external" 
 </dd></dl>
 
 <dl class="method">
-<dt id="vcsamqp.senders.amqp.AsyncAMQPSender.on_queue_declared">
-<tt class="descname">on_queue_declared</tt><big>(</big><em>_frame</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.amqp.AsyncAMQPSender.on_queue_declared" title="Permalink to this definition">¶</a></dt>
+<dt id="ether.publishers.amqp.AsyncAMQPPublisher.on_queue_declared">
+<tt class="descname">on_queue_declared</tt><big>(</big><em>_frame</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.AsyncAMQPPublisher.on_queue_declared" title="Permalink to this definition">¶</a></dt>
 <dd><p>Callback: Called when queue has been declared.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -149,8 +149,8 @@ Code is borrowed from Pika Asynchronous demo_send <a class="reference external" 
 </dd></dl>
 
 <dl class="method">
-<dt id="vcsamqp.senders.amqp.AsyncAMQPSender.send_payload">
-<tt class="descname">send_payload</tt><big>(</big><em>payload</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.amqp.AsyncAMQPSender.send_payload" title="Permalink to this definition">¶</a></dt>
+<dt id="ether.publishers.amqp.AsyncAMQPPublisher.send_payload">
+<tt class="descname">send_payload</tt><big>(</big><em>payload</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.AsyncAMQPPublisher.send_payload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send payload to the server setting up chain of callbacks:
 on_connected -&gt; on_channel_open -&gt; on_queue_declared.
 (see above)</p>
@@ -167,14 +167,14 @@ on_connected -&gt; on_channel_open -&gt; on_queue_declared.
 </dd></dl>
 
 </div>
-<div class="section" id="module-vcsamqp.senders.log">
-<span id="log"></span><h2>log<a class="headerlink" href="#module-vcsamqp.senders.log" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-ether.publishers.log">
+<span id="log"></span><h2>log<a class="headerlink" href="#module-ether.publishers.log" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="vcsamqp.senders.log.FileLogger">
-<em class="property">class </em><tt class="descclassname">vcsamqp.senders.log.</tt><tt class="descname">FileLogger</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.log.FileLogger" title="Permalink to this definition">¶</a></dt>
+<dt id="ether.publishers.log.FileLogger">
+<em class="property">class </em><tt class="descclassname">ether.publishers.log.</tt><tt class="descname">FileLogger</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#ether.publishers.log.FileLogger" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt id="vcsamqp.senders.log.FileLogger.send_payload">
-<tt class="descname">send_payload</tt><big>(</big><em>payload</em><big>)</big><a class="headerlink" href="#vcsamqp.senders.log.FileLogger.send_payload" title="Permalink to this definition">¶</a></dt>
+<dt id="ether.publishers.log.FileLogger.send_payload">
+<tt class="descname">send_payload</tt><big>(</big><em>payload</em><big>)</big><a class="headerlink" href="#ether.publishers.log.FileLogger.send_payload" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -191,8 +191,8 @@ on_connected -&gt; on_channel_open -&gt; on_queue_declared.
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Senders</a><ul>
-<li><a class="reference internal" href="#module-vcsamqp.senders.amqp">amqp</a></li>
-<li><a class="reference internal" href="#module-vcsamqp.senders.log">log</a></li>
+<li><a class="reference internal" href="#module-ether.publishers.amqp">amqp</a></li>
+<li><a class="reference internal" href="#module-ether.publishers.log">log</a></li>
 </ul>
 </li>
 </ul>
@@ -201,11 +201,11 @@ on_connected -&gt; on_channel_open -&gt; on_queue_declared.
   <p class="topless"><a href="modules.html"
                         title="previous chapter">Modules and classes</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="listeners.html"
+  <p class="topless"><a href="consumers.html"
                         title="next chapter">Listeners</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/senders.txt"
+    <li><a href="_sources/publishers.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -235,12 +235,12 @@ on_connected -&gt; on_channel_open -&gt; on_queue_declared.
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="listeners.html" title="Listeners"
+          <a href="consumers.html" title="Listeners"
              >next</a> |</li>
         <li class="right" >
           <a href="modules.html" title="Modules and classes"
              >previous</a> |</li>
-        <li><a href="index.html">VCS AMQP v0.1.0 documentation</a> &raquo;</li>
+        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li>
           <li><a href="modules.html" >Modules and classes</a> &raquo;</li> 
       </ul>
     </div>
