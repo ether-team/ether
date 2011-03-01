@@ -1,3 +1,13 @@
+python-vcs-amqp (0.1.1) unstable; urgency=low
+  
+  * Declared queue on listener side
+  * Declared exchange on sender side
+  * Removed trailing whitespaces
+  * Adopted listeners and senders to new config format
+  * Made separate configurations for consumer and publisher
+
+ -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 01 Mar 2011 13:20:51 +0200
+
 python-vcs-amqp (0.1.0) unstable; urgency=low
 
   * Designed project modules hierarchy
