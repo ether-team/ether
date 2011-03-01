@@ -1,17 +1,27 @@
 #!/usr/bin/python -tt
 
 AMQP = {
-    "host": "hemeego-sidev-h001.europe.nokia.com",
+    "host": "localhost",
     "port": 5672,
     "user": "vcsamqp",
     "password": "123",
     "vhost": "/vcsamqp",
-    "exchange": "",
-    "exchange_type": "topic",
-    "routing_key": "vcsamqp-queue",
-    "queue_name": "vcsamqp-queue",
-    "queue_durable": True,
-    "queue_exclusive": False,
-    "queue_auto_delete": False,
-    "delivery_mode": 1
+    "exchange_name": "vcsamqp",
+    "exchange_type": "fanout",
+    "exchange_durable": True,
+    "delivery_mode": 1,
+    
+    "PUBLISHER": {"queue_name": "",
+                  "routing_key": "",
+                  "queue_durable": True,
+                  "queue_exclusive": False,
+                  "queue_auto_delete": False
+                  },
+
+    "CONSUMER": {"queue_name": "",
+                 "routing_key": "",
+                 "queue_durable": True,
+                 "queue_exclusive": True,
+                 "queue_auto_delete": True
+                 }
 }
