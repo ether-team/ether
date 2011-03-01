@@ -6,7 +6,7 @@ from ether import VERSION_STR
 setup(
     name="ether",
     version=VERSION_STR,
-    url='https://github.com/iamer/python-vcs-amqp',
+    url='https://github.com/ether-team/ether',
     author='BIFH & OBS teams',
     author_email='bifh-team@nokia.com',
     packages=find_packages(exclude=['ez_setup']),
