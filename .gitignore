@@ -3,3 +3,11 @@
 *.pyo
 *.swo
 build/
+docs/_build/
+debian/files
+debian/python-ether.debhelper.log
+debian/python-ether.postinst.debhelper
+debian/python-ether.prerm.debhelper
+debian/python-ether.substvars
+debian/python-ether/
+ether.egg-info/
