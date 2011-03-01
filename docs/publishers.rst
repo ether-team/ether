@@ -3,12 +3,12 @@ Senders
 
 amqp
 ----
-.. automodule:: vcsamqp.senders.amqp
+.. automodule:: vcsamqp.publishers.amqp
    :members:
    :undoc-members:
 
 log
 ---
-.. automodule:: vcsamqp.senders.log
+.. automodule:: vcsamqp.publishers.log
    :members:
    :undoc-members:

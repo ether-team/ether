@@ -6,8 +6,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   senders
-   listeners
+   publishers
+   consumers
    hooks
 
 Indices and tables

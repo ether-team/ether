@@ -13,16 +13,16 @@ from vcsamqp.payload.common import Payload
 
 LOG = logging.getLogger(__name__)
 
-class BaseAMQPListener(object):
+class BaseAMQPConsumer(object):
 
-    """Base abstract class for AMQP listeners."""
+    """Base abstract class for AMQP consumers."""
 
     __metaclass__ = ABCMeta
 
     def __init__(self, config=AMQP):
 
         """
-        Initializes the base listener object.
+        Initializes the base consumer object.
 
         :param config: Dictionary containing the needed configuration items.
         :type config: dictionary
@@ -68,9 +68,9 @@ class BaseAMQPListener(object):
         raise NotImplementedError
 
 
-class AsyncAMQPListener(BaseAMQPListener):
+class AsyncAMQPConsumer(BaseAMQPConsumer):
 
-    """Asynchronous Listener."""
+    """Asynchronous consumer."""
 
     def __init__(self, config=AMQP):
 
@@ -81,7 +81,7 @@ class AsyncAMQPListener(BaseAMQPListener):
         :type config: dictionary
         """
 
-        super(AsyncAMQPListener, self).__init__(config = config)
+        super(AsyncAMQPConsumer, self).__init__(config = config)
         self.setup_connection()
 
     def setup_connection(self):
@@ -169,15 +169,15 @@ class AsyncAMQPListener(BaseAMQPListener):
             self._connection.ioloop.start()
 
 
-class TestListener(AsyncAMQPListener):
+class TestConsumer(AsyncAMQPConsumer):
 
     def receive_payload(self, channel, method, header, body):
         print simplejson.loads(body)
 
 
 def main(argv):
-    listener = TestListener(config = AMQP)
-    listener.consume()
+    consumer = TestConsumer(config = AMQP)
+    consumer.consume()
     return 0
 
 if __name__ == '__main__':

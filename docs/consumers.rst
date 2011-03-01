@@ -3,7 +3,7 @@ Listeners
 
 amqp
 ----
-.. automodule:: vcsamqp.listeners.amqp
+.. automodule:: vcsamqp.consumers.amqp
    :members:
    :undoc-members:
 

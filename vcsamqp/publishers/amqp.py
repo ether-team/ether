@@ -14,9 +14,9 @@ from vcsamqp.settings import AMQP
 
 LOG = logging.getLogger(__name__)
 
-class BasicAMQPSender(object):
+class BasicAMQPPublisher(object):
 
-    """Base abstract class for AMQP senders."""
+    """Base abstract class for AMQP publishers."""
 
     __metaclass__ = ABCMeta
 
@@ -60,10 +60,10 @@ class BasicAMQPSender(object):
         raise NotImplementedError
 
 
-class BlockingAMQPSender(BasicAMQPSender):
+class BlockingAMQPPublisher(BasicAMQPPublisher):
 
     """
-    Blocking (synchronous) sender.
+    Blocking (synchronous) publisher.
     Code is borrowed from Pika Blocking demo_send example_blocking_:
 
     .. _example_blocking: http://tonyg.github.com/pika/examples.html#id4
@@ -100,11 +100,11 @@ class BlockingAMQPSender(BasicAMQPSender):
                                     properties=properties)
 
 
-class AsyncAMQPSender(BasicAMQPSender):
+class AsyncAMQPPublisher(BasicAMQPPublisher):
 
     """
 
-    Asynchronous Sender.
+    Asynchronous Publisher.
     Code is borrowed from Pika Asynchronous demo_send example_async_:
 
     .. _example_async: http://tonyg.github.com/pika/examples.html#demo-send
