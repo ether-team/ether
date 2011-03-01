@@ -81,7 +81,7 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         :type config: dictionary
         """
 
-        super(AsyncAMQPConsumer, self).__init__(config = config)
+        super(AsyncAMQPConsumer, self).__init__(config=config)
         self.setup_connection()
 
     def setup_connection(self):
@@ -113,11 +113,11 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         """
 
         self._channel = channel
-        channel.queue_declare(queue = self._queue,
-                              durable = self._durable,
-                              exclusive = self._exclusive,
-                              auto_delete = self._auto_delete,
-                              callback = self.on_queue_declared)
+        channel.queue_declare(queue=self._queue,
+                              durable=self._durable,
+                              exclusive=self._exclusive,
+                              auto_delete=self._auto_delete,
+                              callback=self.on_queue_declared)
 
     # Step #4
     def on_queue_declared(self, frame):
@@ -126,10 +126,10 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
 
         frame is the response from RabbitMQ"""
 
-        self._channel.queue_bind(queue = self._queue,
-                                exchange = self._exchange,
-                                routing_key = self._routing_key,
-                                callback = self.on_queue_bound)
+        self._channel.queue_bind(queue=self._queue,
+                                exchange=self._exchange,
+                                routing_key=self._routing_key,
+                                callback=self.on_queue_bound)
 
     def on_queue_bound(self, frame):
 
@@ -141,7 +141,7 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         """
 
         self._channel.basic_consume(self.receive_payload,
-                                   queue = self._queue,
+                                   queue=self._queue,
                                    no_ack=True)
 
     def receive_payload(self, channel, method, header, body):
@@ -176,7 +176,7 @@ class TestConsumer(AsyncAMQPConsumer):
 
 
 def main(argv):
-    consumer = TestConsumer(config = AMQP)
+    consumer = TestConsumer(config=AMQP)
     consumer.consume()
     return 0
 
