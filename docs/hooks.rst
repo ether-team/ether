@@ -6,9 +6,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   .. automodule:: ether.hooks.svn
+.. automodule:: ether.hooks.svn
    :members:
    
-   .. automodule:: ether.hooks.git
+.. automodule:: ether.hooks.git
    :members:
-
