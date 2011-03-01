@@ -10,8 +10,8 @@ setup(
     author='BIFH & OBS teams',
     author_email='bifh-team@nokia.com',
     packages=find_packages(exclude=['ez_setup']),
-    data_files=[('share/vcs-hooks/svn', ['hooks/svn/vcs-amqp-post-commit']),
-                ('share/vcs-hooks/git', ['hooks/git/vcs-amqp-post-receive'])],
+    data_files=[('share/vcs-hooks/svn', ['hooks/svn/ether-post-commit']),
+                ('share/vcs-hooks/git', ['hooks/git/ether-post-receive'])],
     classifiers=[
         'Operating System :: OS Independent',
         'Programming Language :: Python',
