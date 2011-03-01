@@ -2,7 +2,7 @@
 
 """AMQP Listener."""
 
-__all__ = ["BaseAMQPListener", "AsyncAMQPListener"]
+__all__ = ["BaseAMQPConsumer", "AsyncAMQPConsumer"]
 
 import logging
 from abc import ABCMeta, abstractmethod
