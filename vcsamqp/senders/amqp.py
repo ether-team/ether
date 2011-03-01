@@ -82,10 +82,14 @@ class BlockingAMQPSender(BasicAMQPSender):
         self._connection = pika.BlockingConnection(self._parameters)
         self._channel = self._connection.channel()
 
-        self._channel.queue_declare(queue=self._queue,
-                                    durable=self._durable,
-                                    exclusive=self._exclusive,
-                                    auto_delete=self._auto_delete)
+        self._channel.exchange_declare(exchange=self._exchange,
+                                       type=self._exchange_type)
+
+        if self._queue:
+            self._channel.queue_declare(queue=self._queue,
+                                        durable=self._durable,
+                                        exclusive=self._exclusive,
+                                        auto_delete=self._auto_delete)
 
         properties = pika.BasicProperties("text/plain",
                                           delivery_mode=self._delivery_mode)
