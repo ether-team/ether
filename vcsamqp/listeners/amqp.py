@@ -113,25 +113,11 @@ class AsyncAMQPListener(BaseAMQPListener):
         """
 
         self._channel = channel
-        channel.exchange_declare(exchange = self._exchange,
-                                 type = self._exchange_type,
-                                 durable = self._durable,
-                                 callback = self.on_exchange_declared)
-
-    def on_exchange_declared(self, frame):
-
-        """
-        Step #4: Called when the exchange has been declared.
-
-        :param _frame: response from broker
-        :type _frame: object
-        """
-
-        self._channel.queue_declare(queue = self._queue, 
-                                   durable = self._durable,
-                                   exclusive = self._exclusive,
-                                   auto_delete = self._auto_delete,
-                                   callback = self.on_queue_declared)
+        channel.queue_declare(queue = self._queue,
+                              durable = self._durable,
+                              exclusive = self._exclusive,
+                              auto_delete = self._auto_delete,
+                              callback = self.on_queue_declared)
 
     # Step #4
     def on_queue_declared(self, frame):
