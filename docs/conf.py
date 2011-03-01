@@ -213,15 +213,15 @@ latex_documents = [
 # If there is more than one author, separate them with \\.
 # For example: r'Guido van Rossum\\Fred L. Drake, Jr., editor'
 #
-# The options element is a dictionary that lets you override 
+# The options element is a dictionary that lets you override
 # this config per-document.
-# For example, 
-# ('index', u'MyProject', u'My Project', u'Author Name', 
+# For example,
+# ('index', u'MyProject', u'My Project', u'Author Name',
 #  dict(pdf_compressed = True))
 # would mean that specific document would be compressed
 # regardless of the global pdf_compressed setting.
 
-pdf_documents = [ 
+pdf_documents = [
     ('index', u'ether', u'Ether documentation', u'Islam Amer\\Ed \
     Bartosh\\Anton Beresin'),
 ]
@@ -253,7 +253,7 @@ pdf_stylesheets = ['sphinx','kerning','a4']
 # or just use 'any'
 #pdf_breakside = 'any'
 
-# Insert footnotes where they are defined instead of 
+# Insert footnotes where they are defined instead of
 # at the end.
 #pdf_inline_footnotes = True
 
@@ -272,7 +272,7 @@ pdf_stylesheets = ['sphinx','kerning','a4']
 # Name of the cover page template to use
 #pdf_cover_template = 'sphinxcover.tmpl'
 
-# Documents to append as an appendix to all manuals.    
+# Documents to append as an appendix to all manuals.
 #pdf_appendices = []
 
 # Enable experimental feature to split table cells. Use it
