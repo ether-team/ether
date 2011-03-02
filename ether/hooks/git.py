@@ -39,11 +39,17 @@ class GitHook(object):
     @staticmethod
     def _get_commits(old, new):
         """
-        Property that holds a dictionary of a format:
-            {"id": "commit hashsum",
-             "author": "commit author",
-             "message": "commit message",
-             "timestamp": "timestamp in github format"}
+        :param old: old commit hashsum
+        :type old: string
+        :param new: newer commit hashsum
+        :type new: string
+        :returns:
+            [{
+              "id": "commit hashsum",
+              "author": "commit author",
+              "message": "commit message",
+              "timestamp": "timestamp in github format"
+            }]
         """
         revlist = _get_revlist(old, new)
         sections = revlist.split('\n\n')[:-1]
@@ -90,11 +96,7 @@ class GitHook(object):
             })
         return commits
 
-    def postreceive(self, old, new, ref):
-        self.old = old
-        self.new = new
-        self.ref = ref
-
+    def postreceive(self):
         """Postcommit hook."""
         # Get command line arguments
         old, new, ref = sys.argv[1:4]
