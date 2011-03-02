@@ -17,7 +17,7 @@ import sys
 from optparse import OptionParser
 
 from ether.settings import AMQP
-from ether.hooks.svn import SvnHooks
+from ether.hooks.svn import SvnHook
 
 from ether.publishers.log import FileLogger
 from ether.publishers.amqp import BlockingAMQPPublisher, AsyncAMQPPublisher
@@ -44,7 +44,7 @@ def main(argv):
     elif options.type == "log":
         publisher = FileLogger("/tmp/postcommit.log")
 
-    SvnHooks(publisher).postcommit()
+    SvnHook(publisher).postcommit()
     return 0
 
 if __name__ == '__main__':
