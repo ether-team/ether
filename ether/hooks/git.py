@@ -24,17 +24,6 @@ def _get_revlist(old, new):
         return handler.read()
 
 
-def _get_terminal_input():
-    """This method was moved out of the GitHook class to simplify testing.
-
-    :returns: a tuple of three strings:
-        - the old commit hashsum
-        - newer commit hashsum
-        - reference (e.g. refs/heads/master"
-    """
-    return (sys.argv[1], sys.argv[2], sys.argv[3])
-
-
 class GitHook(object):
 
     def __init__(self, sender):
@@ -44,7 +33,6 @@ class GitHook(object):
             has to implement 'send_payload' method
         """
         self._sender = sender
-        self.old, self.new, self.ref = _get_terminal_input()
 
     @property
     def commits(self):
@@ -100,12 +88,16 @@ class GitHook(object):
                 })
         return self.__commits
 
-    def postreceive(self):
+    def postreceive(self, old, new, ref):
+        self.old = old
+        self.new = new
+        self.ref = ref
+
         """Postcommit hook."""
         self._sender.send_payload({
-            "before": self.old,
-            "after": self.new,
-            "ref": self.ref,
+            "before": old,
+            "after": new,
+            "ref": ref,
             "repository": {
                 "url": "",
                 "name": "",

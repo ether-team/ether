@@ -11,8 +11,38 @@ For example:
  aa453216d1b3e49e7f6f98441fa56946ddcd6a20 68f7abf4e6f922807889f52bc043ecd31b79f814 refs/heads/master
 """
 
+import sys
+sys.path.append(".")
+from optparse import OptionParser
+
 from ether.hooks.git import GitHook
 from ether.publishers.log import FileLogger
+from ether.publishers.amqp import BlockingAMQPPublisher, AsyncAMQPPublisher
+
+def parse_args(argv):
+    """ Commandline parser """
+    parser = OptionParser(usage="%prog [options]")
+    parser.add_option("--type", dest="type", metavar="<type of publisher>",
+                      default="amqp-async",
+                      help="amqp-blocking, amqp-async and log are supported")
+
+    return parser.parse_args(argv)
 
 
-GitHook(FileLogger("/tmp/postcommit.log")).postreceive()
+def main(argv):
+    """Script entry point."""
+
+    options, args = parse_args(argv)
+
+    if options.type == "amqp-async":
+        publisher = AsyncAMQPPublisher(AMQP)
+    elif options.type == "amqp-blocking":
+        publisher = BlockingAMQPPublisher(AMQP)
+    elif options.type == "log":
+        publisher = FileLogger("/tmp/postcommit.log")
+
+    GitHook(publisher).postreceive(args[1], args[2], args[3])
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv))
+
