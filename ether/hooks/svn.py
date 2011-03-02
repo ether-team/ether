@@ -47,7 +47,7 @@ class SvnHook:
             "timestamp": date
         }]
 
-    def postcommit(self, repos, rev):
+    def postcommit(self):
         """Postcommit hook."""
         repos, rev = sys.argv[1:3]
         self._sender.send_payload({
