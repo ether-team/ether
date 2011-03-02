@@ -81,7 +81,7 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         :type config: dictionary
         """
 
-        super(AsyncAMQPConsumer, self).__init__(config=config)
+        BaseAMQPConsumer.__init__(self, config = config)
         self.setup_connection()
 
     def setup_connection(self):
@@ -100,8 +100,8 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         :type connection: object
         """
 
-        connection.channel(self.on_channel_open)
         self._connection = connection
+        self._connection.channel(self.on_channel_open)
 
     def on_channel_open(self, channel):
 
@@ -122,9 +122,11 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
     # Step #4
     def on_queue_declared(self, frame):
 
-        """Step #5: Called when Queue has been declared.
+        """
+        Step #5: Called when Queue has been declared.
 
-        frame is the response from RabbitMQ"""
+        frame is the response from RabbitMQ
+        """
 
         self._channel.queue_bind(queue=self._queue,
                                 exchange=self._exchange,

@@ -1,54 +1,79 @@
 #!/usr/bin/python -tt
-from ether.publishers.amqp import AsyncAMQPPublisher
-from ether.consumers.amqp import AsyncAMQPConsumer
-from ether.payload.common import Payload
 
 """
 This a simple shovel script to bridge github messages to the local fanout
 exchnage.
+
+The usage of multiprocessing module is to workaround a design limitation in
+pika :
+http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2011-February/011438.html
 """
+
+import sys
+sys.path.append(".") 
+from ether.publishers.amqp import AsyncAMQPPublisher
+from ether.consumers.amqp import AsyncAMQPConsumer
+from ether.payload.common import Payload
+from ether.settings import AMQP
+from multiprocessing import Process, Queue
+
+#import pika.log
+#pika.log.setup(level=pika.log.DEBUG)
+
 
 GITHUB = {
     "host": "localhost",
     "port": 5672,
-    "user": "ether",
+    "user": "guest",
     "password": "123",
-    "vhost": "/ether",
-    "exchange_name": "ether",
-    "exchange_type": "fanout",
+    "vhost": "/",
+    "exchange_name": "github",
+    "exchange_type": "topic",
     "exchange_durable": True,
     "delivery_mode": 1,
     
-    "PUBLISHER": {"queue_name": "",
-                  "routing_key": "",
-                  "queue_durable": True,
-                  "queue_exclusive": False,
-                  "queue_auto_delete": False
-                  },
-
-    "CONSUMER": {"queue_name": "",
-                 "routing_key": "",
+    "CONSUMER": {"queue_name": "github",
+                 "routing_key": "github.push.#",
                  "queue_durable": True,
                  "queue_exclusive": True,
                  "queue_auto_delete": True
                  }
 }
 
-class githubConsumer(AsyncAMQPConsumer):
+class GithubConsumer(AsyncAMQPConsumer):
 
     """github consumer based on Async AMQP consumer."""
-    def __init__(self, config=None)
-        super(self, AsyncAMQPConsumer).__init__(config = config)
-        self.publisher = AsyncAMQPPublisher()
 
     def receive_payload(self, channel, method, header, body):
-        self._payload = Payload(body)
-        print self._payload
-        self.publisher.send_payload(self._payload)
-        
+        #print "putting item in q"
+        PQ.put(Payload(body).payload)
 
-consumer = githubConsumer(config = GITHUB )
-cosumer.consume()
+def consumer():
+
+    """ Wrapper function used by Process """
+
+    #print "Creating consumer"
+    con = GithubConsumer(config = GITHUB )
+    #print "running consumer"
+    con.consume()
+
+def publisher():
+
+    """ Wrapper function used by Process """
+
+    pub = AsyncAMQPPublisher(AMQP)
+    while True:
+        #print "Blocking in publisher thread"
+        pub.send_payload(PQ.get(block=True))
+        #print "item sent, looping"
 
 
+if __name__ == '__main__':
+    PQ = Queue()
+    PP = Process(target=publisher)
+    PP.start()
+    CP = Process(target=consumer)
+    CP.start()
+    PP.join()
+    CP.join()
 
