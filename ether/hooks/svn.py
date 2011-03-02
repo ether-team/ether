@@ -47,9 +47,21 @@ class SvnHook:
             "timestamp": date
         }]
 
+
     def postcommit(self):
         """Postcommit hook."""
+
+        #FIXME: Ask Anton what the heck is this
         repos, rev = sys.argv[1:3]
+        
         self._sender.send_payload({
-            "commits": self._get_commits(repos, rev)
+            "data": {},
+            "payload": {
+                "repository": {
+                    "name": "",
+                    "url": "",
+                    "owner": ""
+                    },            
+                "commits": self._get_commits(repos, rev)
+            }
         })
