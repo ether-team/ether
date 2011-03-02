@@ -64,16 +64,22 @@ def publisher():
     pub = AsyncAMQPPublisher(AMQP)
     while True:
         #print "Blocking in publisher thread"
-        pub.send_payload(PQ.get(block=True))
-        #print "item sent, looping"
+        try:
+            pub.send_payload(PQ.get(block=True))
+            #print "item sent, looping"
+        except KeyboardInterrupt:
+            sys.exit(0)
 
 
 if __name__ == '__main__':
-    PQ = Queue()
-    PP = Process(target=publisher)
-    PP.start()
-    CP = Process(target=consumer)
-    CP.start()
-    PP.join()
-    CP.join()
+    try:
+        PQ = Queue()
+        PP = Process(target=publisher)
+        PP.start()
+        CP = Process(target=consumer)
+        CP.start()
+        PP.join()
+        CP.join()
+    except KeyboardInterrupt:
+        sys.exit(0)
 
