@@ -154,7 +154,6 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         """
 
         self._payload = Payload(body)
-        print self._payload
 
     def consume(self):
 
