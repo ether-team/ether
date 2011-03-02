@@ -44,7 +44,7 @@ def main(argv):
     elif options.type == "log":
         publisher = FileLogger("/tmp/postcommit.log")
 
-    SvnHooks(publisher).postcommit(args[1], args[2])
+    SvnHooks(publisher).postcommit()
     return 0
 
 if __name__ == '__main__':
