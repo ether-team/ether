@@ -1,5 +1,7 @@
 import unittest, os, sys
 
+import settings
+
 from ether import fixtures
 
 from ether.hooks import git, svn
