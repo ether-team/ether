@@ -55,7 +55,6 @@ class BaseAMQPConsumer(object):
         self._channel = None
         self._payload = None
 
-    @abstractmethod
     def receive_payload(self, channel, method, header, body):
 
         """
@@ -66,7 +65,24 @@ class BaseAMQPConsumer(object):
         :type body: dictionary
         """
 
+        payload = Payload(body)
+        self._payload = payload
+
+        return self.process_payload(payload)
+
+    @abstractmethod
+    def process_payload(self, payload):
+
+        """
+        Process payload.
+        Abstract method. Has to be implemented in derived classes.
+
+        :param payload: received payload
+        :type body: dictionary
+        """
+
         raise NotImplementedError
+
 
 
 class AsyncAMQPConsumer(BaseAMQPConsumer):
@@ -147,17 +163,6 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
                                    queue = self._queue,
                                    no_ack = True)
 
-    def receive_payload(self, channel, method, header, body):
-        """
-        Step #7: Called when we receive a message from RabbitMQ.
-        Implementation of recieve_payload that just prints the payload.
-
-        :param body: data received
-        :type body: dictionary
-        """
-
-        self._payload = Payload(body)
-
     def consume(self):
 
         """Start the IO event loop so we can communicate with RabbitMQ."""
@@ -173,10 +178,9 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
 
 class TestConsumer(AsyncAMQPConsumer):
 
-    def receive_payload(self, channel, method, header, body):
-        print simplejson.loads(body)
-
-
+    def process_payload(self, payload):
+        print payload.payload
+        
 def main(argv):
     consumer = TestConsumer(config = AMQP)
     consumer.consume()
