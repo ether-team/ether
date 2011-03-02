@@ -19,7 +19,7 @@ class BaseAMQPConsumer(object):
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, config=AMQP):
+    def __init__(self, config = AMQP):
 
         """
         Initializes the base consumer object.
@@ -47,8 +47,9 @@ class BaseAMQPConsumer(object):
 
         self._credentials = pika.PlainCredentials(self._user, self._password)
         self._parameters = pika.ConnectionParameters(host=self._host,
-                                    port=self._port, virtual_host=self._vhost,
-                                    credentials=self._credentials)
+                                                     port = self._port, 
+                                                     virtual_host = self._vhost,
+                                                     credentials = self._credentials)
 
         self._connection = None
         self._channel = None
@@ -113,11 +114,11 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         """
 
         self._channel = channel
-        channel.queue_declare(queue=self._queue,
-                              durable=self._durable,
-                              exclusive=self._exclusive,
-                              auto_delete=self._auto_delete,
-                              callback=self.on_queue_declared)
+        channel.queue_declare(queue = self._queue,
+                              durable = self._durable,
+                              exclusive = self._exclusive,
+                              auto_delete = self._auto_delete,
+                              callback = self.on_queue_declared)
 
     # Step #4
     def on_queue_declared(self, frame):
@@ -128,10 +129,10 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         frame is the response from RabbitMQ
         """
 
-        self._channel.queue_bind(queue=self._queue,
-                                exchange=self._exchange,
-                                routing_key=self._routing_key,
-                                callback=self.on_queue_bound)
+        self._channel.queue_bind(queue = self._queue,
+                                exchange = self._exchange,
+                                routing_key = self._routing_key,
+                                callback = self.on_queue_bound)
 
     def on_queue_bound(self, frame):
 
@@ -143,8 +144,8 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         """
 
         self._channel.basic_consume(self.receive_payload,
-                                   queue=self._queue,
-                                   no_ack=True)
+                                   queue = self._queue,
+                                   no_ack = True)
 
     def receive_payload(self, channel, method, header, body):
         """
@@ -177,7 +178,7 @@ class TestConsumer(AsyncAMQPConsumer):
 
 
 def main(argv):
-    consumer = TestConsumer(config=AMQP)
+    consumer = TestConsumer(config = AMQP)
     consumer.consume()
     return 0
 
