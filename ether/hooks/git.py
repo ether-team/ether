@@ -20,11 +20,13 @@ def _get_revlist(old, new):
     :type new: string
     :returns: command output
     """
-    with os.popen("git rev-list --pretty=medium %s..%s" % (old, new), "r") as handler:
+    with os.popen("git rev-list --pretty=medium %s..%s" % (old, new), "r") \
+            as handler:
         return handler.read()
 
 
 class GitHook(object):
+    """GIT hook."""
 
     def __init__(self, sender):
         """Constructor.
@@ -34,8 +36,8 @@ class GitHook(object):
         """
         self._sender = sender
 
-    @property
-    def commits(self):
+    @staticmethod
+    def _get_commits(old, new):
         """
         Property that holds a dictionary of a format:
             {"id": "commit hashsum",
@@ -43,50 +45,50 @@ class GitHook(object):
              "message": "commit message",
              "timestamp": "timestamp in github format"}
         """
-        if not hasattr(self, "__commits"):
-            revlist = _get_revlist(self.old, self.new)
-            sections = revlist.split('\n\n')[:-1]
-            self.__commits = []
-            index = 0
-            while index < len(sections):
-                lines = sections[index].split('\n')
+        revlist = _get_revlist(old, new)
+        sections = revlist.split('\n\n')[:-1]
+        commits = []
+        index = 0
+        while index < len(sections):
+            lines = sections[index].split('\n')
 
-                # first line is 'commit HASH\n'
-                props = {'id': lines[0].strip().split(' ')[1]}
+            # first line is 'commit HASH\n'
+            props = {'id': lines[0].strip().split(' ')[1]}
 
-                # read the header
-                for line in lines[1:]:
-                    key, val = line.split(' ', 1)
-                    props[key[:-1].lower()] = val.strip()
+            # read the header
+            for line in lines[1:]:
+                key, val = line.split(' ', 1)
+                props[key[:-1].lower()] = val.strip()
 
-                # read the commit message
-                props['message'] = sections[index+1]
+            # read the commit message
+            props['message'] = sections[index+1]
 
-                # use github time format
-                basetime = datetime.strptime(props['date'][:-6], "%a %b %d %H:%M:%S %Y")
-                tzstr = props['date'][-5:]
-                props['date'] = basetime.strftime('%Y-%m-%dT%H:%M:%S') + tzstr
+            # use github time format
+            basetime = datetime.strptime(props['date'][:-6],
+                                         "%a %b %d %H:%M:%S %Y")
+            tzstr = props['date'][-5:]
+            props['date'] = basetime.strftime('%Y-%m-%dT%H:%M:%S') + tzstr
 
-                # split up author
-                author = EMAIL_RE.match(props['author'])
-                if author:
-                    props['name'] = author.group(1)
-                    props['email'] = author.group(2)
-                else:
-                    props['name'] = 'unknown'
-                    props['email'] = 'unknown'
-                del props['author']
+            # split up author
+            author = EMAIL_RE.match(props['author'])
+            if author:
+                props['name'] = author.group(1)
+                props['email'] = author.group(2)
+            else:
+                props['name'] = 'unknown'
+                props['email'] = 'unknown'
+            del props['author']
 
-                # increment the counter
-                index += 2
+            # increment the counter
+            index += 2
 
-                self.__commits.append({
-                    'id': props['id'],
-                    'author': {'name': props['name'], 'email': props['email']},
-                    'message': props['message'].strip(),
-                    'timestamp': props['date']
-                })
-        return self.__commits
+            commits.append({
+                'id': props['id'],
+                'author': {'name': props['name'], 'email': props['email']},
+                'message': props['message'].strip(),
+                'timestamp': props['date']
+            })
+        return commits
 
     def postreceive(self, old, new, ref):
         self.old = old
@@ -94,6 +96,9 @@ class GitHook(object):
         self.ref = ref
 
         """Postcommit hook."""
+        # Get command line arguments
+        old, new, ref = sys.argv[1:4]
+        # Send the payload
         self._sender.send_payload({
             "before": old,
             "after": new,
@@ -107,5 +112,5 @@ class GitHook(object):
                     "name": ""
                 }
             },
-            "commits": self.commits,
+            "commits": self._get_commits(old, new),
         })
