@@ -19,6 +19,6 @@ AMQP_CONFIG = {
 }
 
 REPO_CONFIG = [
-    ("/svn/", "https://some.site.org/svn/")
+    ("", "https://some.site.org/svn/")
 ]
 

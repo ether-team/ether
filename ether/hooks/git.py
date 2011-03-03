@@ -13,7 +13,7 @@ from datetime import datetime
 #EMAIL_RE = re.compile("^(.*) <(.*)>$")
 ALLZEROS_RE = re.compile("0+$")
 
-# Wrappers around system calls
+# Wrappers around system calls. Shouldn't be covered.
 
 def _get_allbranches():
     """
@@ -24,13 +24,24 @@ def _get_allbranches():
         return handler.read()
 
 
+def _get_notcommits(other_branches):
+    """
+    :param ref: branch names
+    :type ref: string
+    :returns: string
+    """
+    with os.popen("git rev-parse --not %s" % (other_branches), \
+                  "r") as handler:
+        return handler.read()
+
+
 def _get_ataginfo(ref):
     """
     :param ref: ref name
     :type ref: string
     :returns: string
     """
-    fmt = "'%(*authorname)|%(*authoremail)|%(*authordate)|%(*subject)'"
+    fmt = "'%(authorname)|%(authoremail)|%(authordate)|%(subject)'"
     with os.popen("git for-each-ref --format=%s %s" % \
             (fmt, ref), "r") as handler:
         return handler.read()
@@ -94,7 +105,7 @@ def _get_types(old, new, ref):
     :type new: string
     :param ref: ref name
     :type ref: string
-    :returns: change_type, ref_type 
+    :returns: change_type, ref_type
     """
     change_type = ref_type = None
 
@@ -255,7 +266,7 @@ class GitHook(object):
                 # branch creates can contain multiple commits as well
                 # the consumer probably cares only about the fact that this is
                 # a branch and the sha1sum in the "after" field.
-                # for the commits list we need to find all the commits that are 
+                # for the commits list we need to find all the commits that are
                 # in this branch but not in all other branches ...
                 other_branches = _get_allbranches().split("\n")
                 other_branches.remove(ref)

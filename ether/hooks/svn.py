@@ -33,7 +33,6 @@ def get_repo_url(paths, config):
     for path in paths:
         for upath, url in config:
             if path.startswith(upath):
-                # check if we previously got the same url
                 if result and result != url:
                     raise SvnHookError("get_repo_url got 2 different results: "
                                         "%s and %s" % (result, url))
