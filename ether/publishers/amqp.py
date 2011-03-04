@@ -10,8 +10,6 @@ from abc import ABCMeta, abstractmethod
 import pika
 import simplejson
 
-from ether.settings import AMQP
-
 LOG = logging.getLogger(__name__)
 
 class BasicAMQPPublisher(object):
@@ -20,28 +18,27 @@ class BasicAMQPPublisher(object):
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, config=AMQP):
+    def __init__(self, config):
 
-        self._host = config["host"]
-        self._port = config["port"]
-        self._user = config["user"]
-        self._password = config["password"]
-        self._vhost = config["vhost"]
         self._exchange = config["exchange_name"]
         self._exchange_type = config["exchange_type"]
         self._delivery_mode = config["delivery_mode"]
 
-        self._routing_key = config["PUBLISHER"]["routing_key"]
-        self._queue = config["PUBLISHER"]["queue_name"]
-        self._durable = config["PUBLISHER"]["queue_durable"]
-        self._exclusive = config["PUBLISHER"]["queue_exclusive"]
-        self._auto_delete = config["PUBLISHER"]["queue_auto_delete"]
+        self._routing_key = config["routing_key"]
+        self._queue = config["queue_name"]
+        self._durable = config["queue_durable"]
+        self._exclusive = config["queue_exclusive"]
+        
+        self._auto_delete = config["queue_auto_delete"]
 
-        self._credentials = pika.PlainCredentials(self._user, self._password)
-        self._parameters = pika.ConnectionParameters(host=self._host,
-                                    port=self._port, virtual_host=self._vhost,
-                                    credentials=self._credentials)
 
+        credentials = pika.PlainCredentials(config["user"],
+                                            config["password"],
+        self._parameters = pika.ConnectionParameters(
+                                                host=config["host"],
+                                                port=config["port"],
+                                                virtual_host=config["vhost"],
+                                                credentials=credentials)
         self._connection = None
         self._channel = None
         self._payload = None

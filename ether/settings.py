@@ -16,19 +16,11 @@ AMQP = {
     "exchange_name": "ether",
     "exchange_type": "fanout",
     "exchange_durable": True,
-    "delivery_mode": 1,
-
-    "PUBLISHER": {"queue_name": "",
-                  "routing_key": "",
-                  "queue_durable": True,
-                  "queue_exclusive": False,
-                  "queue_auto_delete": False
-                  },
-
-    "CONSUMER": {"queue_name": "",
-                 "routing_key": "",
-                 "queue_durable": True,
-                 "queue_exclusive": True,
-                 "queue_auto_delete": True
-                 }
+    "delivery_mode": 1,    
+    "routing_key": "test",
+    "queue_name": "",
+    "routing_key": "",
+    "queue_durable": True,
+    "queue_exclusive": True,
+    "queue_auto_delete": True
 }
