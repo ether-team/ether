@@ -124,6 +124,7 @@ class AsyncAMQPPublisher(BasicAMQPPublisher):
                                     properties=pika.BasicProperties(
                                         content_type="text/plain",
                                         delivery_mode=self._delivery_mode))
+        self._connection.close()
 
     def send_payload(self, payload):
         """
@@ -141,5 +142,5 @@ class AsyncAMQPPublisher(BasicAMQPPublisher):
                                                  self.on_connected)
         self._payload = simplejson.dumps(payload)
         self._connection.ioloop.start()
-        self._connection.close()
+
 
