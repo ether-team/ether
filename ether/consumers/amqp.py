@@ -68,10 +68,10 @@ class BaseAMQPConsumer(object):
         payload = Payload(body)
         self._payload = payload
 
-        return self.process_payload(payload)
+        return self.process_payload(payload, method.routing_key)
 
     @abstractmethod
-    def process_payload(self, payload):
+    def process_payload(self, payload, routing_key=None):
 
         """
         Process payload.
@@ -79,6 +79,12 @@ class BaseAMQPConsumer(object):
 
         :param payload: received payload
         :type body: dictionary
+
+        :param routing_key: AMQP routing key
+        :type routing_key: string
+
+        :returns: result code
+        :rtype: int
         """
 
         raise NotImplementedError
@@ -178,9 +184,9 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
 
 class TestConsumer(AsyncAMQPConsumer):
 
-    def process_payload(self, payload):
-        print payload.payload
-        
+    def process_payload(self, payload, routing_key):
+        print "%s: %s" % (routing_key, payload.payload)
+
 def main(argv):
     consumer = TestConsumer(config = AMQP)
     consumer.consume()
