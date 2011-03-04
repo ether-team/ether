@@ -29,8 +29,6 @@ class BaseAMQPConsumer(object):
         """
 
         self._exchange = config["exchange_name"]
-        self._exchange_type = config["exchange_type"]
-        self._delivery_mode = config["delivery_mode"]
 
         self._routing_key = config["routing_key"]
         self._queue = config["queue_name"]
@@ -106,7 +104,7 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
         """Step #1: Connect to RabbitMQ."""
 
         self._connection = pika.adapters.SelectConnection(self._parameters,
-                                                         self.on_connected)
+                                                          self.on_connected)
 
     def on_connected(self, connection):
 

@@ -25,15 +25,9 @@ class BasicAMQPPublisher(object):
         self._delivery_mode = config["delivery_mode"]
 
         self._routing_key = config["routing_key"]
-        self._queue = config["queue_name"]
-        self._durable = config["queue_durable"]
-        self._exclusive = config["queue_exclusive"]
-        
-        self._auto_delete = config["queue_auto_delete"]
-
 
         credentials = pika.PlainCredentials(config["user"],
-                                            config["password"],
+                                            config["password"])
         self._parameters = pika.ConnectionParameters(
                                                 host=config["host"],
                                                 port=config["port"],
@@ -82,12 +76,6 @@ class BlockingAMQPPublisher(BasicAMQPPublisher):
         self._channel.exchange_declare(exchange=self._exchange,
                                        type=self._exchange_type)
 
-        if self._queue:
-            self._channel.queue_declare(queue=self._queue,
-                                        durable=self._durable,
-                                        exclusive=self._exclusive,
-                                        auto_delete=self._auto_delete)
-
         properties = pika.BasicProperties("text/plain",
                                           delivery_mode=self._delivery_mode)
 
@@ -129,20 +117,6 @@ class AsyncAMQPPublisher(BasicAMQPPublisher):
 
         """
         self._channel = channel
-        channel.queue_declare(queue=self._queue, durable=self._durable,
-                              exclusive=self._exclusive,
-                              auto_delete=self._auto_delete,
-                              callback=self.on_queue_declared)
-
-
-    def on_queue_declared(self, _frame):
-        """
-        Callback: Called when queue has been declared.
-
-        :param _frame: response from broker
-        :type _frame: object
-
-        """
 
         self._channel.basic_publish(exchange=self._exchange,
                                     routing_key=self._routing_key,
@@ -150,8 +124,6 @@ class AsyncAMQPPublisher(BasicAMQPPublisher):
                                     properties=pika.BasicProperties(
                                         content_type="text/plain",
                                         delivery_mode=self._delivery_mode))
-        self._connection.close()
-
 
     def send_payload(self, payload):
         """
@@ -169,4 +141,5 @@ class AsyncAMQPPublisher(BasicAMQPPublisher):
                                                  self.on_connected)
         self._payload = simplejson.dumps(payload)
         self._connection.ioloop.start()
+        self._connection.close()
 
