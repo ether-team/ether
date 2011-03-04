@@ -48,12 +48,9 @@ class SvnHook:
         }]
 
 
-    def postcommit(self):
+    def postcommit(self, repos, rev):
         """Postcommit hook."""
 
-        #FIXME: Ask Anton what the heck is this
-        repos, rev = sys.argv[1:3]
-        
         self._sender.send_payload({
             "data": {},
             "payload": {
