@@ -13,10 +13,13 @@ setup(
     data_files=[
         ('share/vcs-hooks/svn', ['hooks/svn/ether-post-commit']),
         ('share/vcs-hooks/git', ['hooks/git/ether-post-receive']),
-        ('/etc/ether', ['configs/common.py', 'configs/svn_postcommit.py',
-                        'configs/test_consumer.py']),
+        ('/etc/ether', [
+            'configs/common.py', 'configs/svn_postcommit.py',
+            'configs/test_consumer.py', 'configs/test_publisher.py'
+            ]
+         ),
     ],
-    scripts = ['examples/test_consumer'],
+    scripts = ['examples/test_consumer', 'examples/test_publisher'],
     classifiers=[
         'Operating System :: OS Independent',
         'Programming Language :: Python',

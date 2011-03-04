@@ -1,0 +1,17 @@
+#!/usr/bin/env python -tt
+
+"""Test Publisher."""
+
+import sys
+
+from ether.configs.test_publisher import TEST_CONFIG
+from ether.publishers.amqp import AsyncAMQPPublisher
+
+def main(argv):
+    publisher = AsyncAMQPPublisher(config=TEST_CONFIG)
+    publisher.send_payload({"payload": argv})
+    return 0
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv))
+
