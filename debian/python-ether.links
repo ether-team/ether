@@ -1,0 +1,3 @@
+etc/ether/common.py usr/share/pyshared/ether/configs/common.py
+etc/ether/svn_postcommit.py usr/share/pyshared/ether/configs/svn_postcommit.py
+etc/ether/test_consumer.py usr/share/pyshared/ether/configs/test_consumer.py

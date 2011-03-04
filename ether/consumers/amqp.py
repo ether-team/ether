@@ -87,7 +87,7 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
 
     """Asynchronous consumer."""
 
-    def __init__(self, config=AMQP):
+    def __init__(self, config):
 
         """
         Setup the connection with the provided configuration.
