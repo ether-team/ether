@@ -98,6 +98,7 @@ class BlockingAMQPPublisher(BasicAMQPPublisher):
                                     routing_key=self._routing_key,
                                     body=simplejson.dumps(payload),
                                     properties=properties)
+        self._connection.close()
 
 
 class AsyncAMQPPublisher(BasicAMQPPublisher):
