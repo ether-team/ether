@@ -174,15 +174,3 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
             self._connection.ioloop.start()
 
 
-class TestConsumer(AsyncAMQPConsumer):
-
-    def process_payload(self, payload, routing_key):
-        print "%s: %s" % (routing_key, payload.payload)
-
-def main(argv):
-    consumer = TestConsumer(config = AMQP)
-    consumer.consume()
-    return 0
-
-if __name__ == '__main__':
-    sys.exit(main(sys.argv))
