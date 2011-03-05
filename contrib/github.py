@@ -16,6 +16,14 @@ from ether.consumers.amqp import AsyncAMQPConsumer
 from ether.payload.common import Payload
 from ether.settings import AMQP
 from multiprocessing import Process, Queue
+try:
+    from setproctitle import setproctitle
+except ImportError:
+    print "setproctitle module not found"
+    def setproctitle(name):
+        """dummy function"""
+        print name
+        return
 
 #import pika.log
 #pika.log.setup(level=pika.log.DEBUG)
@@ -46,12 +54,13 @@ class GithubConsumer(AsyncAMQPConsumer):
 
     def receive_payload(self, channel, method, header, body):
         #print "putting item in q"
+        print Payload(body)
         PQ.put(Payload(body).payload)
 
 def consumer():
 
     """ Wrapper function used by Process """
-
+    setproctitle("github-consumer")
     #print "Creating consumer"
     con = GithubConsumer(config = GITHUB )
     #print "running consumer"
@@ -60,6 +69,8 @@ def consumer():
 def publisher():
 
     """ Wrapper function used by Process """
+
+    setproctitle("amqp-publisher")
 
     pub = AsyncAMQPPublisher(AMQP)
     while True:
@@ -72,6 +83,7 @@ def publisher():
 
 
 if __name__ == '__main__':
+    setproctitle("github launcher")
     try:
         PQ = Queue()
         PP = Process(target=publisher)
