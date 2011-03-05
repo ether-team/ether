@@ -45,9 +45,9 @@ def main(argv):
             sys.exit(1)
 
     if options.type == "amqp-async":
-        publisher = AsyncAMQPPublisher(AMQP)
+        publisher = AsyncAMQPPublisher(GIT_CONFIG)
     elif options.type == "amqp-blocking":
-        publisher = BlockingAMQPPublisher(AMQP)
+        publisher = BlockingAMQPPublisher(GIT_CONFIG)
     elif options.type == "log":
         publisher = FileLogger("/tmp/postcommit.log")
 
