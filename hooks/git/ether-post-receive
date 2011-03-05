@@ -12,7 +12,7 @@ For example:
 """
 
 import sys
-sys.path.append(".")
+sys.path.append("/home/iamer/Workspace/ether")
 from optparse import OptionParser
 
 from ether.hooks.git import GitHook
@@ -23,7 +23,7 @@ def parse_args(argv):
     """ Commandline parser """
     parser = OptionParser(usage="%prog [options]")
     parser.add_option("--type", dest="type", metavar="<type of publisher>",
-                      default="amqp-async",
+                      default="log",
                       help="amqp-blocking, amqp-async and log are supported")
 
     return parser.parse_args(argv)
@@ -34,6 +34,15 @@ def main(argv):
 
     options, args = parse_args(argv)
 
+    if len(args) > 3:
+        commits = [[args[1], args[2], args[3]]]
+    else:
+        if not sys.stdin.isatty():
+            commits = [line.split() for line in sys.stdin.readlines()]
+        else:
+            print "Standard input is a terminal. Aborting!"
+            sys.exit(1)
+
     if options.type == "amqp-async":
         publisher = AsyncAMQPPublisher(AMQP)
     elif options.type == "amqp-blocking":
@@ -41,7 +50,7 @@ def main(argv):
     elif options.type == "log":
         publisher = FileLogger("/tmp/postcommit.log")
 
-    GitHook(publisher).postreceive(args[1], args[2], args[3])
+    GitHook(publisher).postreceive(commits)
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
