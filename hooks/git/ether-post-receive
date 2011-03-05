@@ -12,12 +12,13 @@ For example:
 """
 
 import sys
-sys.path.append("/home/iamer/Workspace/ether")
+sys.path.append(".")
 from optparse import OptionParser
 
 from ether.hooks.git import GitHook
 from ether.publishers.log import FileLogger
 from ether.publishers.amqp import BlockingAMQPPublisher, AsyncAMQPPublisher
+from ether.configs.git_postreceive import GIT_CONFIG
 
 def parse_args(argv):
     """ Commandline parser """

@@ -8,7 +8,7 @@ import logging
 from abc import ABCMeta, abstractmethod
 
 import pika, sys, simplejson
-from ether.settings import AMQP
+from ether.configs.common import 
 
 LOG = logging.getLogger(__name__)
 
@@ -18,7 +18,7 @@ class BaseAMQPUtil(object):
 
     __metaclass__ = ABCMeta
 
-    def __init__(self, config=AMQP):
+    def __init__(self, config):
 
         """
         Initializes the base consumer object.
@@ -46,7 +46,7 @@ class AMQPUtil(BaseAMQPUtil):
 
     """Asynchronous consumer."""
 
-    def __init__(self, config=AMQP):
+    def __init__(self, config):
 
         """
         Setup the connection with the provided configuration.
