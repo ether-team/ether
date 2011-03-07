@@ -5,7 +5,7 @@
 from ether.configs.common import host, port, user, password, \
      vhost, exchange_name
 
-SVN_CONFIG = {
+AMQP_CONFIG = {
     "host": host,
     "port": port,
     "user": user,
@@ -17,3 +17,8 @@ SVN_CONFIG = {
     "exchange_durable": True,
     "delivery_mode": 1,
 }
+
+REPO_CONFIG = [
+    ("/svn/", "https://some.site.org/svn/")
+]
+
