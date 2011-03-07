@@ -11,6 +11,7 @@ import pika
 
 LOG = logging.getLogger(__name__)
 
+
 class BaseAMQPUtil(object):
 
     """Base abstract class for AMQP consumers."""
@@ -41,6 +42,7 @@ class BaseAMQPUtil(object):
         self._connection = None
         self._channel = None
 
+
 class AMQPUtil(BaseAMQPUtil):
 
     """Asynchronous consumer."""
@@ -66,5 +68,3 @@ class AMQPUtil(BaseAMQPUtil):
 
         """Delete a queue."""
         self._channel.queue_delete(queue = name)
-
-

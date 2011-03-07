@@ -3,6 +3,7 @@
 import json
 import sys
 
+
 class Payload(object):
     """ Class to wrap the payload json """
 

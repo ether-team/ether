@@ -4,9 +4,11 @@
 
 import os, sys
 
+
 class SvnHookError(Exception):
     """Custom exception."""
     pass
+
 
 def _svnlook(what, repos, rev):
     """Wrapper around svnlook tool."""
@@ -14,6 +16,7 @@ def _svnlook(what, repos, rev):
     with os.popen("svnlook %s -r %s %s" % \
                   (what, rev, repos), "r") as handler:
         return handler.readlines()
+
 
 def get_repo_url(paths, config):
     """
@@ -40,6 +43,7 @@ def get_repo_url(paths, config):
     if not result:
         raise SvnHookError("get_repo_url: Can't get repo url")
     return result
+
 
 class SvnHook:
     """SVN hooks API. Gets hook data, creates hook payload
@@ -78,7 +82,6 @@ class SvnHook:
             "timestamp": date
         }]
 
-
     def postcommit(self, repos, rev):
         """Postcommit hook."""
 
@@ -95,4 +98,3 @@ class SvnHook:
                 "commits": commits
             }
         })
-

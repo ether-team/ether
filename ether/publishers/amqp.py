@@ -12,6 +12,7 @@ import simplejson
 
 LOG = logging.getLogger(__name__)
 
+
 class BasicAMQPPublisher(object):
 
     """Base abstract class for AMQP publishers."""
@@ -142,5 +143,3 @@ class AsyncAMQPPublisher(BasicAMQPPublisher):
                                                  self.on_connected)
         self._payload = simplejson.dumps(payload)
         self._connection.ioloop.start()
-
-

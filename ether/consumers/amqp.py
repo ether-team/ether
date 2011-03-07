@@ -12,6 +12,7 @@ from ether.payload.common import Payload
 
 LOG = logging.getLogger(__name__)
 
+
 class BaseAMQPConsumer(object):
 
     """Base abstract class for AMQP consumers."""
@@ -80,7 +81,6 @@ class BaseAMQPConsumer(object):
         """
 
         raise NotImplementedError
-
 
 
 class AsyncAMQPConsumer(BaseAMQPConsumer):
@@ -172,5 +172,3 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
             self._connection.close()
             # Loop until we're fully closed, will stop on its own
             self._connection.ioloop.start()
-
-
