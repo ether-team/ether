@@ -82,7 +82,7 @@ def _parse_revinfo(revinfo):
     :type revinfo: string
     :returns: {}
     """
-    commit_part , info_part = revinfo.split("\n")
+    commit_part, info_part = revinfo.split("\n")
     rev = commit_part.split(" ")[1]
     author, email, date, message = info_part.split("|")
 
@@ -164,7 +164,7 @@ def _gen_commit(change_type, ref_type, props):
     :type change_type: string
     :param ref_type: branch, annotated tag, unannotated tag
     :type ref_type: string
-    :param props: dict of properties as returned by _parse_ataginfo or 
+    :param props: dict of properties as returned by _parse_ataginfo or
     :type ref: dictionary
     :returns:
         {
@@ -276,8 +276,7 @@ class GitHook(object):
             for revinfo in revlistinfo:
                 if revinfo.strip() != "":
                     props = _parse_revinfo(revinfo)
-                    commits.append(_gen_commit(change_type, ref_type, 
-                                               props))
+                    commits.append(_gen_commit(change_type, ref_type, props))
 
         return commits
 
