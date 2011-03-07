@@ -14,17 +14,16 @@ from datetime import datetime
 #EMAIL_RE = re.compile("^(.*) <(.*)>$")
 ALLZEROS_RE = re.compile("0+$")
 
+
 def _parse_revinfo(revinfo):
-    """Parses two lines of rev info 
+    """Parses two lines of rev info
 
     :param revinfo: two lines describing a rev
     :type revinfo: string
     :returns: {}
     """
     commit_part , info_part = revinfo.split("\n")
-
     rev = commit_part.split(" ")[1]
-
     author, email, date, message = info_part.split("|")
 
     #basetime = datetime.strptime(date[:-6],"%a %b %d %H:%M:%S %Y")
@@ -39,6 +38,7 @@ def _parse_revinfo(revinfo):
                'email' : email
            }
 
+
 def _get_revlistinfo(rev):
     """Executes "git rev-list" with rev
 
@@ -52,6 +52,7 @@ def _get_revlistinfo(rev):
             % (rev), "r") as handler:
         return handler.read()
 
+
 def _get_revtype(rev):
     """Executes "git cat-file -t" with a rev
 
@@ -62,6 +63,7 @@ def _get_revtype(rev):
     with os.popen("git cat-file -t %s" % (rev), "r") \
             as handler:
         return handler.read()
+
 
 def _get_types(old, new, ref):
     """
@@ -109,6 +111,7 @@ def _get_ataginfo(ref):
             (fmt, ref), "r") as handler:
         return handler.read()
 
+
 def _parse_ataginfo(ref):
     """
     :param ref: ref name
@@ -131,6 +134,7 @@ def _parse_ataginfo(ref):
                'name' : author,
                'email' : email
            }
+
 
 def _gen_commit(change_type, ref_type, props):
     """
@@ -161,7 +165,8 @@ def _gen_commit(change_type, ref_type, props):
                'message': props['message'].strip(),
                'timestamp': props['date']
             }
-           
+
+
 def _get_allbranches():
     """
     :returns: string
@@ -169,6 +174,7 @@ def _get_allbranches():
     with os.popen("git for-each-ref --format='%(refname)' refs/heads/", \
                   "r") as handler:
         return handler.read()
+
 
 def _get_notcommits(other_branches):
     """
@@ -179,6 +185,7 @@ def _get_notcommits(other_branches):
     with os.popen("git rev-parse --not %s" % (other_branches), \
                   "r") as handler:
         return handler.read()
+
 
 class GitHook(object):
     """GIT hook."""
@@ -236,7 +243,7 @@ class GitHook(object):
 
         elif ref_type == "unannotated tag":
             return commits
-                
+
         elif ref_type == "branch":
             if change_type == "delete":
                 # we care only which branch was deleted and when
