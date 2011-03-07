@@ -1,3 +1,33 @@
+python-ether (0.3.0) unstable; urgency=low
+
+  * Complete rewrite of the git hook
+  * added test_publisher example
+  * fixed python packaging
+  * Added test_consumer example
+  * Moved test consumer out of API module
+  * Reimplemented config handling
+  * Added routing_key as a parameter to process_payload method
+  * svn hook: Fixed payload structure
+  * Added new abstract method process_payload
+  * Basic utilility class and script that uses it.
+  * Use setproctitle module if available
+  * Renamed SvnHooks to SvnHook in the script.
+  * Refactored SVN hook.
+  * Clean exit on ctrl-c
+  * pylint fixes
+  * Fixed github shovel script
+  * Github relay
+  * Baseclass should not print
+  * Add command to build documentation coverage.
+  * Simplified GitHook logic
+  * Documented the code
+  * Made GitHook code easy to test
+  * parameter re-formatting
+  * ignore more build artefacts
+  * finalized project rename in setup.py
+
+ -- Ed Bartosh <eduard.bartosh@nokia.com>  Mon, 07 Mar 2011 11:13:02 +0200
+
 python-ether (0.2.0) unstable; urgency=low
 
   * Renamed project
