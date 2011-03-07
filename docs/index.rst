@@ -7,8 +7,8 @@ Contents:
    :maxdepth: 2
 
    overview
+   implementation
    hacking
-   modules
 
 Indices and tables
 ==================
