@@ -5,10 +5,9 @@
 __all__ = ["BaseAMQPUtil", "AMQPUtil"]
 
 import logging
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 
-import pika, sys, simplejson
-from ether.configs.common import 
+import pika
 
 LOG = logging.getLogger(__name__)
 
