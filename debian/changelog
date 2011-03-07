@@ -1,3 +1,9 @@
+python-ether (0.3.1) unstable; urgency=low
+
+  * Repackaged configs to be in the same package as the hooks.
+
+ -- Anton Berezin <anton.berezin@nokia.com>  Mon, 07 Mar 2011 17:15:28 +0200
+
 python-ether (0.3.0) unstable; urgency=low
 
   * Complete rewrite of the git hook
