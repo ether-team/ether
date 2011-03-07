@@ -13,7 +13,6 @@ import sys
 sys.path.append(".") 
 from ether.publishers.amqp import AsyncAMQPPublisher
 from ether.consumers.amqp import AsyncAMQPConsumer
-from ether.payload.common import Payload
 from ether.configs.github import SOURCE, TARGET
 from multiprocessing import Process, Queue
 try:
