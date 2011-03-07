@@ -9,15 +9,10 @@ setup(
     url='https://github.com/ether-team/ether',
     author='BIFH & OBS teams',
     author_email='bifh-team@nokia.com',
-    packages=find_packages(exclude=['configs']),
+    packages=find_packages(),
     data_files=[
         ('share/vcs-hooks/svn', ['hooks/svn/ether-post-commit']),
         ('share/vcs-hooks/git', ['hooks/git/ether-post-receive']),
-        ('/etc/ether', [
-            'configs/common.py', 'configs/svn_postcommit.py',
-            'configs/test_consumer.py', 'configs/test_publisher.py'
-            ]
-         ),
     ],
     scripts = ['examples/test_consumer', 'examples/test_publisher'],
     classifiers=[
