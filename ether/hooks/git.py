@@ -24,17 +24,6 @@ def _get_allbranches():
         return handler.read()
 
 
-def _get_notcommits(other_branches):
-    """
-    :param ref: branch names
-    :type ref: string
-    :returns: string
-    """
-    with os.popen("git rev-parse --not %s" % (other_branches), \
-                  "r") as handler:
-        return handler.read()
-
-
 def _get_ataginfo(ref):
     """
     :param ref: ref name
@@ -270,9 +259,10 @@ class GitHook(object):
                 # in this branch but not in all other branches ...
                 other_branches = _get_allbranches().split("\n")
                 other_branches.remove(ref)
-                other_branches = ["^%s" % branch for branch in other_branches]
-                revlistinfo = _get_revlistinfo("--branches %s %s" %  \
-                                            (ref, other_branches)).split("\n\n")
+                other_branches = " ".join(["^%s" % branch for branch in
+                                          other_branches])
+                revlistinfo = _get_revlistinfo("--branches %s %s" % (ref, \
+                                               other_branches)).split("\n\n")
 
             for revinfo in revlistinfo:
                 if revinfo.strip() != "":
