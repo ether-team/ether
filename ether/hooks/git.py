@@ -226,7 +226,10 @@ class GitHook(object):
         if not change_type or not ref_type:
             return commits
 
-        if ref_type == "annotated tag":
+        if ref_type == "unannotated tag":
+            return commits
+
+        elif ref_type == "annotated tag":
             # Annotated tags have their own info
             if change_type == "delete":
                 # we care only which tag was deleted and when
@@ -242,9 +245,6 @@ class GitHook(object):
                 props = _parse_ataginfo(ref)
 
             commits.append(_gen_commit(change_type, ref_type, props))
-
-        elif ref_type == "unannotated tag":
-            return commits
 
         elif ref_type == "branch":
             if change_type == "delete":
