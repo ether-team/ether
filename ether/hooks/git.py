@@ -50,10 +50,8 @@ def _get_ataginfo(ref):
 def _get_revlistinfo(rev):
     """Executes "git rev-list" with rev
 
-    :param old: old commit hashsum
-    :type old: string
-    :param new: newer commit hashsum
-    :type new: string
+    :param rev: commit hashsum
+    :type rev: string
     :returns: command output
     """
     with os.popen("git rev-list --pretty=format:'%%an|%%ae|%%ad|%%s%%n' %s"\
@@ -266,12 +264,15 @@ class GitHook(object):
 
             elif change_type == "create":
                 # branch creates can contain multiple commits as well
-                # but we need to find the commits that are in this branch only
+                # the consumer probably cares only about the fact that this is
+                # a branch and the sha1sum in the "after" field.
+                # for the commits list we need to find all the commits that are 
+                # in this branch but not in all other branches ...
                 other_branches = _get_allbranches().split("\n")
                 other_branches.remove(ref)
-                not_commits = _get_notcommits(" ".join(other_branches))
-                revlistinfo = _get_revlistinfo("%s %s" %  \
-                                               (new, not_commits)).split("\n\n")
+                other_branches = ["^%s" % branch for branch in other_branches]
+                revlistinfo = _get_revlistinfo("--branches %s %s" %  \
+                                            (ref, other_branches)).split("\n\n")
 
             for revinfo in revlistinfo:
                 if revinfo.strip() != "":
