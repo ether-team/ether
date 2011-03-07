@@ -1,8 +1,8 @@
-Listeners
+Consumers
 =========
 
-amqp
-----
+AMQP
+====
 
 .. automodule:: ether.consumers.amqp
    :members:

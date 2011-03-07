@@ -1,8 +1,9 @@
+=====================
 Development Practices
 =====================
 
 General Ideas
--------------
+=============
 
 Code in this project should satisfy following requirements:
 
@@ -12,7 +13,7 @@ Code in this project should satisfy following requirements:
 * Reviewed
 
 Code Quality
-------------
+============
 
 We use `pylint`_ with default settings to check the code compliance::
 
@@ -29,7 +30,7 @@ If you fix a defect, create a test case to avoid regressions in future.
 .. _pylint: http://www.logilab.org/857
 
 Documenting Your Code
----------------------
+=====================
 
 For documenting we use `sphinx`_.  You can find project documentation in :file:`docs/`
 directory of the project.
@@ -61,7 +62,7 @@ Some useful links related to `sphinx`_:
 .. _sphinx: http://sphinx.pocoo.org
 
 Branching Policy
-----------------
+================
 
 Recommended way is to have separate git branch for each task.  After code is
 ready branch can be rebased against master and provided for review.
@@ -71,7 +72,7 @@ task to review the code, disscuss it with developer, then merge it to master
 and tag it if needed.
 
 Building Debian Package
------------------------
+=======================
 
 To build packages, use::
 

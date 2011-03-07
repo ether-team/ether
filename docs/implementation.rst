@@ -1,7 +1,6 @@
+===================
 Modules and classes
 ===================
-
-Contents:
 
 .. toctree::
    :maxdepth: 2

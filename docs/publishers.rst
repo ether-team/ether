@@ -1,15 +1,16 @@
-Senders
-=======
+==========
+Publishers
+==========
 
-amqp
-----
+AMQP
+====
 
 .. automodule:: ether.publishers.amqp
    :members:
    :undoc-members:
 
 log
----
+===
 
 .. automodule:: ether.publishers.log
    :members:

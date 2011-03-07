@@ -1,10 +1,6 @@
+=====
 Hooks
 =====
-
-Contents:
-
-.. toctree::
-   :maxdepth: 2
 
 .. automodule:: ether.hooks.svn
    :members:
