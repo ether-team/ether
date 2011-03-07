@@ -5,7 +5,9 @@ Maintainer: BIFH Team <bifh-team@nokia.com>
 Uploaders: Ed Bartosh <eduard.bartosh@nokia.com>
 Build-Depends: debhelper (>= 7.0.50~),
                python-setuptools,
-               python-support
+               python-support,
+               python-sphinx,
+               rst2pdf
 XS-Python-Version: >= 2.6
 Standards-Version: 3.9.1
 Homepage: http://ether-team.github.com/ether/
