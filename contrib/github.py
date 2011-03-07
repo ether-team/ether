@@ -29,25 +29,29 @@ except ImportError:
 
 
 class GithubConsumer(AsyncAMQPConsumer):
-
     """github consumer based on Async AMQP consumer."""
+
+    def __init__(self, config, queue):
+        super(GithubConsumer, self).__init__(self, config)
+
+        self._queue = queue
 
     def process_payload(self, payload, routing_key=None):
         #print "putting item in q"
         print payload
-        PQ.put(payload.payload)
+        self._queue.put(payload.payload)
 
-def consumer():
-
+def consumer(queue):
     """ Wrapper function used by Process """
+
     setproctitle("github-consumer")
+
     #print "Creating consumer"
-    con = GithubConsumer(SOURCE)
+    con = GithubConsumer(SOURCE, queue)
     #print "running consumer"
     con.consume()
 
-def publisher():
-
+def publisher(queue):
     """ Wrapper function used by Process """
 
     setproctitle("amqp-publisher")
@@ -56,22 +60,29 @@ def publisher():
     while True:
         #print "Blocking in publisher thread"
         try:
-            pub.send_payload(PQ.get(block=True))
+            payload = queue.get(block=True)
+            pub.send_payload(payload)
             #print "item sent, looping"
         except KeyboardInterrupt:
             sys.exit(0)
 
+def main():
+    """
+    CLI entry point
+    """
+
+    setproctitle("github launcher")
+
+    try:
+        queue = Queue()
+        pprocess = Process(target=publisher, args=(queue,))
+        pprocess.start()
+        cprocess = Process(target=consumer, args=(queue,))
+        cprocess.start()
+        pprocess.join()
+        cprocess.join()
+    except KeyboardInterrupt:
+        return 0
 
 if __name__ == '__main__':
-    setproctitle("github launcher")
-    try:
-        PQ = Queue()
-        PP = Process(target=publisher)
-        PP.start()
-        CP = Process(target=consumer)
-        CP.start()
-        PP.join()
-        CP.join()
-    except KeyboardInterrupt:
-        sys.exit(0)
-
+    sys.exit(main())
