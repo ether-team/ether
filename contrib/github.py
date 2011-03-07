@@ -2,11 +2,11 @@
 
 """
 This a simple shovel script to bridge github messages to the local fanout
-exchnage.
+exchange.
 
-The usage of multiprocessing module is to workaround a design limitation in
-pika :
-http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2011-February/011438.html
+multiprocessing module is used to workaround a design limitation in pika:
+
+  http://lists.rabbitmq.com/pipermail/rabbitmq-discuss/2011-February/011438.html
 """
 
 import sys
