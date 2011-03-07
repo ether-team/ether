@@ -16,7 +16,7 @@ import sys
 
 from optparse import OptionParser
 
-from ether.configs.svn_postcommit import SVN_CONFIG
+from ether.configs.svn_postcommit import AMQP_CONFIG, REPO_CONFIG
 from ether.hooks.svn import SvnHook
 
 from ether.publishers.log import FileLogger
@@ -38,13 +38,13 @@ def main(argv):
     options, args = parse_args(argv)
 
     if options.type == "amqp-async":
-        publisher = AsyncAMQPPublisher(SVN_CONFIG)
+        publisher = AsyncAMQPPublisher(AMQP_CONFIG)
     elif options.type == "amqp-blocking":
-        publisher = BlockingAMQPPublisher(SVN_CONFIG)
+        publisher = BlockingAMQPPublisher(AMQP_CONFIG)
     elif options.type == "log":
         publisher = FileLogger("/tmp/postcommit.log")
 
-    SvnHook(publisher).postcommit(args[1], args[2])
+    SvnHook(publisher, REPO_CONFIG).postcommit(args[1], args[2])
     return 0
 
 if __name__ == '__main__':
