@@ -10,33 +10,41 @@ import os, re
 from datetime import datetime
 
 
-
 #EMAIL_RE = re.compile("^(.*) <(.*)>$")
 ALLZEROS_RE = re.compile("0+$")
 
+# Wrappers around system calls
 
-def _parse_revinfo(revinfo):
-    """Parses two lines of rev info
-
-    :param revinfo: two lines describing a rev
-    :type revinfo: string
-    :returns: {}
+def _get_allbranches():
     """
-    commit_part , info_part = revinfo.split("\n")
-    rev = commit_part.split(" ")[1]
-    author, email, date, message = info_part.split("|")
+    :returns: string
+    """
+    with os.popen("git for-each-ref --format='%(refname)' refs/heads/", \
+                  "r") as handler:
+        return handler.read()
 
-    #basetime = datetime.strptime(date[:-6],"%a %b %d %H:%M:%S %Y")
-    #tzstr = date[-5:]
-    #date = basetime.strftime('%Y-%m-%dT%H:%M:%S') + tzstr
 
-    return {
-               'id': rev,
-               'message' : message,
-               'date' : date,
-               'name' : author,
-               'email' : email
-           }
+def _get_notcommits(other_branches):
+    """
+    :param ref: branch names
+    :type ref: string
+    :returns: string
+    """
+    with os.popen("git rev-parse --not %s" % (other_branches), \
+                  "r") as handler:
+        return handler.read()
+
+
+def _get_ataginfo(ref):
+    """
+    :param ref: ref name
+    :type ref: string
+    :returns: string
+    """
+    fmt = "'%(*authorname)|%(*authoremail)|%(*authordate)|%(*subject)'"
+    with os.popen("git for-each-ref --format=%s %s" % \
+            (fmt, ref), "r") as handler:
+        return handler.read()
 
 
 def _get_revlistinfo(rev):
@@ -63,6 +71,32 @@ def _get_revtype(rev):
     with os.popen("git cat-file -t %s" % (rev), "r") \
             as handler:
         return handler.read()
+
+
+# Functions related to parsing data
+
+def _parse_revinfo(revinfo):
+    """Parses two lines of rev info
+
+    :param revinfo: two lines describing a rev
+    :type revinfo: string
+    :returns: {}
+    """
+    commit_part , info_part = revinfo.split("\n")
+    rev = commit_part.split(" ")[1]
+    author, email, date, message = info_part.split("|")
+
+    #basetime = datetime.strptime(date[:-6],"%a %b %d %H:%M:%S %Y")
+    #tzstr = date[-5:]
+    #date = basetime.strftime('%Y-%m-%dT%H:%M:%S') + tzstr
+
+    return {
+               'id': rev,
+               'message' : message,
+               'date' : date,
+               'name' : author,
+               'email' : email
+           }
 
 
 def _get_types(old, new, ref):
@@ -98,18 +132,6 @@ def _get_types(old, new, ref):
             ref_type = "unknown"
 
     return change_type, ref_type
-
-
-def _get_ataginfo(ref):
-    """
-    :param ref: ref name
-    :type ref: string
-    :returns: string
-    """
-    fmt = "'%(*authorname)|%(*authoremail)|%(*authordate)|%(*subject)'"
-    with os.popen("git for-each-ref --format=%s %s" % \
-            (fmt, ref), "r") as handler:
-        return handler.read()
 
 
 def _parse_ataginfo(ref):
@@ -159,32 +181,12 @@ def _gen_commit(change_type, ref_type, props):
                'operation' : change_type,
                'ref_type' : ref_type,
                'author': {
-                             'name': props['name'], 
+                             'name': props['name'],
                              'email': props['email']
                          },
                'message': props['message'].strip(),
                'timestamp': props['date']
             }
-
-
-def _get_allbranches():
-    """
-    :returns: string
-    """
-    with os.popen("git for-each-ref --format='%(refname)' refs/heads/", \
-                  "r") as handler:
-        return handler.read()
-
-
-def _get_notcommits(other_branches):
-    """
-    :param ref: branch names
-    :type ref: string
-    :returns: string
-    """
-    with os.popen("git rev-parse --not %s" % (other_branches), \
-                  "r") as handler:
-        return handler.read()
 
 
 class GitHook(object):
