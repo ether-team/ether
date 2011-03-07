@@ -11,7 +11,7 @@ override_dh_clean:
 override_dh_auto_build:
 	dh_auto_build
 	mkdir -p docs/_build
-	python setup.py build_sphinx
+	python setup.py build_sphinx -q
 
 override_dh_install:
 	dh_install
