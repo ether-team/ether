@@ -17,7 +17,9 @@ Vcs-Browser: https://github.com/ether-team/ether
 Package: python-ether
 Architecture: all
 Depends: ${misc:Depends}, 
-         ${python:Depends}
+         ${python:Depends},
+         python-simplejson,
+         python-pika
 Provides: ${python:Provides}
 Description: set of APIs and tools for passing VCS information through AMQP network
  This project is an implementation of commit / post-recieve hooks for various

@@ -41,7 +41,7 @@ def get_repo_url(paths, config):
                     result = url
                 break
     if not result:
-        raise SvnHookError("get_repo_url: Can't get repo url")
+        raise SvnHookError("get_repo_url: Can't get repo url from %s" % str(paths))
     return result
 
 
