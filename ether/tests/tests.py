@@ -29,14 +29,12 @@ class TConsumer(consumers.AsyncAMQPConsumer):
 
 class TestGitHook(runner.DummyTestCase):
 
-    def setUp(self):
+    def test_postreceive(self):
         self.mock(git, "_get_allbranches", dummy.dummy_get_allbranches)
         self.mock(git, "_get_notcommits", dummy.dummy_get_notcommits)
         self.mock(git, "_get_ataginfo", dummy.dummy_get_ataginfo)
         self.mock(git, "_get_revlistinfo", dummy.dummy_get_revlistinfo)
         self.mock(git, "_get_revtype", lambda rev: "tag")
-
-    def test_postreceive(self):
         publisher = TPublisher()
         hook = git.GitHook(publisher)
         hook.postreceive(dummy.generate_git_commits())
@@ -66,6 +64,7 @@ class TestGitHook(runner.DummyTestCase):
 
     def test_get_types(self):
         # Case 1
+        self.mock(git, "_get_revtype", lambda rev: "tag")
         change_type, ref_type = git._get_types(
             "0000", "0000", "refs/tags/TAG_NAME")
         self.assertEquals(change_type, "create")
@@ -89,7 +88,6 @@ class TestGitHook(runner.DummyTestCase):
     def test_wrappers(self):
         """Make sure that the wrappers are OK."""
         self.unmock()
-        print "****"
         git._get_allbranches()
         git._get_notcommits("branch1")
         git._get_ataginfo("ref")

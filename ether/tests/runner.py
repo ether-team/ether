@@ -60,6 +60,7 @@ class DummyTestCase(unittest.TestCase):
         for module_imported, originals in self.originals.iteritems():
             for original_name, module in originals.iteritems():
                 setattr(module_imported, original_name, module)
+        self.originals = {}
 
     def tearDown(self):
         """Unmocks the modules."""

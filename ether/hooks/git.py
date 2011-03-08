@@ -19,7 +19,7 @@ def _get_allbranches():
     """
     :returns: string
     """
-    with os.popen("git for-each-ref --format='%(refname)' refs/heads/", \
+    with os.popen("git for-each-ref --format='%(refname)' refs/heads/ 2> /dev/null", \
                   "r") as handler:
         return handler.read()
 
@@ -30,7 +30,7 @@ def _get_notcommits(other_branches):
     :type ref: string
     :returns: string
     """
-    with os.popen("git rev-parse --not %s" % (other_branches), \
+    with os.popen("git rev-parse --not %s 2> /dev/null" % (other_branches), \
                   "r") as handler:
         return handler.read()
 
@@ -42,7 +42,7 @@ def _get_ataginfo(ref):
     :returns: string
     """
     fmt = "'%(authorname)|%(authoremail)|%(authordate)|%(subject)'"
-    with os.popen("git for-each-ref --format=%s %s" % \
+    with os.popen("git for-each-ref --format=%s %s 2> /dev/null" % \
             (fmt, ref), "r") as handler:
         return handler.read()
 
@@ -54,7 +54,7 @@ def _get_revlistinfo(rev):
     :type rev: string
     :returns: command output
     """
-    with os.popen("git rev-list --pretty=format:'%%an|%%ae|%%ad|%%s%%n' %s"\
+    with os.popen("git rev-list --pretty=format:'%%an|%%ae|%%ad|%%s%%n' %s 2> /dev/null"\
             % (rev), "r") as handler:
         return handler.read()
 
@@ -66,7 +66,7 @@ def _get_revtype(rev):
     :type rev: string
     :returns: command output
     """
-    with os.popen("git cat-file -t %s" % (rev), "r") \
+    with os.popen("git cat-file -t %s 2> /dev/null" % (rev), "r") \
             as handler:
         return handler.read()
 
