@@ -10,11 +10,8 @@ multiprocessing module is used to workaround a design limitation in pika:
 """
 
 import sys
-sys.path.append(".")
-from ether.publishers.amqp import AsyncAMQPPublisher
-from ether.consumers.amqp import AsyncAMQPConsumer
-from ether.configs.github import SOURCE, TARGET
 from multiprocessing import Process, Queue
+
 try:
     from setproctitle import setproctitle
 except ImportError:
@@ -27,6 +24,9 @@ except ImportError:
 #import pika.log
 #pika.log.setup(level=pika.log.DEBUG)
 
+from ether.publishers.amqp import AsyncAMQPPublisher
+from ether.consumers.amqp import AsyncAMQPConsumer
+from ether.configs.github import SOURCE, TARGET
 
 class GithubConsumer(AsyncAMQPConsumer):
     """github consumer based on Async AMQP consumer."""
