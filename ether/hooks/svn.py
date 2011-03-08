@@ -63,14 +63,15 @@ class SvnHook:
 
         # prepare hook payload in the github payload format
         changes = {"A": [], "U": [], "D": []}
+        paths = []
         for line in changed:
             oper, path = line.split()
             # Used oper[0] to work with 'UU' operation
             if oper[0] in changes:
                 changes[oper[0]].append(path)
+                paths.append(os.path.join(repos, path))
 
-        url = get_repo_url(changes["A"] + changes["U"] + changes["D"],
-                           self._config)
+        url = get_repo_url(paths, self._config)
 
         return url, [{
             "author": {"name": author, "email": ""},
