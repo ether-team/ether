@@ -1,3 +1,12 @@
+python-ether (0.4.0) unstable; urgency=low
+
+  * Added dependencies to debian package
+  * Code butification.
+  * Pylinted
+  * Implemented repo url passing for svn hooks
+
+ -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 08 Mar 2011 11:52:27 +0200
+
 python-ether (0.3.1) unstable; urgency=low
 
   * Repackaged configs to be in the same package as the hooks.
