@@ -5,7 +5,6 @@
 __all__ = ["BaseAMQPUtil", "AMQPUtil"]
 
 import logging
-from abc import ABCMeta
 
 import pika
 
@@ -13,10 +12,6 @@ LOG = logging.getLogger(__name__)
 
 
 class BaseAMQPUtil(object):
-
-    """Base abstract class for AMQP consumers."""
-
-    __metaclass__ = ABCMeta
 
     def __init__(self, config):
 
@@ -44,8 +39,6 @@ class BaseAMQPUtil(object):
 
 
 class AMQPUtil(BaseAMQPUtil):
-
-    """Asynchronous consumer."""
 
     def __init__(self, config):
 
