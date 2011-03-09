@@ -1,6 +1,8 @@
 """Python unittests together with python code coverage."""
 
-import unittest, os, coverage, fnmatch
+import unittest, os, fnmatch, tempfile
+
+import coverage
 
 
 def locate(pattern, root=os.curdir):
@@ -62,7 +64,7 @@ class DummyTestCase(unittest.TestCase):
                 setattr(module_imported, original_name, module)
         self.originals = {}
 
-    def tearDown(self):
+    def tearDown(self): #C0103:
         """Unmocks the modules."""
         self.unmock()
 
@@ -85,23 +87,18 @@ class TestRunner(object):
         if not ignored_modules:
             ignored_modules = []
         self._ignored_modules = ignored_modules
-        self._executed = False
 
     @property
-    def _suite(self):
+    def suite(self):
         """Creates a testsuite out of a list of testcase classes."""
         suites = []
+        loader = unittest.TestLoader()
         for test_module in self._test_modules:
-            module = load_module(test_module)
-            for item in dir(module):
-                if item.startswith("Test"):
-                    case = getattr(module, item)
-                    suites.append(
-                        unittest.TestLoader().loadTestsFromTestCase(case))
+            suites.append(loader.loadTestsFromModule(load_module(test_module)))
         return unittest.TestSuite(suites)
 
     @property
-    def _coverable_modules(self):
+    def coverable_modules(self):
         """Returns a list of modules to check via testcoverage."""
         modules = []
         for tdir in locate("*.py", self._project_directory):
@@ -119,23 +116,27 @@ class TestRunner(object):
                 modules.append(module)
         return modules
 
-    @property
-    def report(self):
-        """Returns a dictioanry as a report about the execution."""
-        if not self._executed:
-            raise TestsNotRunError()
-        raise NotImplementedError
-
     def run(self):
         """Runs unittests with coverage."""
         coverage.start()
-        unittest.TextTestRunner(verbosity=1).run(self._suite)
+        results = unittest.TextTestRunner(verbosity=1).run(self.suite)
         coverage.stop()
-        coverage.report(self._coverable_modules)
+        percentage = 0
+        with tempfile.TemporaryFile() as log:
+            coverage.report(self.coverable_modules, file=log)
+            log.seek(0)
+            data = log.read()
+            for line in data.split("\n"):
+                if line.find("TOTAL") >= 0:
+                    percentage = int(line.split()[3].strip().replace("%", ""))
+        coverage.report(self.coverable_modules) # Show results in terminal
         coverage.erase()
-        self._executed = True
+        return (results, percentage)
 
 
 def run(project_directory, test_modules, ignored_modules=None):
-    """Short way to instanciate the TestRunner and call the "run" method."""
-    TestRunner(project_directory, test_modules, ignored_modules).run()
+    """Short way to instanciate the TestRunner and call the "run" method.
+
+    :returns: unittest TestResults
+    """
+    return TestRunner(project_directory, test_modules, ignored_modules).run()

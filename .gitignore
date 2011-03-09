@@ -11,3 +11,4 @@ debian/python-ether.prerm.debhelper
 debian/python-ether.substvars
 debian/python-ether/
 ether.egg-info/
+.coverage
