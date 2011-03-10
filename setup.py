@@ -51,7 +51,6 @@ setup(
         ('share/vcs-hooks/svn', ['hooks/svn/ether-post-commit']),
         ('share/vcs-hooks/git', ['hooks/git/ether-post-receive']),
     ],
-    scripts = ['examples/test_consumer', 'examples/test_publisher'],
     classifiers=[
         'Operating System :: OS Independent',
         'Programming Language :: Python',
