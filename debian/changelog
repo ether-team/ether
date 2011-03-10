@@ -1,3 +1,13 @@
+python-ether (0.5.0) unstable; urgency=low
+
+  [Anton Berezin]
+  * Added unittests
+
+  [Ed Bartosh]
+  * Simplified architecture
+
+ -- Anton Berezin <anton.berezin@nokia.com>  Thu, 10 Mar 2011 18:40:07 +0200
+
 python-ether (0.4.0) unstable; urgency=low
 
   * Added dependencies to debian package
