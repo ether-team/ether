@@ -8,7 +8,6 @@ import logging
 from abc import ABCMeta, abstractmethod
 
 import pika, sys, simplejson
-from ether.payload.common import Payload
 
 LOG = logging.getLogger(__name__)
 
@@ -60,7 +59,7 @@ class AsyncAMQPConsumer(object):
         :type body: dictionary
         """
 
-        payload = Payload(body)
+        payload = simplejson.dumps(body)
         self._payload = payload
 
         return self.process_payload(payload, method.routing_key)
