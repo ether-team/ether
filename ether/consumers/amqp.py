@@ -50,7 +50,7 @@ class AsyncAMQPConsumer(object):
 
         self.setup_connection()
 
-    def receive_payload(self, channel, method, header, body):
+    def receive_payload(self, _channel, method, _header, body):
 
         """
         Recieve payload from the server.
@@ -121,7 +121,7 @@ class AsyncAMQPConsumer(object):
                               callback = self.on_queue_declared)
 
     # Step #4
-    def on_queue_declared(self, frame):
+    def on_queue_declared(self, _frame):
 
         """
         Step #5: Called when Queue has been declared.
@@ -134,7 +134,7 @@ class AsyncAMQPConsumer(object):
                                 routing_key = self._routing_key,
                                 callback = self.on_queue_bound)
 
-    def on_queue_bound(self, frame):
+    def on_queue_bound(self, _frame):
 
         """
         Step #6: Called when the queue has been bound to the exchange.
