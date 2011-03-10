@@ -1,11 +1,11 @@
-import os, sys
+import os
+import sys
 
 import pika
 
 from ether.tests import fixtures, dummy, runner
 from ether.hooks import git, svn
-from ether.publishers import amqp, log
-from ether.consumers import amqp as consumers
+from ether import consumer, publisher
 from ether.util import amqp as util
 from ether.configs.svn_postcommit import AMQP_CONFIG, REPO_CONFIG
 from ether.configs.test_consumer import TEST_CONFIG
@@ -20,7 +20,7 @@ class TPublisher(object):
         self.payload = payload
 
 
-class TConsumer(consumers.AsyncAMQPConsumer):
+class TConsumer(consumer.AsyncAMQPConsumer):
 
     def process_payload(self, payload, routing_key=None):
         self.payload = payload
@@ -109,81 +109,94 @@ class TestSvnHook(runner.DummyTestCase):
         self.assertEquals(publisher.payload,
                           fixtures.svnhook_payload)
 
-class TestPublishers(runner.DummyTestCase):
+    def test_wrappers(self):
+        """Make sure that the wrappers are OK."""
+        self.unmock()
+        svn._svnlook(None, None, None)
+
+    def test_get_repo_url(self):
+        self.assertRaises(svn.SvnHookError, svn.get_repo_url, [], None)
+        self.assertRaises(svn.SvnHookError, svn.get_repo_url,
+                          ["whatever", "/some/path"],
+                          (("/some/path", "url1"), ("", "url2")))
+
+class TestPublisher(runner.DummyTestCase):
 
     def setUp(self):
-        self.mock(amqp.pika, "PlainCredentials", dummy.DummyPlainCridentials)
-        self.mock(amqp.pika, "ConnectionParameters",
+        self.mock(publisher.pika, "PlainCredentials",
+                  dummy.DummyPlainCridentials)
+        self.mock(publisher.pika, "ConnectionParameters",
                   dummy.DummyConnectionParameters)
-        self.mock(amqp.pika, "BlockingConnection",
+        self.mock(publisher.pika, "BlockingConnection",
                   dummy.DummyBlockingConnection)
-        self.mock(amqp.pika, "BasicProperties", dummy.DummyBasicProperties)
-        self.mock(amqp.pika, "SelectConnection", dummy.DummySelectConnection)
+        self.mock(publisher.pika, "BasicProperties",
+                  dummy.DummyBasicProperties)
+        self.mock(publisher.pika, "SelectConnection",
+                  dummy.DummySelectConnection)
 
     def test_send_async_payload(self):
-        publisher = amqp.AsyncAMQPPublisher(AMQP_CONFIG)
-        publisher.send_payload({"payload":"payload"})
+        tpublisher = publisher.AsyncAMQPPublisher(AMQP_CONFIG)
+        tpublisher.send_payload({"payload":"payload"})
         # Test callbacks
-        publisher.on_connected(dummy.DummySelectConnection(None, None))
-        publisher.on_channel_open(dummy.DummyChannel())
+        tpublisher.on_connected(dummy.DummySelectConnection(None, None))
+        tpublisher.on_channel_open(dummy.DummyChannel())
 
 
-class TestConsumers(runner.DummyTestCase):
+class TestConsumer(runner.DummyTestCase):
 
     def setUp(self):
-        self.mock(consumers.pika, "PlainCredentials",
+        self.mock(consumer.pika, "PlainCredentials",
                 dummy.DummyPlainCridentials)
-        self.mock(consumers.pika, "ConnectionParameters",
+        self.mock(consumer.pika, "ConnectionParameters",
                 dummy.DummyConnectionParameters)
-        self.mock(consumers.pika, "BlockingConnection",
+        self.mock(consumer.pika, "BlockingConnection",
                 dummy.DummyBlockingConnection)
-        self.mock(consumers.pika, "BasicProperties",
+        self.mock(consumer.pika, "BasicProperties",
                 dummy.DummyBasicProperties)
-        self.mock(consumers.pika.adapters, "SelectConnection",
+        self.mock(consumer.pika.adapters, "SelectConnection",
                 dummy.DummySelectConnection)
 
     def test_ansync_methods(self):
-        consumer = TConsumer(TEST_CONFIG)
-        consumer.consume()
+        tconsumer = TConsumer(TEST_CONFIG)
+        tconsumer.consume()
         # Test callbacks
-        consumer.setup_connection()
-        consumer.on_connected(dummy.DummySelectConnection(None, None))
-        consumer.on_channel_open(dummy.DummyChannel())
-        consumer.on_queue_declared("some_frame")
-        consumer.on_queue_bound("some_frame")
+        tconsumer.setup_connection()
+        tconsumer.on_connected(dummy.DummySelectConnection(None, None))
+        tconsumer.on_channel_open(dummy.DummyChannel())
+        tconsumer.on_queue_declared("some_frame")
+        tconsumer.on_queue_bound("some_frame")
 
     def test_receive_payload(self):
-        consumer = TConsumer(TEST_CONFIG)
-        consumer.receive_payload(None, dummy.DummyMethod(),
+        tconsumer = TConsumer(TEST_CONFIG)
+        tconsumer.receive_payload(None, dummy.DummyMethod(),
                                  None, '{"payload":{"data":"data"}}')
 
+    def test_abstract_method(self):
+        tconsumer = TConsumer(TEST_CONFIG)
+        self.assertRaises(NotImplementedError,
+                          consumer.AsyncAMQPConsumer.process_payload,
+                          tconsumer, None, None)
+
     def test_receive_payload_exception(self):
-        self.assertRaises(TypeError, consumers.AsyncAMQPConsumer, TEST_CONFIG)
+        self.assertRaises(TypeError, consumer.AsyncAMQPConsumer, TEST_CONFIG)
 
     def test_exceptional_consume(self):
-        consumers.pika.adapters.SelectConnection = \
+        consumer.pika.adapters.SelectConnection = \
                 dummy.DummyExceptionalSelectConnection
-        consumer = TConsumer(TEST_CONFIG)
-        consumer.consume()
-
-
-class TestFileLogger(runner.DummyTestCase):
-
-    def test_call(self):
-        logger = log.FileLogger("/tmp/test.log")
-        logger.send_payload({"test": "test"})
+        tconsumer = TConsumer(TEST_CONFIG)
+        tconsumer.consume()
 
 
 class TestUtils(runner.DummyTestCase):
 
     def setUp(self):
-        self.mock(consumers.pika, "PlainCredentials",
+        self.mock(consumer.pika, "PlainCredentials",
                 dummy.DummyPlainCridentials)
-        self.mock(consumers.pika, "ConnectionParameters",
+        self.mock(consumer.pika, "ConnectionParameters",
                 dummy.DummyConnectionParameters)
-        self.mock(consumers.pika, "BlockingConnection",
+        self.mock(consumer.pika, "BlockingConnection",
                 dummy.DummyBlockingConnection)
-        self.mock(consumers.pika, "BasicProperties",
+        self.mock(consumer.pika, "BasicProperties",
                 dummy.DummyBasicProperties)
 
     def test_amqp_util(self):

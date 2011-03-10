@@ -5,7 +5,7 @@
 import sys
 
 from ether.configs.test_consumer import TEST_CONFIG
-from ether.consumers.amqp import AsyncAMQPConsumer
+from ether.consumer import AsyncAMQPConsumer
 
 class TestConsumer(AsyncAMQPConsumer):
     """Test Consumer. Prints routing key and payload."""

@@ -19,32 +19,16 @@ from optparse import OptionParser
 from ether.configs.svn_postcommit import AMQP_CONFIG, REPO_CONFIG
 from ether.hooks.svn import SvnHook
 
-from ether.publishers.log import FileLogger
-from ether.publishers.amqp import BlockingAMQPPublisher, AsyncAMQPPublisher
-
-def parse_args(argv):
-    """ Commandline parser """
-    parser = OptionParser(usage="%prog [options]")
-    parser.add_option("--type", dest="type", metavar="<type of publisher>",
-                      default="amqp-async",
-                      help="amqp-blocking, amqp-async and log are supported")
-
-    return parser.parse_args(argv)
-
+from ether.publisher import AsyncAMQPPublisher
 
 def main(argv):
     """Script entry point."""
 
     options, args = parse_args(argv)
 
-    if options.type == "amqp-async":
-        publisher = AsyncAMQPPublisher(AMQP_CONFIG)
-    elif options.type == "amqp-blocking":
-        publisher = BlockingAMQPPublisher(AMQP_CONFIG)
-    elif options.type == "log":
-        publisher = FileLogger("/tmp/postcommit.log")
-
+    publisher = AsyncAMQPPublisher(AMQP_CONFIG)
     SvnHook(publisher, REPO_CONFIG).postcommit(args[1], args[2])
+
     return 0
 
 if __name__ == '__main__':

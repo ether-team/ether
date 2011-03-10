@@ -5,7 +5,7 @@
 import sys
 
 from ether.configs.test_publisher import TEST_CONFIG
-from ether.publishers.amqp import AsyncAMQPPublisher
+from ether.publisher import AsyncAMQPPublisher
 
 def main(argv):
     publisher = AsyncAMQPPublisher(config=TEST_CONFIG)
