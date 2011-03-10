@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Modules and classes &mdash; Ether v0.2.0 documentation</title>
+    <title>Modules and classes &mdash; Ether v0.4.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.2.0',
+        VERSION:     '0.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Ether v0.2.0 documentation" href="index.html" />
-    <link rel="next" title="Senders" href="publishers.html" />
-    <link rel="prev" title="Development practices" href="hacking.html" /> 
+    <link rel="top" title="Ether v0.4.0 documentation" href="index.html" />
+    <link rel="next" title="Publishers" href="publishers.html" />
+    <link rel="prev" title="Format of AMQP Messages" href="messages.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,12 +37,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="publishers.html" title="Senders"
+          <a href="publishers.html" title="Publishers"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="hacking.html" title="Development practices"
+          <a href="messages.html" title="Format of AMQP Messages"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,31 +53,26 @@
             
   <div class="section" id="modules-and-classes">
 <h1>Modules and classes<a class="headerlink" href="#modules-and-classes" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="publishers.html">Senders</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="publishers.html#module-ether.publishers.amqp">amqp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publishers.html">Publishers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="publishers.html#module-ether.publishers.amqp">AMQP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="publishers.html#module-ether.publishers.log">log</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="consumers.html">Listeners</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="consumers.html#module-ether.consumers.amqp">amqp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consumers.html">Consumers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consumers.html#module-ether.consumers.amqp">AMQP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hooks.html">Hooks</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="hooks.html">Hooks</a><ul class="simple">
-</ul>
-</li>
-</ul>
-</div>
 </div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
 <li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
 <li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
+</div>
 </div>
 
 
@@ -89,20 +84,20 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Modules and classes</a><ul>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="hacking.html"
-                        title="previous chapter">Development practices</a></p>
+  <p class="topless"><a href="messages.html"
+                        title="previous chapter">Format of AMQP Messages</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="publishers.html"
-                        title="next chapter">Senders</a></p>
+                        title="next chapter">Publishers</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/modules.txt"
+    <li><a href="_sources/implementation.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -132,12 +127,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="publishers.html" title="Senders"
+          <a href="publishers.html" title="Publishers"
              >next</a> |</li>
         <li class="right" >
-          <a href="hacking.html" title="Development practices"
+          <a href="messages.html" title="Format of AMQP Messages"
              >previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

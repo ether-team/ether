@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Hooks &mdash; Ether v0.2.0 documentation</title>
+    <title>Hooks &mdash; Ether v0.4.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.2.0',
+        VERSION:     '0.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Ether v0.2.0 documentation" href="index.html" />
-    <link rel="up" title="Modules and classes" href="modules.html" />
-    <link rel="prev" title="Listeners" href="consumers.html" /> 
+    <link rel="top" title="Ether v0.4.0 documentation" href="index.html" />
+    <link rel="up" title="Modules and classes" href="implementation.html" />
+    <link rel="next" title="Development Practices" href="hacking.html" />
+    <link rel="prev" title="Consumers" href="consumers.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +38,13 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="consumers.html" title="Listeners"
+          <a href="hacking.html" title="Development Practices"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="consumers.html" title="Consumers"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li>
-          <li><a href="modules.html" accesskey="U">Modules and classes</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li>
+          <li><a href="implementation.html" accesskey="U">Modules and classes</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -49,13 +53,55 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="hooks">
-<h1>Hooks<a class="headerlink" href="#hooks" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
-<div class="toctree-wrapper compound">
-<ul class="simple">
-</ul>
-</div>
+  <div class="section" id="module-ether.hooks.svn">
+<span id="hooks"></span><h1>Hooks<a class="headerlink" href="#module-ether.hooks.svn" title="Permalink to this headline">¶</a></h1>
+<p>SVN hooks APIs.</p>
+<dl class="class">
+<dt id="ether.hooks.svn.SvnHook">
+<em class="property">class </em><tt class="descclassname">ether.hooks.svn.</tt><tt class="descname">SvnHook</tt><big>(</big><em>sender</em>, <em>config</em><big>)</big><a class="headerlink" href="#ether.hooks.svn.SvnHook" title="Permalink to this definition">¶</a></dt>
+<dd><p>SVN hooks API. Gets hook data, creates hook payload
+and calls sender.send_payload.</p>
+<dl class="method">
+<dt id="ether.hooks.svn.SvnHook.postcommit">
+<tt class="descname">postcommit</tt><big>(</big><em>repos</em>, <em>rev</em><big>)</big><a class="headerlink" href="#ether.hooks.svn.SvnHook.postcommit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Postcommit hook.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="ether.hooks.svn.SvnHookError">
+<em class="property">exception </em><tt class="descclassname">ether.hooks.svn.</tt><tt class="descname">SvnHookError</tt><a class="headerlink" href="#ether.hooks.svn.SvnHookError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ether.hooks.svn.get_repo_url">
+<tt class="descclassname">ether.hooks.svn.</tt><tt class="descname">get_repo_url</tt><big>(</big><em>paths</em>, <em>config</em><big>)</big><a class="headerlink" href="#ether.hooks.svn.get_repo_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get svn repo url from the list of paths.
+:param paths: list of changed paths
+:ptype paths: list
+:param config: configuration object which maps repository paths to urls
+:ptype config: list of tuples (&lt;path&gt;, &lt;url&gt;)
+:returns: repository url
+:rtype: string</p>
+</dd></dl>
+
+<span class="target" id="module-ether.hooks.git"></span><p>GIT hooks APIs.</p>
+<p>Loosely modelled after the excellent contrib hook
+/usr/share/doc/git/contrib/hooks/post-receive-email</p>
+<dl class="class">
+<dt id="ether.hooks.git.GitHook">
+<em class="property">class </em><tt class="descclassname">ether.hooks.git.</tt><tt class="descname">GitHook</tt><big>(</big><em>sender</em><big>)</big><a class="headerlink" href="#ether.hooks.git.GitHook" title="Permalink to this definition">¶</a></dt>
+<dd><p>GIT hook.</p>
+<dl class="method">
+<dt id="ether.hooks.git.GitHook.postreceive">
+<tt class="descname">postreceive</tt><big>(</big><em>commits</em><big>)</big><a class="headerlink" href="#ether.hooks.git.GitHook.postreceive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Postcommit hook.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -66,7 +112,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="consumers.html"
-                        title="previous chapter">Listeners</a></p>
+                        title="previous chapter">Consumers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="hacking.html"
+                        title="next chapter">Development Practices</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/hooks.txt"
@@ -99,10 +148,13 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="consumers.html" title="Listeners"
+          <a href="hacking.html" title="Development Practices"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="consumers.html" title="Consumers"
              >previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >Modules and classes</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li>
+          <li><a href="implementation.html" >Modules and classes</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

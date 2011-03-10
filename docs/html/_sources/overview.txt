@@ -1,8 +1,10 @@
+========
 Overview
 ========
 
-This project is an implementation of commit / post-recieve hooks for various
-VCS systems, that send a notification to an AMQP server containing payload
-that follows the github payload spec :
+This project implements commit/post-receive hooks for various version control systems.
 
-.. https://github.com/github/github-services/blob/master/docs/github_payload
+We use AMQP for handling the events.  The format of messages is described in :ref:`messages`.
+
+..
+    vim:ft=rst:et:ts=4:sw=4

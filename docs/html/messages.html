@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Overview &mdash; Ether v0.4.0 documentation</title>
+    <title>Format of AMQP Messages &mdash; Ether v0.4.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,9 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Ether v0.4.0 documentation" href="index.html" />
-    <link rel="next" title="System Architecture" href="design.html" />
-    <link rel="prev" title="Ether’s documentation!" href="index.html" /> 
+    <link rel="up" title="System Architecture" href="design.html" />
+    <link rel="next" title="Modules and classes" href="implementation.html" />
+    <link rel="prev" title="System Architecture" href="design.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,12 +38,13 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="design.html" title="System Architecture"
+          <a href="implementation.html" title="Modules and classes"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Ether’s documentation!"
+          <a href="design.html" title="System Architecture"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li>
+          <li><a href="design.html" accesskey="U">System Architecture</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,10 +53,15 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<p>This project implements commit/post-receive hooks for various version control systems.</p>
-<p>We use AMQP for handling the events.  The format of messages is described in <a class="reference internal" href="messages.html#messages"><em>Format of AMQP Messages</em></a>.</p>
+  <div class="section" id="format-of-amqp-messages">
+<span id="messages"></span><h1>Format of AMQP Messages<a class="headerlink" href="#format-of-amqp-messages" title="Permalink to this headline">¶</a></h1>
+<p>The format of AMQP messages is loosely based on <a class="reference external" href="https://github.com/github/github-services/blob/master/docs/github_payload">github payload spec</a>.</p>
+<div class="section" id="routing-key">
+<h2>Routing Key<a class="headerlink" href="#routing-key" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="payload">
+<h2>Payload<a class="headerlink" href="#payload" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
@@ -63,15 +70,24 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Format of AMQP Messages</a><ul>
+<li><a class="reference internal" href="#routing-key">Routing Key</a></li>
+<li><a class="reference internal" href="#payload">Payload</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Ether&#8217;s documentation!</a></p>
-  <h4>Next topic</h4>
   <p class="topless"><a href="design.html"
-                        title="next chapter">System Architecture</a></p>
+                        title="previous chapter">System Architecture</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="implementation.html"
+                        title="next chapter">Modules and classes</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/overview.txt"
+    <li><a href="_sources/messages.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -101,12 +117,13 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="design.html" title="System Architecture"
+          <a href="implementation.html" title="Modules and classes"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Ether’s documentation!"
+          <a href="design.html" title="System Architecture"
              >previous</a> |</li>
-        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li>
+          <li><a href="design.html" >System Architecture</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

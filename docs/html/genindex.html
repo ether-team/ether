@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Index &mdash; Ether v0.2.0 documentation</title>
+    <title>Index &mdash; Ether v0.4.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.2.0',
+        VERSION:     '0.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Ether v0.2.0 documentation" href="index.html" /> 
+    <link rel="top" title="Ether v0.4.0 documentation" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -47,7 +47,7 @@
    <h1 id="index">Index</h1>
 
    <div class="genindex-jumpbox">
-   <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> 
+   <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> 
    </div>
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
@@ -91,9 +91,11 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
     <dt><a href="consumers.html#module-ether.consumers.amqp">ether.consumers.amqp (module)</a></dt>
-    <dt><a href="publishers.html#module-ether.publishers.amqp">ether.publishers.amqp (module)</a></dt>
+    <dt><a href="hooks.html#module-ether.hooks.git">ether.hooks.git (module)</a></dt>
+    <dt><a href="hooks.html#module-ether.hooks.svn">ether.hooks.svn (module)</a></dt>
 </dl></td>
   <td style="width: 33%" valign="top"><dl>
+    <dt><a href="publishers.html#module-ether.publishers.amqp">ether.publishers.amqp (module)</a></dt>
     <dt><a href="publishers.html#module-ether.publishers.log">ether.publishers.log (module)</a></dt>
 </dl></td>
 </tr></table>
@@ -106,6 +108,16 @@
 </dl></td>
   <td style="width: 33%" valign="top"><dl>
     <dt><a href="hacking.html#docfunc.foo">foo() (in module docfunc)</a></dt>
+</dl></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="hooks.html#ether.hooks.svn.get_repo_url">get_repo_url() (in module ether.hooks.svn)</a></dt>
+</dl></td>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="hooks.html#ether.hooks.git.GitHook">GitHook (class in ether.hooks.git)</a></dt>
 </dl></td>
 </tr></table>
 
@@ -131,19 +143,24 @@
   <td style="width: 33%" valign="top"><dl>
     <dt><a href="consumers.html#ether.consumers.amqp.AsyncAMQPConsumer.on_queue_bound">on_queue_bound() (ether.consumers.amqp.AsyncAMQPConsumer method)</a></dt>
     <dt><a href="consumers.html#ether.consumers.amqp.AsyncAMQPConsumer.on_queue_declared">on_queue_declared() (ether.consumers.amqp.AsyncAMQPConsumer method)</a></dt>
-    <dd><dl>
-      <dt><a href="publishers.html#ether.publishers.amqp.AsyncAMQPPublisher.on_queue_declared">(ether.publishers.amqp.AsyncAMQPPublisher method)</a></dt>
-  </dl></dd>
+</dl></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="hooks.html#ether.hooks.svn.SvnHook.postcommit">postcommit() (ether.hooks.svn.SvnHook method)</a></dt>
+    <dt><a href="hooks.html#ether.hooks.git.GitHook.postreceive">postreceive() (ether.hooks.git.GitHook method)</a></dt>
+</dl></td>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="consumers.html#ether.consumers.amqp.BaseAMQPConsumer.process_payload">process_payload() (ether.consumers.amqp.BaseAMQPConsumer method)</a></dt>
 </dl></td>
 </tr></table>
 
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
-    <dt><a href="consumers.html#ether.consumers.amqp.AsyncAMQPConsumer.receive_payload">receive_payload() (ether.consumers.amqp.AsyncAMQPConsumer method)</a></dt>
-    <dd><dl>
-      <dt><a href="consumers.html#ether.consumers.amqp.BaseAMQPConsumer.receive_payload">(ether.consumers.amqp.BaseAMQPConsumer method)</a></dt>
-  </dl></dd>
+    <dt><a href="consumers.html#ether.consumers.amqp.BaseAMQPConsumer.receive_payload">receive_payload() (ether.consumers.amqp.BaseAMQPConsumer method)</a></dt>
 </dl></td>
 </tr></table>
 
@@ -156,9 +173,11 @@
       <dt><a href="publishers.html#ether.publishers.amqp.BlockingAMQPPublisher.send_payload">(ether.publishers.amqp.BlockingAMQPPublisher method)</a></dt>
       <dt><a href="publishers.html#ether.publishers.log.FileLogger.send_payload">(ether.publishers.log.FileLogger method)</a></dt>
   </dl></dd>
+    <dt><a href="consumers.html#ether.consumers.amqp.AsyncAMQPConsumer.setup_connection">setup_connection() (ether.consumers.amqp.AsyncAMQPConsumer method)</a></dt>
 </dl></td>
   <td style="width: 33%" valign="top"><dl>
-    <dt><a href="consumers.html#ether.consumers.amqp.AsyncAMQPConsumer.setup_connection">setup_connection() (ether.consumers.amqp.AsyncAMQPConsumer method)</a></dt>
+    <dt><a href="hooks.html#ether.hooks.svn.SvnHook">SvnHook (class in ether.hooks.svn)</a></dt>
+    <dt><a href="hooks.html#ether.hooks.svn.SvnHookError">SvnHookError</a></dt>
 </dl></td>
 </tr></table>
 
@@ -198,7 +217,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

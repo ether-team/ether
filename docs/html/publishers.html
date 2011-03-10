@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Senders &mdash; Ether v0.2.0 documentation</title>
+    <title>Publishers &mdash; Ether v0.4.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.2.0',
+        VERSION:     '0.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Ether v0.2.0 documentation" href="index.html" />
-    <link rel="up" title="Modules and classes" href="modules.html" />
-    <link rel="next" title="Listeners" href="consumers.html" />
-    <link rel="prev" title="Modules and classes" href="modules.html" /> 
+    <link rel="top" title="Ether v0.4.0 documentation" href="index.html" />
+    <link rel="up" title="Modules and classes" href="implementation.html" />
+    <link rel="next" title="Consumers" href="consumers.html" />
+    <link rel="prev" title="Modules and classes" href="implementation.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,13 +38,13 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="consumers.html" title="Listeners"
+          <a href="consumers.html" title="Consumers"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="modules.html" title="Modules and classes"
+          <a href="implementation.html" title="Modules and classes"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li>
-          <li><a href="modules.html" accesskey="U">Modules and classes</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li>
+          <li><a href="implementation.html" accesskey="U">Modules and classes</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,14 +53,14 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="senders">
-<h1>Senders<a class="headerlink" href="#senders" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="publishers">
+<h1>Publishers<a class="headerlink" href="#publishers" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-ether.publishers.amqp">
-<span id="amqp"></span><h2>amqp<a class="headerlink" href="#module-ether.publishers.amqp" title="Permalink to this headline">¶</a></h2>
+<span id="amqp"></span><h2>AMQP<a class="headerlink" href="#module-ether.publishers.amqp" title="Permalink to this headline">¶</a></h2>
 <p>AMQP sender API.</p>
 <dl class="class">
 <dt id="ether.publishers.amqp.BasicAMQPPublisher">
-<em class="property">class </em><tt class="descclassname">ether.publishers.amqp.</tt><tt class="descname">BasicAMQPPublisher</tt><big>(</big><em>config={'PUBLISHER': {'queue_durable': True</em>, <em>'queue_auto_delete': False</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': False}</em>, <em>'exchange_name': 'ether'</em>, <em>'delivery_mode': 1</em>, <em>'vhost': '/ether'</em>, <em>'host': 'localhost'</em>, <em>'user': 'ether'</em>, <em>'exchange_durable': True</em>, <em>'port': 5672</em>, <em>'password': '123'</em>, <em>'exchange_type': 'fanout'</em>, <em>'CONSUMER': {'queue_durable': True</em>, <em>'queue_auto_delete': True</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': True}}</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.BasicAMQPPublisher" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">ether.publishers.amqp.</tt><tt class="descname">BasicAMQPPublisher</tt><big>(</big><em>config</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.BasicAMQPPublisher" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base abstract class for AMQP publishers.</p>
 <dl class="method">
 <dt id="ether.publishers.amqp.BasicAMQPPublisher.send_payload">
@@ -81,7 +81,7 @@ Abstract method. Has to be implemented in derived classes.</p>
 
 <dl class="class">
 <dt id="ether.publishers.amqp.BlockingAMQPPublisher">
-<em class="property">class </em><tt class="descclassname">ether.publishers.amqp.</tt><tt class="descname">BlockingAMQPPublisher</tt><big>(</big><em>config={'PUBLISHER': {'queue_durable': True</em>, <em>'queue_auto_delete': False</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': False}</em>, <em>'exchange_name': 'ether'</em>, <em>'delivery_mode': 1</em>, <em>'vhost': '/ether'</em>, <em>'host': 'localhost'</em>, <em>'user': 'ether'</em>, <em>'exchange_durable': True</em>, <em>'port': 5672</em>, <em>'password': '123'</em>, <em>'exchange_type': 'fanout'</em>, <em>'CONSUMER': {'queue_durable': True</em>, <em>'queue_auto_delete': True</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': True}}</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.BlockingAMQPPublisher" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">ether.publishers.amqp.</tt><tt class="descname">BlockingAMQPPublisher</tt><big>(</big><em>config</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.BlockingAMQPPublisher" title="Permalink to this definition">¶</a></dt>
 <dd><p>Blocking (synchronous) publisher.
 Code is borrowed from Pika Blocking demo_send <a class="reference external" href="http://tonyg.github.com/pika/examples.html#id4">example_blocking</a>:</p>
 <dl class="method">
@@ -102,7 +102,7 @@ Code is borrowed from Pika Blocking demo_send <a class="reference external" href
 
 <dl class="class">
 <dt id="ether.publishers.amqp.AsyncAMQPPublisher">
-<em class="property">class </em><tt class="descclassname">ether.publishers.amqp.</tt><tt class="descname">AsyncAMQPPublisher</tt><big>(</big><em>config={'PUBLISHER': {'queue_durable': True</em>, <em>'queue_auto_delete': False</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': False}</em>, <em>'exchange_name': 'ether'</em>, <em>'delivery_mode': 1</em>, <em>'vhost': '/ether'</em>, <em>'host': 'localhost'</em>, <em>'user': 'ether'</em>, <em>'exchange_durable': True</em>, <em>'port': 5672</em>, <em>'password': '123'</em>, <em>'exchange_type': 'fanout'</em>, <em>'CONSUMER': {'queue_durable': True</em>, <em>'queue_auto_delete': True</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': True}}</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.AsyncAMQPPublisher" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">ether.publishers.amqp.</tt><tt class="descname">AsyncAMQPPublisher</tt><big>(</big><em>config</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.AsyncAMQPPublisher" title="Permalink to this definition">¶</a></dt>
 <dd><p>Asynchronous Publisher.
 Code is borrowed from Pika Asynchronous demo_send <a class="reference external" href="http://tonyg.github.com/pika/examples.html#demo-send">example_async</a>:</p>
 <p>Methods are placed in the same order as they&#8217;re called by pika</p>
@@ -129,20 +129,6 @@ Code is borrowed from Pika Asynchronous demo_send <a class="reference external" 
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>connection</strong> (<em>object</em>) &#8211; connection object</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="ether.publishers.amqp.AsyncAMQPPublisher.on_queue_declared">
-<tt class="descname">on_queue_declared</tt><big>(</big><em>_frame</em><big>)</big><a class="headerlink" href="#ether.publishers.amqp.AsyncAMQPPublisher.on_queue_declared" title="Permalink to this definition">¶</a></dt>
-<dd><p>Callback: Called when queue has been declared.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_frame</strong> (<em>object</em>) &#8211; response from broker</td>
 </tr>
 </tbody>
 </table>
@@ -190,19 +176,19 @@ on_connected -&gt; on_channel_open -&gt; on_queue_declared.
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Senders</a><ul>
-<li><a class="reference internal" href="#module-ether.publishers.amqp">amqp</a></li>
+<li><a class="reference internal" href="#">Publishers</a><ul>
+<li><a class="reference internal" href="#module-ether.publishers.amqp">AMQP</a></li>
 <li><a class="reference internal" href="#module-ether.publishers.log">log</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="modules.html"
+  <p class="topless"><a href="implementation.html"
                         title="previous chapter">Modules and classes</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="consumers.html"
-                        title="next chapter">Listeners</a></p>
+                        title="next chapter">Consumers</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/publishers.txt"
@@ -235,13 +221,13 @@ on_connected -&gt; on_channel_open -&gt; on_queue_declared.
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="consumers.html" title="Listeners"
+          <a href="consumers.html" title="Consumers"
              >next</a> |</li>
         <li class="right" >
-          <a href="modules.html" title="Modules and classes"
+          <a href="implementation.html" title="Modules and classes"
              >previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >Modules and classes</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li>
+          <li><a href="implementation.html" >Modules and classes</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

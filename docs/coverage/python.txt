@@ -1,0 +1,9 @@
+Undocumented Python objects
+===========================
+ether.consumers.amqp
+--------------------
+Classes:
+ * AsyncAMQPConsumer -- missing methods:
+   - process_payload
+   - receive_payload
+

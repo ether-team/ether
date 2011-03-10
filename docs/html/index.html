@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to Ether’s documentation! &mdash; Ether v0.2.0 documentation</title>
+    <title>Ether’s documentation! &mdash; Ether v0.4.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.2.0',
+        VERSION:     '0.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Ether v0.2.0 documentation" href="#" />
+    <link rel="top" title="Ether v0.4.0 documentation" href="#" />
     <link rel="next" title="Overview" href="overview.html" /> 
   </head>
   <body>
@@ -38,7 +38,7 @@
         <li class="right" >
           <a href="overview.html" title="Overview"
              accesskey="N">next</a> |</li>
-        <li><a href="#">Ether v0.2.0 documentation</a> &raquo;</li> 
+        <li><a href="#">Ether v0.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -47,37 +47,41 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="welcome-to-ether-s-documentation">
-<h1>Welcome to Ether&#8217;s documentation!<a class="headerlink" href="#welcome-to-ether-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
+  <div class="section" id="ether-s-documentation">
+<h1>Ether&#8217;s documentation!<a class="headerlink" href="#ether-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hacking.html">Development practices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hacking.html#general-ideas">General ideas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">System Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="messages.html">Format of AMQP Messages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="implementation.html">Modules and classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="publishers.html">Publishers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="consumers.html">Consumers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="consumers.html#module-ether.consumers.amqp">AMQP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hooks.html">Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implementation.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hacking.html">Development Practices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hacking.html#general-ideas">General Ideas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hacking.html#code-quality">Code Quality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hacking.html#documenting-your-code">Documenting your code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hacking.html#branching-policy">Branching policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hacking.html#documenting-your-code">Documenting Your Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hacking.html#branching-policy">Branching Policy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hacking.html#building-debian-package">Building Debian Package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules and classes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="publishers.html">Senders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="consumers.html">Listeners</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hooks.html">Hooks</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html#indices-and-tables">Indices and tables</a></li>
-</ul>
-</div>
 </div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
 <li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
 <li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
+</div>
 </div>
 
 
@@ -88,10 +92,10 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to Ether&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#">Ether&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
   <h4>Next topic</h4>
@@ -131,7 +135,7 @@
         <li class="right" >
           <a href="overview.html" title="Overview"
              >next</a> |</li>
-        <li><a href="#">Ether v0.2.0 documentation</a> &raquo;</li> 
+        <li><a href="#">Ether v0.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

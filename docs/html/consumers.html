@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Listeners &mdash; Ether v0.2.0 documentation</title>
+    <title>Consumers &mdash; Ether v0.4.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.2.0',
+        VERSION:     '0.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Ether v0.2.0 documentation" href="index.html" />
-    <link rel="up" title="Modules and classes" href="modules.html" />
+    <link rel="top" title="Ether v0.4.0 documentation" href="index.html" />
+    <link rel="up" title="Modules and classes" href="implementation.html" />
     <link rel="next" title="Hooks" href="hooks.html" />
-    <link rel="prev" title="Senders" href="publishers.html" /> 
+    <link rel="prev" title="Publishers" href="publishers.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,10 +41,10 @@
           <a href="hooks.html" title="Hooks"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="publishers.html" title="Senders"
+          <a href="publishers.html" title="Publishers"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li>
-          <li><a href="modules.html" accesskey="U">Modules and classes</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li>
+          <li><a href="implementation.html" accesskey="U">Modules and classes</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,15 +53,41 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="listeners">
-<h1>Listeners<a class="headerlink" href="#listeners" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="consumers">
+<h1>Consumers<a class="headerlink" href="#consumers" title="Permalink to this headline">¶</a></h1>
+</div>
 <div class="section" id="module-ether.consumers.amqp">
-<span id="amqp"></span><h2>amqp<a class="headerlink" href="#module-ether.consumers.amqp" title="Permalink to this headline">¶</a></h2>
+<span id="amqp"></span><h1>AMQP<a class="headerlink" href="#module-ether.consumers.amqp" title="Permalink to this headline">¶</a></h1>
 <p>AMQP Listener.</p>
 <dl class="class">
 <dt id="ether.consumers.amqp.BaseAMQPConsumer">
-<em class="property">class </em><tt class="descclassname">ether.consumers.amqp.</tt><tt class="descname">BaseAMQPConsumer</tt><big>(</big><em>config={'PUBLISHER': {'queue_durable': True</em>, <em>'queue_auto_delete': False</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': False}</em>, <em>'exchange_name': 'ether'</em>, <em>'delivery_mode': 1</em>, <em>'vhost': '/ether'</em>, <em>'host': 'localhost'</em>, <em>'user': 'ether'</em>, <em>'exchange_durable': True</em>, <em>'port': 5672</em>, <em>'password': '123'</em>, <em>'exchange_type': 'fanout'</em>, <em>'CONSUMER': {'queue_durable': True</em>, <em>'queue_auto_delete': True</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': True}}</em><big>)</big><a class="headerlink" href="#ether.consumers.amqp.BaseAMQPConsumer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">ether.consumers.amqp.</tt><tt class="descname">BaseAMQPConsumer</tt><big>(</big><em>config</em><big>)</big><a class="headerlink" href="#ether.consumers.amqp.BaseAMQPConsumer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base abstract class for AMQP consumers.</p>
+<dl class="method">
+<dt id="ether.consumers.amqp.BaseAMQPConsumer.process_payload">
+<tt class="descname">process_payload</tt><big>(</big><em>payload</em>, <em>routing_key=None</em><big>)</big><a class="headerlink" href="#ether.consumers.amqp.BaseAMQPConsumer.process_payload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process payload.
+Abstract method. Has to be implemented in derived classes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>payload</strong> &#8211; received payload</li>
+<li><strong>routing_key</strong> (<em>string</em>) &#8211; AMQP routing key</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">result code</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="ether.consumers.amqp.BaseAMQPConsumer.receive_payload">
 <tt class="descname">receive_payload</tt><big>(</big><em>channel</em>, <em>method</em>, <em>header</em>, <em>body</em><big>)</big><a class="headerlink" href="#ether.consumers.amqp.BaseAMQPConsumer.receive_payload" title="Permalink to this definition">¶</a></dt>
@@ -81,7 +107,7 @@ Abstract method. Has to be implemented in derived classes.</p>
 
 <dl class="class">
 <dt id="ether.consumers.amqp.AsyncAMQPConsumer">
-<em class="property">class </em><tt class="descclassname">ether.consumers.amqp.</tt><tt class="descname">AsyncAMQPConsumer</tt><big>(</big><em>config={'PUBLISHER': {'queue_durable': True</em>, <em>'queue_auto_delete': False</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': False}</em>, <em>'exchange_name': 'ether'</em>, <em>'delivery_mode': 1</em>, <em>'vhost': '/ether'</em>, <em>'host': 'localhost'</em>, <em>'user': 'ether'</em>, <em>'exchange_durable': True</em>, <em>'port': 5672</em>, <em>'password': '123'</em>, <em>'exchange_type': 'fanout'</em>, <em>'CONSUMER': {'queue_durable': True</em>, <em>'queue_auto_delete': True</em>, <em>'queue_name': ''</em>, <em>'routing_key': ''</em>, <em>'queue_exclusive': True}}</em><big>)</big><a class="headerlink" href="#ether.consumers.amqp.AsyncAMQPConsumer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">ether.consumers.amqp.</tt><tt class="descname">AsyncAMQPConsumer</tt><big>(</big><em>config</em><big>)</big><a class="headerlink" href="#ether.consumers.amqp.AsyncAMQPConsumer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Asynchronous consumer.</p>
 <dl class="method">
 <dt id="ether.consumers.amqp.AsyncAMQPConsumer.consume">
@@ -139,21 +165,6 @@ Abstract method. Has to be implemented in derived classes.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="ether.consumers.amqp.AsyncAMQPConsumer.receive_payload">
-<tt class="descname">receive_payload</tt><big>(</big><em>channel</em>, <em>method</em>, <em>header</em>, <em>body</em><big>)</big><a class="headerlink" href="#ether.consumers.amqp.AsyncAMQPConsumer.receive_payload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Step #7: Called when we receive a message from RabbitMQ.
-Implementation of recieve_payload that just prints the payload.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>body</strong> (<em>dictionary</em>) &#8211; data received</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="ether.consumers.amqp.AsyncAMQPConsumer.setup_connection">
 <tt class="descname">setup_connection</tt><big>(</big><big>)</big><a class="headerlink" href="#ether.consumers.amqp.AsyncAMQPConsumer.setup_connection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Step #1: Connect to RabbitMQ.</p>
@@ -161,7 +172,6 @@ Implementation of recieve_payload that just prints the payload.</p>
 
 </dd></dl>
 
-</div>
 </div>
 
 
@@ -172,15 +182,13 @@ Implementation of recieve_payload that just prints the payload.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Listeners</a><ul>
-<li><a class="reference internal" href="#module-ether.consumers.amqp">amqp</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Consumers</a></li>
+<li><a class="reference internal" href="#module-ether.consumers.amqp">AMQP</a></li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="publishers.html"
-                        title="previous chapter">Senders</a></p>
+                        title="previous chapter">Publishers</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="hooks.html"
                         title="next chapter">Hooks</a></p>
@@ -219,10 +227,10 @@ Implementation of recieve_payload that just prints the payload.</p>
           <a href="hooks.html" title="Hooks"
              >next</a> |</li>
         <li class="right" >
-          <a href="publishers.html" title="Senders"
+          <a href="publishers.html" title="Publishers"
              >previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li>
-          <li><a href="modules.html" >Modules and classes</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li>
+          <li><a href="implementation.html" >Modules and classes</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

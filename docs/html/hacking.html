@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Development practices &mdash; Ether v0.2.0 documentation</title>
+    <title>Development Practices &mdash; Ether v0.4.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.2.0',
+        VERSION:     '0.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Ether v0.2.0 documentation" href="index.html" />
-    <link rel="next" title="Modules and classes" href="modules.html" />
-    <link rel="prev" title="Overview" href="overview.html" /> 
+    <link rel="top" title="Ether v0.4.0 documentation" href="index.html" />
+    <link rel="prev" title="Hooks" href="hooks.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,12 +36,9 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="modules.html" title="Modules and classes"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="overview.html" title="Overview"
+          <a href="hooks.html" title="Hooks"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -52,18 +48,16 @@
           <div class="body">
             
   <div class="section" id="development-practices">
-<h1>Development practices<a class="headerlink" href="#development-practices" title="Permalink to this headline">¶</a></h1>
+<h1>Development Practices<a class="headerlink" href="#development-practices" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="general-ideas">
-<h2>General ideas<a class="headerlink" href="#general-ideas" title="Permalink to this headline">¶</a></h2>
+<h2>General Ideas<a class="headerlink" href="#general-ideas" title="Permalink to this headline">¶</a></h2>
 <p>Code in this project should satisfy following requirements:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li>PEP8 compliant</li>
 <li>Covered with testcases not less than 90%</li>
 <li>Covered with documentation</li>
 <li>Reviewed</li>
 </ul>
-</div></blockquote>
 </div>
 <div class="section" id="code-quality">
 <h2>Code Quality<a class="headerlink" href="#code-quality" title="Permalink to this headline">¶</a></h2>
@@ -71,18 +65,17 @@
 <div class="highlight-python"><pre>pylint &lt;your-file&gt;</pre>
 </div>
 <p>Code rated &lt; 9 is <strong>NOT</strong> acceptable.</p>
-<p>Before you commit your changes please run the unit tests</p>
+<p>Make sure you run unit tests before committing any changes.</p>
 <p>Make sure that all the test cases pass and code coverage is more than 90%.</p>
-<p>After you fix a defect please create a test case to avoid regressions in future.</p>
+<p>If you fix a defect, create a test case to avoid regressions in future.</p>
 </div>
 <div class="section" id="documenting-your-code">
-<h2>Documenting your code<a class="headerlink" href="#documenting-your-code" title="Permalink to this headline">¶</a></h2>
-<p>For documenting we use <a class="reference external" href="http://sphinx.pocoo.org">sphinx</a>
-You can find project documentation in docs directory of the project</p>
+<h2>Documenting Your Code<a class="headerlink" href="#documenting-your-code" title="Permalink to this headline">¶</a></h2>
+<p>For documenting we use <a class="reference external" href="http://sphinx.pocoo.org">sphinx</a>.  You can find project documentation in <tt class="file docutils literal"><span class="pre">docs/</span></tt>
+directory of the project.</p>
 <p>Here are recomendations of documenting API:</p>
 <p>If you document your functions this way:</p>
-<blockquote>
-<div><div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span> <span class="n">param2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Description of foo.</span>
 
 <span class="sd">    :param param1: param1 description</span>
@@ -126,10 +119,8 @@ You can find project documentation in docs directory of the project</p>
 </table>
 </dd></dl>
 
-</div></blockquote>
 <p>The same is for classes:</p>
-<blockquote>
-<div><div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class description.&quot;&quot;&quot;</span>
 
     <span class="c">#: class attribute description.</span>
@@ -181,34 +172,30 @@ Could take several lines.</p>
 
 </dd></dl>
 
-</div></blockquote>
 <p>Some useful links related to <a class="reference external" href="http://sphinx.pocoo.org">sphinx</a>:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li><a class="reference external" href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">http://docutils.sourceforge.net/docs/user/rst/quickref.html</a></li>
 <li><a class="reference external" href="http://sphinx.pocoo.org/markup/code.html">http://sphinx.pocoo.org/markup/code.html</a></li>
 <li><a class="reference external" href="http://sphinx.pocoo.org/ext/autodoc.html">http://sphinx.pocoo.org/ext/autodoc.html</a></li>
 <li><a class="reference external" href="http://packages.python.org/an_example_pypi_project/sphinx.html">http://packages.python.org/an_example_pypi_project/sphinx.html</a></li>
 </ul>
-</div></blockquote>
 </div>
 <div class="section" id="branching-policy">
-<h2>Branching policy<a class="headerlink" href="#branching-policy" title="Permalink to this headline">¶</a></h2>
-<p>Recommended way is to have separate git branch for each task.
-After code is ready branch can be rebased against master and provided for review.</p>
-<p>Please note that <strong>No code should go to master without review</strong>
-It&#8217;s reviewer task to review the code, disscuss it with developer, then merge it to master
+<h2>Branching Policy<a class="headerlink" href="#branching-policy" title="Permalink to this headline">¶</a></h2>
+<p>Recommended way is to have separate git branch for each task.  After code is
+ready branch can be rebased against master and provided for review.</p>
+<p>Please note that <strong>no code should go to master without review</strong>.  It&#8217;s reviewer
+task to review the code, disscuss it with developer, then merge it to master
 and tag it if needed.</p>
 </div>
 <div class="section" id="building-debian-package">
 <h2>Building Debian Package<a class="headerlink" href="#building-debian-package" title="Permalink to this headline">¶</a></h2>
-<p>Use:</p>
+<p>To build packages, use:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">git</span><span class="o">-</span><span class="n">buildpackage</span> <span class="o">-</span><span class="n">rfakeroot</span> <span class="o">-</span><span class="n">uc</span> <span class="o">-</span><span class="n">us</span> <span class="o">-</span><span class="n">sa</span> <span class="o">-</span><span class="n">D</span>
 </pre></div>
 </div>
-<p>to build packages.</p>
-<p>Build debian package is a recommended way to check your work, because
-project documentation is re-generated and unit tests are run during package building.</p>
+<p>Build Debian package is a recommended way to check your work, because project
+documentation is re-generated and unit tests are run during package building.</p>
 </div>
 </div>
 
@@ -220,22 +207,19 @@ project documentation is re-generated and unit tests are run during package buil
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Development practices</a><ul>
-<li><a class="reference internal" href="#general-ideas">General ideas</a></li>
+<li><a class="reference internal" href="#">Development Practices</a><ul>
+<li><a class="reference internal" href="#general-ideas">General Ideas</a></li>
 <li><a class="reference internal" href="#code-quality">Code Quality</a></li>
-<li><a class="reference internal" href="#documenting-your-code">Documenting your code</a></li>
-<li><a class="reference internal" href="#branching-policy">Branching policy</a></li>
+<li><a class="reference internal" href="#documenting-your-code">Documenting Your Code</a></li>
+<li><a class="reference internal" href="#branching-policy">Branching Policy</a></li>
 <li><a class="reference internal" href="#building-debian-package">Building Debian Package</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="overview.html"
-                        title="previous chapter">Overview</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="modules.html"
-                        title="next chapter">Modules and classes</a></p>
+  <p class="topless"><a href="hooks.html"
+                        title="previous chapter">Hooks</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/hacking.txt"
@@ -268,12 +252,9 @@ project documentation is re-generated and unit tests are run during package buil
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="modules.html" title="Modules and classes"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="overview.html" title="Overview"
+          <a href="hooks.html" title="Hooks"
              >previous</a> |</li>
-        <li><a href="index.html">Ether v0.2.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Ether v0.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
