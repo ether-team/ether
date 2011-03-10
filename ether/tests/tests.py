@@ -112,7 +112,7 @@ class TestSvnHook(runner.DummyTestCase):
     def test_wrappers(self):
         """Make sure that the wrappers are OK."""
         self.unmock()
-        svn._svnlook(None, None, None)
+        svn._svnlook('log', 'bla', 1, '/bin/true')
 
     def test_get_repo_url(self):
         self.assertRaises(svn.SvnHookError, svn.get_repo_url, [], None)

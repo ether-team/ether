@@ -10,11 +10,11 @@ class SvnHookError(Exception):
     pass
 
 
-def _svnlook(what, repos, rev):
+def _svnlook(what, repos, rev, exe="svnlook"):
     """Wrapper around svnlook tool."""
 
-    with os.popen("svnlook %s -r %s %s" % \
-                  (what, rev, repos), "r") as handler:
+    with os.popen("%s %s -r %s %s" % \
+                  (exe, what, rev, repos), "r") as handler:
         return handler.readlines()
 
 
