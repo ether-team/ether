@@ -1,8 +1,8 @@
 #!/usr/bin/env python -tt
 
-"""AMQP Listener."""
+"""AMQP Consumer API."""
 
-__all__ = ["BaseAMQPConsumer", "AsyncAMQPConsumer"]
+__all__ = ["AsyncAMQPConsumer"]
 
 import logging
 from abc import ABCMeta, abstractmethod
@@ -13,7 +13,7 @@ from ether.payload.common import Payload
 LOG = logging.getLogger(__name__)
 
 
-class BaseAMQPConsumer(object):
+class AsyncAMQPConsumer(object):
 
     """Base abstract class for AMQP consumers."""
 
@@ -47,6 +47,8 @@ class BaseAMQPConsumer(object):
         self._connection = None
         self._channel = None
         self._payload = None
+
+        self.setup_connection()
 
     def receive_payload(self, channel, method, header, body):
 
@@ -82,22 +84,6 @@ class BaseAMQPConsumer(object):
 
         raise NotImplementedError
 
-
-class AsyncAMQPConsumer(BaseAMQPConsumer):
-
-    """Asynchronous consumer."""
-
-    def __init__(self, config):
-
-        """
-        Setup the connection with the provided configuration.
-
-        :param config: Dictionary containing the needed configuration items.
-        :type config: dictionary
-        """
-
-        BaseAMQPConsumer.__init__(self, config = config)
-        self.setup_connection()
 
     def setup_connection(self):
 
@@ -172,3 +158,4 @@ class AsyncAMQPConsumer(BaseAMQPConsumer):
             self._connection.close()
             # Loop until we're fully closed, will stop on its own
             self._connection.ioloop.start()
+
