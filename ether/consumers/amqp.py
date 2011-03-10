@@ -7,7 +7,8 @@ __all__ = ["AsyncAMQPConsumer"]
 import logging
 from abc import ABCMeta, abstractmethod
 
-import pika, sys, simplejson
+import pika
+import simplejson
 
 LOG = logging.getLogger(__name__)
 
