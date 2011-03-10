@@ -1,11 +1,10 @@
 #!/usr/bin/env python -tt
 
-"""AMQP sender API."""
+"""AMQP Publisher API."""
 
-__all__ = ["BasicAMQPPublisher", "BlockingAMQPPublisher", "AsyncAMQPPublisher"]
+__all__ = ["AsyncAMQPPublisher"]
 
 import logging
-from abc import ABCMeta, abstractmethod
 
 import pika
 import simplejson
@@ -13,11 +12,18 @@ import simplejson
 LOG = logging.getLogger(__name__)
 
 
-class BasicAMQPPublisher(object):
+class AsyncAMQPPublisher(object):
 
-    """Base abstract class for AMQP publishers."""
+    """
+    Base class for AMQP publishers.
 
-    __metaclass__ = ABCMeta
+    Code is borrowed from Pika Asynchronous demo_send example_async_:
+
+    .. _example_async: http://tonyg.github.com/pika/examples.html#demo-send
+
+    Methods are placed in the same order as they're called by pika
+
+    """
 
     def __init__(self, config):
 
@@ -37,68 +43,6 @@ class BasicAMQPPublisher(object):
         self._connection = None
         self._channel = None
         self._payload = None
-
-    @abstractmethod
-    def send_payload(self, payload):
-        """
-        Send payload to the server.
-        Abstract method. Has to be implemented in derived classes.
-
-        :param payload: data to be sent
-        :type payload: dictionary
-
-        """
-
-        raise NotImplementedError
-
-
-class BlockingAMQPPublisher(BasicAMQPPublisher):
-
-    """
-    Blocking (synchronous) publisher.
-    Code is borrowed from Pika Blocking demo_send example_blocking_:
-
-    .. _example_blocking: http://tonyg.github.com/pika/examples.html#id4
-
-    """
-
-    def send_payload(self, payload):
-        """
-        Send payload to the server using blocking approach.
-
-        :param payload: data to be sent
-        :type payload: dictionary
-
-        """
-
-        self._connection = pika.BlockingConnection(self._parameters)
-        self._channel = self._connection.channel()
-
-        self._channel.exchange_declare(exchange=self._exchange,
-                                       type=self._exchange_type)
-
-        properties = pika.BasicProperties("text/plain",
-                                          delivery_mode=self._delivery_mode)
-
-        self._channel.basic_publish(exchange=self._exchange,
-                                    routing_key=self._routing_key,
-                                    body=simplejson.dumps(payload),
-                                    properties=properties)
-        self._connection.close()
-
-
-class AsyncAMQPPublisher(BasicAMQPPublisher):
-
-    """
-
-    Asynchronous Publisher.
-    Code is borrowed from Pika Asynchronous demo_send example_async_:
-
-    .. _example_async: http://tonyg.github.com/pika/examples.html#demo-send
-
-    Methods are placed in the same order as they're called by pika
-
-    """
 
     def on_connected(self, connection):
         """

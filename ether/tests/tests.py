@@ -120,10 +120,6 @@ class TestPublishers(runner.DummyTestCase):
         self.mock(amqp.pika, "BasicProperties", dummy.DummyBasicProperties)
         self.mock(amqp.pika, "SelectConnection", dummy.DummySelectConnection)
 
-    def test_send_blocking_payload(self):
-        publisher = amqp.BlockingAMQPPublisher(AMQP_CONFIG)
-        publisher.send_payload({"payload":"payload"})
-
     def test_send_async_payload(self):
         publisher = amqp.AsyncAMQPPublisher(AMQP_CONFIG)
         publisher.send_payload({"payload":"payload"})
