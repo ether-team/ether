@@ -16,7 +16,3 @@ override_dh_auto_build:
 override_dh_install:
 	dh_install
 	dh_link
-
-override_dh_pysupport:
-	dh_pysupport
-	python setup.py test

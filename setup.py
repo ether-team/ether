@@ -1,4 +1,6 @@
-import os, sys
+import os, sys, tempfile
+
+import nose, coverage
 
 from distutils.core import setup
 from setuptools import find_packages
@@ -7,33 +9,38 @@ from ether import VERSION_STR
 
 MINIMAL_COVERAGE = 90 # percents
 
-class TestExecutionFailure(Exception):
-    pass
-
-
-class CoverageFailure(Exception):
-    pass
-
 
 if len(sys.argv) > 1:
-    if sys.argv[1] == "test":
-        from ether import runtests
-        results, coverage_percents = runtests.run()
-        if results.errors or results.failures:
-            n_failures = (len(results.errors) + len(results.failures))
-            desc = "test was"
-            if n_failures > 1:
-                desc += "tests were"
-            raise TestExecutionFailure(
-                "%d %s not passed successfully." % \
-                    (n_failures, desc))
-        if coverage_percents < MINIMAL_COVERAGE:
-            raise CoverageFailure(
-                "Code coverage is %d%%, is has to be at least %d%%" % \
-                    (coverage_percents, MINIMAL_COVERAGE))
+    if sys.argv[1] == "build":
+        out = sys.stderr
+        sys.stderr = tempfile.TemporaryFile()
+        result = nose.run(module="tests.tests",
+                          defaultTest="tests.tests",
+                          argv=[sys.argv[0]])
+        sys.stderr.seek(0)
+        data = sys.stderr.read()
+        sys.stderr = out
+        percentage = 0
+        for line in data.split("\n"):
+            if line.find("TOTAL") >= 0:
+                percentage = int(line.split()[3].strip().replace("%", ""))
+        print data # Print the results as usually
+        if not result:
+            print "****************"
+            print "Testing failure."
+            print "****************"
+            sys.exit(1)
+        if percentage < MINIMAL_COVERAGE:
+            print "****************"
+            print "Code coverage is %d%%. It has to be at least %d%%." % \
+                    (percentage, MINIMAL_COVERAGE)
+            print "****************"
+            sys.exit(1)
 
 
 setup(
+    setup_requires=['nose>=0.11.1'],
+    test_suite = 'nose.collector',
     name="ether",
     version=VERSION_STR,
     url='https://github.com/ether-team/ether',

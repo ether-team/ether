@@ -1,14 +1,50 @@
 import os
 import sys
+import unittest
 
 import pika
 
-from ether.tests import fixtures, dummy, runner
+import fixtures, dummy
+
 from ether.hooks import git, svn
 from ether import consumer, publisher
 from ether.util import amqp as util
 from ether.configs.svn_postcommit import AMQP_CONFIG, REPO_CONFIG
 from ether.configs.test_consumer import TEST_CONFIG
+
+
+class DummyTestCase(unittest.TestCase):
+    """A test case that provides an easy way to mock the modules."""
+
+    def __init__(self, *args, **kwargs):
+        """Constructor."""
+        super(DummyTestCase, self).__init__(*args, **kwargs)
+        self.originals = {}
+
+    def mock(self, module_imported, original, dummy):
+        """Mocks the module.
+
+        :param module_imported: module where the substitution has to occur
+        :param original: string name of the module to substitute
+        :param dummy: a module that is supposed to take place of the original
+        """
+        if not self.originals.has_key(module_imported):
+            self.originals[module_imported] = {}
+        if not self.originals[module_imported].has_key(original):
+            self.originals[module_imported][original] = \
+                    getattr(module_imported, original)
+        setattr(module_imported, original, dummy)
+
+    def unmock(self):
+        """Unmocks the modules. Sets everything to initial condition."""
+        for module_imported, originals in self.originals.iteritems():
+            for original_name, module in originals.iteritems():
+                setattr(module_imported, original_name, module)
+        self.originals = {}
+
+    def tearDown(self): #C0103:
+        """Unmocks the modules."""
+        self.unmock()
 
 
 class TPublisher(object):
@@ -27,7 +63,7 @@ class TConsumer(consumer.AsyncAMQPConsumer):
         self.routing_key = routing_key
 
 
-class TestGitHook(runner.DummyTestCase):
+class TestGitHook(DummyTestCase):
 
     def test_postreceive(self):
         self.mock(git, "_get_allbranches", dummy.dummy_get_allbranches)
@@ -95,7 +131,7 @@ class TestGitHook(runner.DummyTestCase):
         git._get_revtype("rev")
 
 
-class TestSvnHook(runner.DummyTestCase):
+class TestSvnHook(DummyTestCase):
 
     def setUp(self):
         self.mock(svn, "_svnlook", dummy.dummy_svnlook)
@@ -120,7 +156,7 @@ class TestSvnHook(runner.DummyTestCase):
                           ["whatever", "/some/path"],
                           (("/some/path", "url1"), ("", "url2")))
 
-class TestPublisher(runner.DummyTestCase):
+class TestPublisher(DummyTestCase):
 
     def setUp(self):
         self.mock(publisher.pika, "PlainCredentials",
@@ -142,7 +178,7 @@ class TestPublisher(runner.DummyTestCase):
         tpublisher.on_channel_open(dummy.DummyChannel())
 
 
-class TestConsumer(runner.DummyTestCase):
+class TestConsumer(DummyTestCase):
 
     def setUp(self):
         self.mock(consumer.pika, "PlainCredentials",
@@ -187,7 +223,7 @@ class TestConsumer(runner.DummyTestCase):
         tconsumer.consume()
 
 
-class TestUtils(runner.DummyTestCase):
+class TestUtils(DummyTestCase):
 
     def setUp(self):
         self.mock(consumer.pika, "PlainCredentials",
