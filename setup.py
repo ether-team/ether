@@ -14,7 +14,7 @@ if len(sys.argv) > 1:
     if sys.argv[1] == "build":
         out = sys.stderr
         sys.stderr = tempfile.TemporaryFile()
-        result = nose.run(module="tests.tests",
+        result = nose.run(module="ether",
                           defaultTest="tests.tests",
                           argv=[sys.argv[0]])
         sys.stderr.seek(0)
