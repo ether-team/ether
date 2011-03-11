@@ -1,17 +1,8 @@
-==========
-Publishers
-==========
+=========
+Publisher
+=========
 
-AMQP
-====
-
-.. automodule:: ether.publishers.amqp
+.. automodule:: ether.publisher
    :members:
    :undoc-members:
 
-log
-===
-
-.. automodule:: ether.publishers.log
-   :members:
-   :undoc-members:

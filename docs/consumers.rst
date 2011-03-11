@@ -1,9 +1,6 @@
-Consumers
-=========
+Consumer
+========
 
-AMQP
-====
-
-.. automodule:: ether.consumers.amqp
+.. automodule:: ether.consumer
    :members:
    :undoc-members:
