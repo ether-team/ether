@@ -1,3 +1,15 @@
+python-ether (0.6.0) unstable; urgency=low
+
+  * Reimplemented configuration handling
+  * Refactored publisher and consumer APIs
+  * Simplified directory structure
+  * Got rid of Payload class
+  * excluded examples from the package
+  * Fixed a minor bug.
+  * Replaced custom runner with nose.
+
+ -- Ed Bartosh <eduard.bartosh@nokia.com>  Fri, 11 Mar 2011 16:56:12 +0200
+
 python-ether (0.5.0) unstable; urgency=low
 
   [Anton Berezin]
