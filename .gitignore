@@ -2,6 +2,7 @@
 *.swp
 *.pyo
 *.swo
+*.confc
 build/
 docs/_build/
 debian/files
