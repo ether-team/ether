@@ -13,21 +13,19 @@ POST-COMMIT HOOK
 """
 
 import sys
+import imp
 
-from optparse import OptionParser
-
-from ether.configs.svn_postcommit import AMQP_CONFIG, REPO_CONFIG
 from ether.hooks.svn import SvnHook
-
 from ether.publisher import AsyncAMQPPublisher
+
+DEFAULT_CONFIG = "/etc/ether/svn_postcommit.conf"
 
 def main(argv):
     """Script entry point."""
 
-    options, args = parse_args(argv)
-
-    publisher = AsyncAMQPPublisher(AMQP_CONFIG)
-    SvnHook(publisher, REPO_CONFIG).postcommit(args[1], args[2])
+    conf = imp.load_source("conf", DEFAULT_CONFIG)
+    publisher = AsyncAMQPPublisher(conf.AMQP_CONFIG)
+    SvnHook(publisher, conf.REPO_CONFIG).postcommit(args[1], args[2])
 
     return 0
 

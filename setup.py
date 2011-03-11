@@ -50,6 +50,11 @@ setup(
     data_files=[
         ('share/vcs-hooks/svn', ['hooks/svn/ether-post-commit']),
         ('share/vcs-hooks/git', ['hooks/git/ether-post-receive']),
+        ('/etc/ether', [
+            'configs/basic.conf', 'configs/common.conf',
+            'configs/git_postreceive.conf', 'configs/github.conf',
+            'configs/svn_postcommit.conf', 'configs/test_consumer.conf',
+            'configs/test_publisher.conf'])
     ],
     classifiers=[
         'Operating System :: OS Independent',

@@ -12,13 +12,15 @@ For example:
 """
 
 import sys
+import imp
 sys.path.append(".")
 from optparse import OptionParser
 
 from ether.hooks.git import GitHook
 from ether.publishers.log import FileLogger
 from ether.publishers.amqp import BlockingAMQPPublisher, AsyncAMQPPublisher
-from ether.configs.git_postreceive import GIT_CONFIG
+
+DEFAULT_CONFIG = "/etc/ether/git_postreceive.conf"
 
 def parse_args(argv):
     """ Commandline parser """
@@ -26,6 +28,10 @@ def parse_args(argv):
     parser.add_option("--type", dest="type", metavar="<type of publisher>",
                       default="log",
                       help="amqp-blocking, amqp-async and log are supported")
+
+    parser.add_option("--config", metavar="<path to conf file>",
+                      default=DEFAULT_CONFIG,
+                      help="path to configuration file")
 
     return parser.parse_args(argv)
 
@@ -44,10 +50,12 @@ def main(argv):
             print "Standard input is a terminal. Aborting!"
             sys.exit(1)
 
+    conf = imp.load_source("conf", options.config)
+
     if options.type == "amqp-async":
-        publisher = AsyncAMQPPublisher(GIT_CONFIG)
+        publisher = AsyncAMQPPublisher(conf.GIT_CONFIG)
     elif options.type == "amqp-blocking":
-        publisher = BlockingAMQPPublisher(GIT_CONFIG)
+        publisher = BlockingAMQPPublisher(conf.GIT_CONFIG)
     elif options.type == "log":
         publisher = FileLogger("/tmp/postcommit.log")
 

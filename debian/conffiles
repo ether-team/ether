@@ -1,7 +1,0 @@
-usr/share/pyshared/ether/configs/basic.py
-usr/share/pyshared/ether/configs/git_postreceive.py
-usr/share/pyshared/ether/configs/github.py
-usr/share/pyshared/ether/configs/test_consumer.py
-usr/share/pyshared/ether/configs/common.py
-usr/share/pyshared/ether/configs/svn_postcommit.py
-usr/share/pyshared/ether/configs/test_publisher.py

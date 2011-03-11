@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import imp
 
 import pika
 
@@ -9,9 +10,12 @@ import fixtures, dummy
 from ether.hooks import git, svn
 from ether import consumer, publisher
 from ether.util import amqp as util
-from ether.configs.svn_postcommit import AMQP_CONFIG, REPO_CONFIG
-from ether.configs.test_consumer import TEST_CONFIG
 
+svn_pcommit = imp.load_source("svn_postcommit_config",
+                              "configs/svn_postcommit.conf")
+
+cons_conf = imp.load_source("test_consumer_config",
+                            "configs/test_consumer.conf")
 
 class DummyTestCase(unittest.TestCase):
     """A test case that provides an easy way to mock the modules."""
@@ -138,7 +142,7 @@ class TestSvnHook(DummyTestCase):
 
     def test_postcommit(self):
         publisher = TPublisher()
-        hook = svn.SvnHook(publisher, REPO_CONFIG)
+        hook = svn.SvnHook(publisher, svn_pcommit.REPO_CONFIG)
         hook.postcommit(
             "17",
             "/var/svn/repo")
@@ -171,7 +175,7 @@ class TestPublisher(DummyTestCase):
                   dummy.DummySelectConnection)
 
     def test_send_async_payload(self):
-        tpublisher = publisher.AsyncAMQPPublisher(AMQP_CONFIG)
+        tpublisher = publisher.AsyncAMQPPublisher(svn_pcommit.AMQP_CONFIG)
         tpublisher.send_payload({"payload":"payload"})
         # Test callbacks
         tpublisher.on_connected(dummy.DummySelectConnection(None, None))
@@ -193,7 +197,7 @@ class TestConsumer(DummyTestCase):
                 dummy.DummySelectConnection)
 
     def test_ansync_methods(self):
-        tconsumer = TConsumer(TEST_CONFIG)
+        tconsumer = TConsumer(cons_conf.TEST_CONFIG)
         tconsumer.consume()
         # Test callbacks
         tconsumer.setup_connection()
@@ -203,23 +207,24 @@ class TestConsumer(DummyTestCase):
         tconsumer.on_queue_bound("some_frame")
 
     def test_receive_payload(self):
-        tconsumer = TConsumer(TEST_CONFIG)
+        tconsumer = TConsumer(cons_conf.TEST_CONFIG)
         tconsumer.receive_payload(None, dummy.DummyMethod(),
                                  None, '{"payload":{"data":"data"}}')
 
     def test_abstract_method(self):
-        tconsumer = TConsumer(TEST_CONFIG)
+        tconsumer = TConsumer(cons_conf.TEST_CONFIG)
         self.assertRaises(NotImplementedError,
                           consumer.AsyncAMQPConsumer.process_payload,
                           tconsumer, None, None)
 
     def test_receive_payload_exception(self):
-        self.assertRaises(TypeError, consumer.AsyncAMQPConsumer, TEST_CONFIG)
+        self.assertRaises(TypeError, consumer.AsyncAMQPConsumer,
+                          cons_conf.TEST_CONFIG)
 
     def test_exceptional_consume(self):
         consumer.pika.adapters.SelectConnection = \
                 dummy.DummyExceptionalSelectConnection
-        tconsumer = TConsumer(TEST_CONFIG)
+        tconsumer = TConsumer(cons_conf.TEST_CONFIG)
         tconsumer.consume()
 
 
@@ -236,6 +241,6 @@ class TestUtils(DummyTestCase):
                 dummy.DummyBasicProperties)
 
     def test_amqp_util(self):
-        obj = util.AMQPUtil(TEST_CONFIG)
+        obj = util.AMQPUtil(cons_conf.TEST_CONFIG)
         obj.setup_connection()
         obj.delete_queue()

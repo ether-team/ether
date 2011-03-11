@@ -3,15 +3,18 @@
 """Test Publisher."""
 
 import sys
+import imp
 
 from ether.configs.test_publisher import TEST_CONFIG
 from ether.publisher import AsyncAMQPPublisher
 
+DEFAULT_CONFIG = "/etc/ether/test_publisher.conf"
+
 def main(argv):
-    publisher = AsyncAMQPPublisher(config=TEST_CONFIG)
+    conf = imp.load_source("conf", DEFAULT_CONFIG)
+    publisher = AsyncAMQPPublisher(config=conf.TEST_CONFIG)
     publisher.send_payload({"payload": argv})
     return 0
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
-

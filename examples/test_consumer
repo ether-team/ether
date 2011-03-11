@@ -3,9 +3,11 @@
 """Test Consumer."""
 
 import sys
+import imp
 
-from ether.configs.test_consumer import TEST_CONFIG
 from ether.consumer import AsyncAMQPConsumer
+
+DEFAULT_CONFIG = "/etc/ether/test_consumer.conf"
 
 class TestConsumer(AsyncAMQPConsumer):
     """Test Consumer. Prints routing key and payload."""
@@ -14,10 +16,10 @@ class TestConsumer(AsyncAMQPConsumer):
         print "%s: %s" % (routing_key, payload.payload)
 
 def main(argv):
-    consumer = TestConsumer(config=TEST_CONFIG)
+    conf = imp.load_source("conf", DEFAULT_CONFIG)
+    consumer = TestConsumer(config=conf.TEST_CONFIG)
     consumer.consume()
     return 0
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
-
