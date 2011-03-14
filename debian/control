@@ -32,14 +32,16 @@ Package: python-ether-svn-hooks
 Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
-         python-ether (= ${binary:Version})
+         python-ether (= ${binary:Version}),
+         subversion (>= 1.6.6)
 Description: SVN hooks
 
 Package: python-ether-git-hooks
 Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
-         python-ether (= ${binary:Version})
+         python-ether (= ${binary:Version}),
+         git-core (>= 1:1.7.0.4)
 Description: GIT hooks
 
 Package: python-ether-doc
