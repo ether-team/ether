@@ -48,14 +48,19 @@ setup(
     author_email='bifh-team@nokia.com',
     packages=find_packages(),
     data_files=[
+        ('share/vcs-hooks/', ['hooks/root_hook.sh']),
         ('share/vcs-hooks/svn', ['hooks/svn/ether-post-commit']),
         ('share/vcs-hooks/git', ['hooks/git/ether-post-receive']),
         ('/etc/ether', [
             'configs/basic.conf', 'configs/common.conf',
             'configs/git_postreceive.conf', 'configs/github.conf',
             'configs/svn_postcommit.conf', 'configs/test_consumer.conf',
-            'configs/test_publisher.conf'])
+            'configs/test_publisher.conf']
+         )
     ],
+    entry_points={
+        "console_scripts": ["hookman = ether.hookman:main"],
+    },
     classifiers=[
         'Operating System :: OS Independent',
         'Programming Language :: Python',
