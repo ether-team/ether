@@ -1,2 +1,4 @@
-usr/lib/python*/*-packages/ether
+usr/lib/python*/*-packages/ether/*.py
+usr/lib/python*/*-packages/ether/hooks/*.py
+usr/lib/python*/*-packages/ether/util/*.py
 etc/ether
