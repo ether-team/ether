@@ -6,9 +6,9 @@ Uploaders: Ed Bartosh <eduard.bartosh@nokia.com>
 Build-Depends: debhelper (>= 7.0.50~),
                python-setuptools,
                python-support,
-               python-sphinx,
+               python-sphinx (>= 1.0),
                python-nose,
-               rst2pdf
+               rst2pdf (>= 0.16)
 XS-Python-Version: >= 2.6
 Standards-Version: 3.9.1
 Homepage: http://ether-team.github.com/ether/
@@ -33,7 +33,7 @@ Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
          python-ether (= ${binary:Version}),
-         subversion (>= 1.6.6)
+         subversion (>= 1.3.0)
 Description: SVN hooks
 
 Package: python-ether-git-hooks
@@ -41,7 +41,7 @@ Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
          python-ether (= ${binary:Version}),
-         git-core (>= 1:1.7.0.4)
+         git (>= 1:1.7.0.4-2~exp0) | git-core (<< 1:1.7.0.4-2~exp0)
 Description: GIT hooks
 
 Package: python-ether-doc
