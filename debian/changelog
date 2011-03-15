@@ -1,10 +1,17 @@
-python-ether (0.6.1) unstable; urgency=low
+ether (0.7.0) unstable; urgency=low
+
+  * Added hookman package
+  * Fixed package naming scheme
+
+ -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 15 Mar 2011 17:18:42 +0200
+
+ether (0.6.1) unstable; urgency=low
 
   * updated versioned dependencies
 
  -- Mikhail Sobolev <mikhail.sobolev@nokia.com>  Tue, 15 Mar 2011 14:10:18 +0200
 
-python-ether (0.6.0) unstable; urgency=low
+ether (0.6.0) unstable; urgency=low
 
   * Reimplemented configuration handling
   * Refactored publisher and consumer APIs
@@ -16,7 +23,7 @@ python-ether (0.6.0) unstable; urgency=low
 
  -- Ed Bartosh <eduard.bartosh@nokia.com>  Fri, 11 Mar 2011 16:56:12 +0200
 
-python-ether (0.5.0) unstable; urgency=low
+ether (0.5.0) unstable; urgency=low
 
   [Anton Berezin]
   * Added unittests
@@ -26,7 +33,7 @@ python-ether (0.5.0) unstable; urgency=low
 
  -- Anton Berezin <anton.berezin@nokia.com>  Thu, 10 Mar 2011 18:40:07 +0200
 
-python-ether (0.4.0) unstable; urgency=low
+ether (0.4.0) unstable; urgency=low
 
   * Added dependencies to debian package
   * Code butification.
@@ -35,13 +42,13 @@ python-ether (0.4.0) unstable; urgency=low
 
  -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 08 Mar 2011 11:52:27 +0200
 
-python-ether (0.3.1) unstable; urgency=low
+ether (0.3.1) unstable; urgency=low
 
   * Repackaged configs to be in the same package as the hooks.
 
  -- Anton Berezin <anton.berezin@nokia.com>  Mon, 07 Mar 2011 17:15:28 +0200
 
-python-ether (0.3.0) unstable; urgency=low
+ether (0.3.0) unstable; urgency=low
 
   * Complete rewrite of the git hook
   * added test_publisher example
@@ -71,13 +78,13 @@ python-ether (0.3.0) unstable; urgency=low
 
  -- Ed Bartosh <eduard.bartosh@nokia.com>  Mon, 07 Mar 2011 11:13:02 +0200
 
-python-ether (0.2.0) unstable; urgency=low
+ether (0.2.0) unstable; urgency=low
 
   * Renamed project
 
  -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 01 Mar 2011 16:37:36 +0200
 
-python-ether (0.1.1) unstable; urgency=low
+ether (0.1.1) unstable; urgency=low
   
   * Declared queue on listener side
   * Declared exchange on sender side
@@ -87,7 +94,7 @@ python-ether (0.1.1) unstable; urgency=low
 
  -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 01 Mar 2011 13:20:51 +0200
 
-python-ether (0.1.0) unstable; urgency=low
+ether (0.1.0) unstable; urgency=low
 
   * Designed project modules hierarchy
   * Implemented and tested working prototype
@@ -96,7 +103,7 @@ python-ether (0.1.0) unstable; urgency=low
 
  -- Ed Bartosh <eduard.bartosh@nokia.com>  Fri, 25 Feb 2011 21:15:40 +0200
 
-python-ether (0.0.0) unstable; urgency=low
+ether (0.0.0) unstable; urgency=low
 
   * Initial release
 
