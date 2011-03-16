@@ -62,7 +62,7 @@ class HooksAPITest(unittest.TestCase):
         # svn
         self.svnrepo = os.path.join(self.root, "svnrepo")
         self.svnapi = SvnHookAPI(basedir)
-        self.svnhooks = self.svnapi._hook_names
+        self.svnhooks = self.svnapi.hook_names
         svnhookdir = os.path.join(self.svnrepo, "hooks")
         os.makedirs(svnhookdir)
         presethook = os.path.join(svnhookdir, self.svnhooks[2])
@@ -77,14 +77,14 @@ class HooksAPITest(unittest.TestCase):
         # git        
         self.gitrepo = os.path.join(self.root, "gitrepo")
         self.gitapi = GitHookAPI(self.gitrepo)
-        self.githooks = self.gitapi._hook_names
+        self.githooks = self.gitapi.hook_names
         githookdir = os.path.join(self.gitrepo, ".git", "hooks")
         os.makedirs(githookdir)
 
         # hg
         self.hgrepo = os.path.join(self.root, "hgrepo")
         self.hgapi = HgHookAPI(self.hgrepo)
-        self.hghooks = self.hgapi._hook_names
+        self.hghooks = self.hgapi.hook_names
         hghookdir = os.path.join(self.hgrepo, ".hg", "hooks")
         os.makedirs(hghookdir)        
 
