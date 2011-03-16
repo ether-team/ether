@@ -44,6 +44,6 @@ class GitHookAPI(HookAPI):
         super(GitHookAPI, self).__init__(basedir)
 
     def get_hook_path(self, repo, hook_name):
-        return os.path.join(repo, ".git/hooks", hook_name)
+        return os.path.join(repo, ".git", "hooks", hook_name)
 
 # vim: sw=4 ts=4 expandtab ai
