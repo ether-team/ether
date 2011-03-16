@@ -48,8 +48,10 @@ def get_option_parser():
 
     parser.add_option('-v', '--avail', action='store_true',
                       help='list available hooks')
-    parser.add_option('-a', '--add', help='add hook to the repo')
-    parser.add_option('-r', '--remove', help='remove hook from the repo')
+    parser.add_option('-a', '--add', metavar="<hook>",
+                      help='add hook to the repo')
+    parser.add_option('-r', '--remove', metavar="<hook>",
+                      help='remove hook from the repo')
     parser.add_option('-l', '--list', action='store_true',
                       help='list repo hooks')
 
