@@ -26,7 +26,7 @@
 import os
 import logging
 
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod, abstractproperty
 
 LOG = logging.getLogger(__name__)
 
@@ -40,7 +40,10 @@ class HookAPI(object):
     __metaclass__ = ABCMeta
 
     _root_hook_name = "root_hook.sh"
-    hook_names = ()
+
+    @abstractproperty
+    def hook_names(self):
+        raise NotImplementedError
 
     def __init__(self, basedir):
         self._basedir = basedir

@@ -31,11 +31,13 @@ from ConfigParser import ConfigParser
 class HgHookAPI(HookAPI):
     """API for maintaining mercurial hooks."""
 
-    hook_names = ("changegroup", "commit",
-                  "incoming", "outgoing", "prechangegroup",
-                  "precommit", "preoutgoing", "pretag",
-                  "pretxnchangegroup", "pretxncommit",
-                  "preupdate", "tag", "update")
+    @property
+    def hook_names(self):
+        return ("changegroup", "commit",
+                "incoming", "outgoing", "prechangegroup",
+                "precommit", "preoutgoing", "pretag",
+                "pretxnchangegroup", "pretxncommit",
+                "preupdate", "tag", "update")
 
     def __init__(self, basedir='/usr/share/vcs-hooks/hg'):
         super(HgHookAPI, self).__init__(basedir)
