@@ -30,15 +30,16 @@ from ether.hookman.common import HookAPI
 class GitHookAPI(HookAPI):
     """API for maintaining svn hooks."""
 
+    hook_names = ("applypatch-msg", "pre-applypatch",
+                  "post-applypatch", "pre-commit",
+                  "prepare-commit-msg", "commit-msg",
+                  "post-commit", "pre-rebase",
+                  "post-checkout", "post-merge",
+                  "pre-receive", "update", "post-receive",
+                  "post-update", "pre-auto-gc")
+
     def __init__(self, basedir='/usr/share/vcs-hooks/git'):
-        super(SvnHookAPI, self).__init__(basedir,
-                         hook_names = ("applypatch-msg", "pre-applypatch",
-                                       "post-applypatch", "pre-commit",
-                                       "prepare-commit-msg", "commit-msg",
-                                       "post-commit", "pre-rebase",
-                                       "post-checkout", "post-merge",
-                                       "pre-receive", "update", "post-receive",
-                                       "post-update", "pre-auto-gc"))
+        super(GitHookAPI, self).__init__(basedir)
 
     def get_hook_path(self, repo, hook_name):
         return os.path.join(repo, ".git/hooks", hook_name)

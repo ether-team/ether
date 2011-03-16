@@ -30,13 +30,14 @@ from ether.hookman.common import HookAPI
 class SvnHookAPI(HookAPI):
     """API for maintaining svn hooks."""
 
+    hook_names = ("post-commit", "post-lock",
+                  "post-revprop-change", "post-unlock",
+                  "pre-commit", "pre-lock",
+                  "pre-revprop-change", "pre-unlock",
+                  "start-commit")
+
     def __init__(self, basedir='/usr/share/vcs-hooks/svn'):
-        super(SvnHookAPI, self).__init__(basedir,
-                         hook_names = ("post-commit", "post-lock",
-                                       "post-revprop-change", "post-unlock",
-                                       "pre-commit", "pre-lock",
-                                       "pre-revprop-change", "pre-unlock",
-                                       "start-commit"))
+        super(SvnHookAPI, self).__init__(basedir)
 
     def get_hook_path(self, repo, hook_name):
         return os.path.join(repo, "hooks", hook_name)

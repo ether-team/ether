@@ -40,10 +40,10 @@ class HookAPI(object):
     __metaclass__ = ABCMeta
 
     _root_hook_name = "root_hook.sh"
+    hook_names = ()
 
-    def __init__(self, basedir, hook_names):
+    def __init__(self, basedir):
         self._basedir = basedir
-        self._hook_names = hook_names
         self._root_hook = os.path.join(basedir, self._root_hook_name)
 
     @abstractmethod
@@ -55,14 +55,14 @@ class HookAPI(object):
         """Get path to hook by name.
            Here are only validation of params and call of get_hook_path
         """
-        if hook_name not in self._hook_names:
+        if hook_name not in self.hook_names:
             raise HookError("Unknown hook: %s" % hook_name)
         return self.get_hook_path(repo, hook_name)
 
     def setup(self, repo, hook):
         """Setup hooks infrastructure if needed."""
 
-        if hook not in self._hook_names:
+        if hook not in self.hook_names:
             raise HookError("Unknown hook: %s" % hook)
 
         hook_path = self.hook_path(repo, hook)
@@ -120,7 +120,7 @@ class HookAPI(object):
     def lst(self, repo):
         """List repo hooks."""
         result = {}
-        for hook in self._hook_names:
+        for hook in self.hook_names:
             hooks_d = self.hook_path(repo, hook) + ".d"
             if os.path.isdir(hooks_d):
                 hooks = [path for path in os.listdir(hooks_d) \

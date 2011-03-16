@@ -31,13 +31,14 @@ from ConfigParser import ConfigParser
 class HgHookAPI(HookAPI):
     """API for maintaining mercurial hooks."""
 
+    hook_names = ("changegroup", "commit",
+                  "incoming", "outgoing", "prechangegroup",
+                  "precommit", "preoutgoing", "pretag",
+                  "pretxnchangegroup", "pretxncommit",
+                  "preupdate", "tag", "update")
+
     def __init__(self, basedir='/usr/share/vcs-hooks/hg'):
-        super(SvnHookAPI, self).__init__(basedir,
-                         hook_names = ("changegroup", "commit",
-                                       "incoming", "outgoing", "prechangegroup",
-                                       "precommit", "preoutgoing", "pretag",
-                                       "pretxnchangegroup", "pretxncommit",
-                                       "preupdate", "tag", "update"))
+        super(HgHookAPI, self).__init__(basedir)
 
     def get_hook_path(self, repo, hook_name):
         return os.path.join(repo, ".hg", "hooks", hook_name)
