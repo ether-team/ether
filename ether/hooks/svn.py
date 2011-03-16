@@ -2,7 +2,7 @@
 
 """SVN hooks APIs."""
 
-import os, sys
+import os
 
 
 class SvnHookError(Exception):
@@ -40,7 +40,8 @@ def get_repo_url(paths, config):
                     result = url
                 break
     if not result:
-        raise SvnHookError("get_repo_url: Can't get repo url from %s" % str(paths))
+        raise SvnHookError("get_repo_url: Can't get repo url from %s" \
+                           % str(paths))
     return result
 
 
@@ -54,6 +55,8 @@ class SvnHook:
         self._config = config
 
     def _get_commits(self, repos, rev):
+        """Get commit info from svn revision using svnlook."""
+
         # collect the info
         changed = _svnlook("changed", repos, rev)
         log = _svnlook("log", repos, rev)
