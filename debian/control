@@ -28,7 +28,7 @@ Description: set of APIs and tools for passing VCS information through AMQP netw
  that follows the github payload spec :
  https://github.com/github/github-services/blob/master/docs/github_payload
 
-Package: ether-hooks-svn
+Package: ether-hookman-svn
 Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
@@ -36,7 +36,7 @@ Depends: ${misc:Depends},
          subversion (>= 1.3.0)
 Description: SVN hooks
 
-Package: ether-hooks-git
+Package: ether-hookman-git
 Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
