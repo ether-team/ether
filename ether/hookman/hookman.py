@@ -30,7 +30,7 @@ import pkg_resources
 
 from optparse import OptionParser
 
-from bifh.vcs.hooks.common import HookError
+from ether.hookman.common import HookError
 
 CATEGORY = "bifh.vcs.hooks"
 
