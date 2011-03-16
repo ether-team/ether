@@ -69,12 +69,12 @@ class HooksAPITest(unittest.TestCase):
         self.create_hook(presethook)
         for hook_name in self.svnhooks:
             self.svnapi.setup(self.svnrepo, hook_name)
-        
+
         existinghook = os.path.join(self.svnapi.hook_path(self.svnrepo,
                                     self.svnhooks[2])+'.d', self.svnhooks[2])
         self.create_hook(existinghook)
 
-        # git        
+        # git
         self.gitrepo = os.path.join(self.root, "gitrepo")
         self.gitapi = GitHookAPI(self.gitrepo)
         self.githooks = self.gitapi.hook_names
@@ -86,7 +86,7 @@ class HooksAPITest(unittest.TestCase):
         self.hgapi = HgHookAPI(self.hgrepo)
         self.hghooks = self.hgapi.hook_names
         hghookdir = os.path.join(self.hgrepo, ".hg", "hooks")
-        os.makedirs(hghookdir)        
+        os.makedirs(hghookdir)
 
     def tearDown(self):
         shutil.rmtree(self.root)
@@ -120,7 +120,7 @@ class HooksAPITest(unittest.TestCase):
 
     def test_add(self):
         self.svnapi.add(self.svnrepo, self.svnhooks[0], "hook1")
-        self.assertRaises(HookError, self.svnapi.add, self.svnrepo, 
+        self.assertRaises(HookError, self.svnapi.add, self.svnrepo,
                           self.svnhooks[0], "bla")
         self.assertRaises(HookError, self.svnapi.add, self.svnrepo,
                           self.svnhooks[0], "hook1")
@@ -128,12 +128,12 @@ class HooksAPITest(unittest.TestCase):
                          self.svnrepo)[self.svnhooks[0]], ['hook1'])
 
     def test_lst(self):
-        self.assertEqual(self.svnapi.lst(self.svnrepo), 
+        self.assertEqual(self.svnapi.lst(self.svnrepo),
                    {self.svnhooks[2]: [self.svnhooks[2]]})
                     #self.svnhooks[3]: [self.svnhooks[3]]})
 
     def test_remove(self):
-        self.assertRaises(HookError, self.svnapi.remove, self.svnrepo, 
+        self.assertRaises(HookError, self.svnapi.remove, self.svnrepo,
                           self.svnhooks[1], "hook2")
         self.svnapi.add(self.svnrepo, self.svnhooks[0], "hook1")
         self.svnapi.remove(self.svnrepo, self.svnhooks[0], "hook1")
@@ -141,7 +141,7 @@ class HooksAPITest(unittest.TestCase):
                              in self.svnapi.lst(self.svnrepo))
 
     def test_teardown(self):
-        self.assertEqual(self.svnapi.teardown(self.svnrepo, 
+        self.assertEqual(self.svnapi.teardown(self.svnrepo,
                                               self.svnhooks[1]), True)
         self.assertRaises(HookError, self.svnapi.teardown, self.svnrepo,
                           self.svnhooks[1])
@@ -154,7 +154,7 @@ class HooksAPITest(unittest.TestCase):
         hgrc_path = os.path.join(self.hgrepo, ".hg", "hgrc")
         parser.read([hgrc_path])
         parser.set("hooks", self.hghooks[1], "whatever")
-        with open(hgrc_path, "w") as hgrc:            
+        with open(hgrc_path, "w") as hgrc:
             parser.write(hgrc)
         self.assertRaises(HookError, self.hgapi.setup, self.hgrepo,
                           self.hghooks[1])
