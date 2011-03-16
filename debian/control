@@ -54,7 +54,7 @@ Package: ether-hookman
 Architecture: all
 Depends: ${python:Depends},
          ${misc:Depends},
-	 python-pkg-resources
+         python-pkg-resources
 Description: VCS hooks infrastructure
  This package contains vcs hooks infrastructure APIs and
  commandline tool for managing it
