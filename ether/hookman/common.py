@@ -47,10 +47,17 @@ class HookAPI(object):
         self._root_hook = os.path.join(basedir, self._root_hook_name)
 
     @abstractmethod
-    def hook_path(self, repo, hook_name):
+    def get_hook_path(self, repo, hook_name):
         """Get path to hook by name."""
+        raise NotImplementedError
+
+    def hook_path(self, repo, hook_name):
+        """Get path to hook by name.
+           Here are only validation of params and call of get_hook_path
+        """
         if hook_name not in self._hook_names:
             raise HookError("Unknown hook: %s" % hook_name)
+        return self.get_hook_path(repo, hook_name)
 
     def setup(self, repo, hook):
         """Setup hooks infrastructure if needed."""

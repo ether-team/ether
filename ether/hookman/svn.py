@@ -38,8 +38,7 @@ class SvnHookAPI(HookAPI):
                                        "pre-revprop-change", "pre-unlock",
                                        "start-commit"))
 
-    def hook_path(self, repo, hook_name):
-        HookAPI.hook_path(self, repo, hook_name)
+    def get_hook_path(self, repo, hook_name):
         return os.path.join(repo, "hooks", hook_name)
 
 # vim: sw=4 ts=4 expandtab ai

@@ -39,8 +39,7 @@ class HgHookAPI(HookAPI):
                                        "pretxnchangegroup", "pretxncommit",
                                        "preupdate", "tag", "update"))
 
-    def hook_path(self, repo, hook_name):
-        HookAPI.hook_path(self, repo, hook_name)
+    def get_hook_path(self, repo, hook_name):
         return os.path.join(repo, ".hg", "hooks", hook_name)
 
     def setup(self, repo, hook):
