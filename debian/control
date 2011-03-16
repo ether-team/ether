@@ -20,7 +20,7 @@ Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
          python-simplejson,
-         python-pika
+         python-pika (>= 0.9.4-3)
 Provides: ${python:Provides}
 Description: set of APIs and tools for passing VCS information through AMQP network
  This project is an implementation of commit / post-recieve hooks for various
