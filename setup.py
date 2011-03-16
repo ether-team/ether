@@ -58,8 +58,28 @@ setup(
             'configs/test_publisher.conf']
          )
     ],
+    classifiers=[
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+    ]
+)
+
+setup(
+    setup_requires=['nose>=0.11.1'],
+    test_suite = 'nose.collector',
+    name="hookman",
+    version=VERSION_STR,
+    url='https://github.com/ether-team/ether',
+    author='BIFH & OBS teams',
+    author_email='bifh-team@nokia.com',
+    packages=["ether.hookman"],
+    data_files=[
+        ('share/vcs-hooks/', ['hooks/root_hook.sh']),
+        ('share/vcs-hooks/svn', ['hooks/svn/ether-post-commit']),
+        ('share/vcs-hooks/git', ['hooks/git/ether-post-receive']),
+    ],
     entry_points={
-        "console_scripts": ["hookman = ether.hookman:main"],
+        "console_scripts": ["hookman = ether.hookman.hookman:main"],
     },
     classifiers=[
         'Operating System :: OS Independent',

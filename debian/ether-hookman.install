@@ -1,3 +1,4 @@
 usr/lib/python*/*-packages/ether/hookman/*
+usr/lib/python*/dist-packages/hookman-*.egg-info/*
 usr/bin/hookman
 usr/share/vcs-hooks/root_hook.sh
