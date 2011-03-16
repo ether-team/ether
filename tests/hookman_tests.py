@@ -116,7 +116,7 @@ class HooksAPITest(unittest.TestCase):
         self.gitapi.setup(self.gitrepo, self.githooks[0])
 
     def test_avail(self):
-        self.assertEqual(self.svnapi.avail(), ["hook1", "hook2"])
+        self.assertEqual(set(self.svnapi.avail()), set(["hook1", "hook2"]))
 
     def test_add(self):
         self.svnapi.add(self.svnrepo, self.svnhooks[0], "hook1")
