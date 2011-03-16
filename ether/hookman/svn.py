@@ -31,7 +31,7 @@ class SvnHookAPI(HookAPI):
     """API for maintaining svn hooks."""
 
     def __init__(self, basedir='/usr/share/vcs-hooks/svn'):
-        HookAPI.__init__(self, basedir,
+        super(SvnHookAPI, self).__init__(basedir,
                          hook_names = ("post-commit", "post-lock",
                                        "post-revprop-change", "post-unlock",
                                        "pre-commit", "pre-lock",

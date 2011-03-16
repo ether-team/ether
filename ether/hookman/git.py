@@ -31,7 +31,7 @@ class GitHookAPI(HookAPI):
     """API for maintaining svn hooks."""
 
     def __init__(self, basedir='/usr/share/vcs-hooks/git'):
-        HookAPI.__init__(self, basedir,
+        super(SvnHookAPI, self).__init__(basedir,
                          hook_names = ("applypatch-msg", "pre-applypatch",
                                        "post-applypatch", "pre-commit",
                                        "prepare-commit-msg", "commit-msg",

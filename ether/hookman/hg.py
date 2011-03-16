@@ -32,7 +32,7 @@ class HgHookAPI(HookAPI):
     """API for maintaining mercurial hooks."""
 
     def __init__(self, basedir='/usr/share/vcs-hooks/hg'):
-        HookAPI.__init__(self, basedir,
+        super(SvnHookAPI, self).__init__(basedir,
                          hook_names = ("changegroup", "commit",
                                        "incoming", "outgoing", "prechangegroup",
                                        "precommit", "preoutgoing", "pretag",
