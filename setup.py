@@ -79,7 +79,7 @@ setup(
         ('share/ether/hookman/git', ['hooks/git/ether-post-receive']),
     ],
     entry_points={
-        "console_scripts": ["hookman = ether.hooks.hookman:main"],
+        "console_scripts": ["hookman = ether.hookman.hookman:main"],
     },
     classifiers=[
         'Operating System :: OS Independent',
