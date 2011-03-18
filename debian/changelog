@@ -1,8 +1,18 @@
-ether (0.7.1) unstable; urgency=low
+ether (0.7.2) unstable; urgency=low
 
   * unified way pika.SelectConnection is used
 
  -- Anton Berezin <anton.berezin@nokia.com>  Tue, 22 Mar 2011 11:32:42 +0200
+
+ether (0.7.1) unstable; urgency=low
+
+  * fixed testcases
+  * Code beautification
+  * Added 'heartbeat' attribute to configuration structure
+  * Adopted ether-post-receive to refactored API
+  * Fixed loading of json
+
+ -- Ed Bartosh <eduard.bartosh@nokia.com>  Fri, 18 Mar 2011 16:22:18 +0200
 
 ether (0.7.0) unstable; urgency=low
 
