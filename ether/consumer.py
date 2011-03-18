@@ -42,7 +42,8 @@ class AsyncAMQPConsumer(object):
                                             config["password"])
         self._parameters = pika.ConnectionParameters(
             host=config["host"], port=config["port"],
-            virtual_host=config["vhost"], credentials=credentials)
+            virtual_host=config["vhost"], credentials=credentials,
+            heartbeat=config["heartbeat"])
 
         self._connection = None
         self._channel = None
