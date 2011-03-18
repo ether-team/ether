@@ -1,9 +1,9 @@
-import os
-import sys
+#!/usr/bin/env python -tt
+
+"""Testcases for Ether APIs."""
+
 import unittest
 import imp
-
-import pika
 
 import fixtures, dummy
 
@@ -12,7 +12,7 @@ from ether.hooks import git, svn
 from ether import consumer, publisher
 from ether.util import amqp as util
 
-svn_pcommit = imp.load_source("svn_postcommit_config",
+SVN_PCOMMIT = imp.load_source("svn_postcommit_config",
                               "configs/svn_postcommit.conf")
 
 cons_conf = imp.load_source("test_consumer_config",
@@ -76,11 +76,10 @@ class TestGitHook(DummyTestCase):
         self.mock(git, "_get_ataginfo", dummy.dummy_get_ataginfo)
         self.mock(git, "_get_revlistinfo", dummy.dummy_get_revlistinfo)
         self.mock(git, "_get_revtype", lambda rev: "tag")
-        publisher = TPublisher()
-        hook = git.GitHook(publisher)
+        publ = TPublisher()
+        hook = git.GitHook(publ)
         hook.postreceive(dummy.generate_git_commits())
-        self.assertEquals(publisher.payload,
-                          fixtures.githook_payload)
+        self.assertEquals(publ.payload, fixtures.githook_payload)
         # Test behavior (not state) multiple cases
         self.mock(git, "_get_types", lambda old, new, ref: ("create",
                                                             "unannotated tag"))
@@ -122,8 +121,7 @@ class TestGitHook(DummyTestCase):
         self.assertEquals(change_type, "update")
         self.assertEquals(ref_type, "branch")
         # Case 4
-        change_type, ref_type = git._get_types(
-            "XXXX", "XXXX", "bugaga")
+        change_type, ref_type = git._get_types("xxxx", "xxxx", "bugaga")
         self.assertEquals(ref_type, "unknown")
 
     def test_wrappers(self):
@@ -143,7 +141,7 @@ class TestSvnHook(DummyTestCase):
 
     def test_postcommit(self):
         publisher = TPublisher()
-        hook = svn.SvnHook(publisher, svn_pcommit.REPO_CONFIG)
+        hook = svn.SvnHook(publisher, SVN_PCOMMIT.REPO_CONFIG)
         hook.postcommit(
             "17",
             "/var/svn/repo")
@@ -176,16 +174,16 @@ class TestPublisher(DummyTestCase):
                   dummy.DummySelectConnection)
 
     def test_send_async_payload(self):
-        tpublisher = publisher.AsyncAMQPPublisher(svn_pcommit.AMQP_CONFIG)
+        tpublisher = publisher.AsyncAMQPPublisher(SVN_PCOMMIT.AMQP_CONFIG)
         tpublisher.send_payload({"payload":"payload"})
         # Test callbacks
         tpublisher.on_connected(dummy.DummySelectConnection(None, None))
         tpublisher.on_channel_open(dummy.DummyChannel())
 
     def test_version(self):
-         reload(ether)
-         self.assertTrue(hasattr(ether, "VERSION"))
-         self.assertTrue(hasattr(ether, "VERSION_STR"))
+        reload(ether)
+        self.assertTrue(hasattr(ether, "VERSION"))
+        self.assertTrue(hasattr(ether, "VERSION_STR"))
 
 class TestConsumer(DummyTestCase):
 
