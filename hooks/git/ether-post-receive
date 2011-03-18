@@ -17,18 +17,13 @@ sys.path.append(".")
 from optparse import OptionParser
 
 from ether.hooks.git import GitHook
-from ether.publishers.log import FileLogger
-from ether.publishers.amqp import BlockingAMQPPublisher, AsyncAMQPPublisher
+from ether.publisher import AsyncAMQPPublisher
 
 DEFAULT_CONFIG = "/etc/ether/git_postreceive.conf"
 
 def parse_args(argv):
     """ Commandline parser """
     parser = OptionParser(usage="%prog [options]")
-    parser.add_option("--type", dest="type", metavar="<type of publisher>",
-                      default="log",
-                      help="amqp-blocking, amqp-async and log are supported")
-
     parser.add_option("--config", metavar="<path to conf file>",
                       default=DEFAULT_CONFIG,
                       help="path to configuration file")
@@ -44,23 +39,17 @@ def main(argv):
     if len(args) > 3:
         commits = [[args[1], args[2], args[3]]]
     else:
-        if not sys.stdin.isatty():
-            commits = [line.split() for line in sys.stdin.readlines()]
-        else:
+        if sys.stdin.isatty():
             print "Standard input is a terminal. Aborting!"
-            sys.exit(1)
+            return 1
+        else:
+            commits = [line.split() for line in sys.stdin.readlines()]
 
     conf = imp.load_source("conf", options.config)
-
-    if options.type == "amqp-async":
-        publisher = AsyncAMQPPublisher(conf.GIT_CONFIG)
-    elif options.type == "amqp-blocking":
-        publisher = BlockingAMQPPublisher(conf.GIT_CONFIG)
-    elif options.type == "log":
-        publisher = FileLogger("/tmp/postcommit.log")
+    publisher = AsyncAMQPPublisher(conf.GIT_CONFIG)
 
     GitHook(publisher).postreceive(commits)
+    return 0
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
-
