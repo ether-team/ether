@@ -61,7 +61,7 @@ class AsyncAMQPConsumer(object):
         :type body: dictionary
         """
 
-        payload = simplejson.dumps(body)
+        payload = simplejson.loads(body)
         self._payload = payload
 
         return self.process_payload(payload, method.routing_key)
