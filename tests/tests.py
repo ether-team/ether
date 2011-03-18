@@ -7,6 +7,7 @@ import pika
 
 import fixtures, dummy
 
+import ether
 from ether.hooks import git, svn
 from ether import consumer, publisher
 from ether.util import amqp as util
@@ -181,6 +182,10 @@ class TestPublisher(DummyTestCase):
         tpublisher.on_connected(dummy.DummySelectConnection(None, None))
         tpublisher.on_channel_open(dummy.DummyChannel())
 
+    def test_version(self):
+         reload(ether)
+         self.assertTrue(hasattr(ether, "VERSION"))
+         self.assertTrue(hasattr(ether, "VERSION_STR"))
 
 class TestConsumer(DummyTestCase):
 

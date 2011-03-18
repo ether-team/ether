@@ -94,8 +94,7 @@ class HooksAPITest(unittest.TestCase):
     def test_abstract_class(self):
         class IncompleteHookAPI(HookAPI):
             pass
-        self.assertRaises(TypeError, IncompleteHookAPI, "basedir",
-                          ["pre-commit", "post-commit"])
+        self.assertRaises(TypeError, IncompleteHookAPI, "basedir")
 
     def test_setup(self):
         self.assertRaises(HookError, self.svnapi.setup, self.svnrepo, "bla")
