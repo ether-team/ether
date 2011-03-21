@@ -17,7 +17,7 @@ ether (0.7.3) unstable; urgency=low
  -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 22 Mar 2011 10:05:25 +0200
 
 ether (0.7.2) unstable; urgency=low
-  
+
   * added python-coverage to the list of build dependencies
   * hookman API: Fixed paths and plugin category
 
