@@ -32,7 +32,7 @@ from optparse import OptionParser
 
 from ether.hookman.common import HookError
 
-CATEGORY = "bifh.vcs.hooks"
+CATEGORY = "ether.hookman"
 
 APP = os.path.basename(sys.argv[0])
 LOG = logging.getLogger(APP)
