@@ -27,7 +27,7 @@ class DummyTestCase(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         """Constructor."""
         super(DummyTestCase, self).__init__(*args, **kwargs)
-        self.originals = {}
+        self._originals = {}
 
     def mock(self, module_imported, original, dummy):
         """Mocks the module.
@@ -36,19 +36,19 @@ class DummyTestCase(unittest.TestCase):
         :param original: string name of the module to substitute
         :param dummy: a module that is supposed to take place of the original
         """
-        if not self.originals.has_key(module_imported):
-            self.originals[module_imported] = {}
-        if not self.originals[module_imported].has_key(original):
-            self.originals[module_imported][original] = \
+        if not self._originals.has_key(module_imported):
+            self._originals[module_imported] = {}
+        if not self._originals[module_imported].has_key(original):
+            self._originals[module_imported][original] = \
                     getattr(module_imported, original)
         setattr(module_imported, original, dummy)
 
     def unmock(self):
         """Unmocks the modules. Sets everything to initial condition."""
-        for module_imported, originals in self.originals.iteritems():
+        for module_imported, originals in self._originals.iteritems():
             for original_name, module in originals.iteritems():
                 setattr(module_imported, original_name, module)
-        self.originals = {}
+        self._originals = {}
 
     def tearDown(self): #C0103:
         """Unmocks the modules."""
