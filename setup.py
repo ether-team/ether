@@ -80,6 +80,9 @@ setup(
     ],
     entry_points={
         "console_scripts": ["hookman = ether.hookman.hookman:main"],
+        "ether.hookman": ["svn = ether.hookman.svn:SvnHookAPI",
+                          "git = ether.hookman.git:GitHookAPI"]
+                          #"hg = ether.hookman.hg:HgHookAPI"
     },
     classifiers=[
         'Operating System :: OS Independent',
