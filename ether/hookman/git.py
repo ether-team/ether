@@ -40,7 +40,7 @@ class GitHookAPI(HookAPI):
                 "pre-receive", "update", "post-receive",
                 "post-update", "pre-auto-gc")
 
-    def __init__(self, basedir='/usr/share/vcs-hooks/git'):
+    def __init__(self, basedir='/usr/share/ether/hookman/git'):
         super(GitHookAPI, self).__init__(basedir)
 
     def get_hook_path(self, repo, hook_name):

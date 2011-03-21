@@ -39,7 +39,7 @@ class HgHookAPI(HookAPI):
                 "pretxnchangegroup", "pretxncommit",
                 "preupdate", "tag", "update")
 
-    def __init__(self, basedir='/usr/share/vcs-hooks/hg'):
+    def __init__(self, basedir='/usr/share/ether/hookman/hg'):
         super(HgHookAPI, self).__init__(basedir)
 
     def get_hook_path(self, repo, hook_name):
