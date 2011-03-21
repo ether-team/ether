@@ -5,6 +5,8 @@
 import unittest
 import imp
 
+from collections import defaultdict
+
 import fixtures, dummy
 
 import ether
@@ -27,7 +29,7 @@ class DummyTestCase(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         """Constructor."""
         super(DummyTestCase, self).__init__(*args, **kwargs)
-        self._originals = {}
+        self._originals = defaultdict(dict)
 
     def mock(self, module_imported, original, dummy):
         """Mocks the module.
@@ -36,9 +38,7 @@ class DummyTestCase(unittest.TestCase):
         :param original: string name of the module to substitute
         :param dummy: a module that is supposed to take place of the original
         """
-        if not self._originals.has_key(module_imported):
-            self._originals[module_imported] = {}
-        if not self._originals[module_imported].has_key(original):
+        if original not in self._originals[module_imported]:
             self._originals[module_imported][original] = \
                     getattr(module_imported, original)
         setattr(module_imported, original, dummy)
@@ -48,7 +48,8 @@ class DummyTestCase(unittest.TestCase):
         for module_imported, originals in self._originals.iteritems():
             for original_name, module in originals.iteritems():
                 setattr(module_imported, original_name, module)
-        self._originals = {}
+
+        self._originals.clear()
 
     def tearDown(self): #C0103:
         """Unmocks the modules."""
