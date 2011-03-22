@@ -2,6 +2,8 @@
 
 """Testcases for Ether APIs."""
 
+# pylint: disable=C0111
+
 import unittest
 import imp
 
@@ -20,7 +22,7 @@ SVN_PCOMMIT = imp.load_source("svn_postcommit_config",
 GIT_PRECEIVE = imp.load_source("git_postreceive_config",
                                "configs/git_postreceive.conf")
 
-cons_conf = imp.load_source("test_consumer_config",
+CONS_CONF = imp.load_source("test_consumer_config",
                             "configs/test_consumer.conf")
 
 class DummyTestCase(unittest.TestCase):
@@ -31,17 +33,17 @@ class DummyTestCase(unittest.TestCase):
         super(DummyTestCase, self).__init__(*args, **kwargs)
         self._originals = defaultdict(dict)
 
-    def mock(self, module_imported, original, dummy):
+    def mock(self, module_imported, original, stub):
         """Mocks the module.
 
         :param module_imported: module where the substitution has to occur
         :param original: string name of the module to substitute
-        :param dummy: a module that is supposed to take place of the original
+        :param stub: a module that is supposed to take place of the original
         """
         if original not in self._originals[module_imported]:
             self._originals[module_imported][original] = \
                     getattr(module_imported, original)
-        setattr(module_imported, original, dummy)
+        setattr(module_imported, original, stub)
 
     def unmock(self):
         """Unmocks the modules. Sets everything to initial condition."""
@@ -209,7 +211,7 @@ Some One|<some.one@example.com>|Thu Mar 3 14:21:46 2011 +0200|Commit 2"""
 class TestSvnHook(DummyTestCase):
 
     @staticmethod
-    def _dummy_svnlook(what, repos, rev):
+    def _dummy_svnlook(what, repos_, rev_):
         data = {
             "changed": "U   test\n",
             "log": "commit 20\n",
@@ -228,7 +230,9 @@ class TestSvnHook(DummyTestCase):
                     'author': {
                         'name': ['ed\n'],
                         'email': ''},
-                    'timestamp': ['2011-02-10 11:33:32 +0200 (Thu, 10 Feb 2011)\n'],
+                    'timestamp': [
+                        '2011-02-10 11:33:32 +0200 (Thu, 10 Feb 2011)\n'
+                    ],
                     'modified': ['test'],
                     'message': ['commit 20\n'],
                     'removed': [],
@@ -305,7 +309,7 @@ class TestConsumer(DummyTestCase):
                 dummy.DummySelectConnection)
 
     def test_ansync_methods(self):
-        tconsumer = TConsumer(cons_conf.TEST_CONFIG)
+        tconsumer = TConsumer(CONS_CONF.TEST_CONFIG)
         tconsumer.consume()
         # Test callbacks
         tconsumer.setup_connection()
@@ -315,24 +319,24 @@ class TestConsumer(DummyTestCase):
         tconsumer.on_queue_bound("some_frame")
 
     def test_receive_payload(self):
-        tconsumer = TConsumer(cons_conf.TEST_CONFIG)
+        tconsumer = TConsumer(CONS_CONF.TEST_CONFIG)
         tconsumer.receive_payload(None, dummy.DummyMethod(),
                                  None, '{"payload":{"data":"data"}}')
 
     def test_abstract_method(self):
-        tconsumer = TConsumer(cons_conf.TEST_CONFIG)
+        tconsumer = TConsumer(CONS_CONF.TEST_CONFIG)
         self.assertRaises(NotImplementedError,
                           consumer.AsyncAMQPConsumer.process_payload,
                           tconsumer, None, None)
 
     def test_receive_payload_exception(self):
         self.assertRaises(TypeError, consumer.AsyncAMQPConsumer,
-                          cons_conf.TEST_CONFIG)
+                          CONS_CONF.TEST_CONFIG)
 
     def test_exceptional_consume(self):
         consumer.pika.SelectConnection = \
                 dummy.DummyExceptionalSelectConnection
-        tconsumer = TConsumer(cons_conf.TEST_CONFIG)
+        tconsumer = TConsumer(CONS_CONF.TEST_CONFIG)
         tconsumer.consume()
 
 
@@ -349,6 +353,6 @@ class TestUtils(DummyTestCase):
                 dummy.DummyBasicProperties)
 
     def test_amqp_util(self):
-        obj = util.AMQPUtil(cons_conf.TEST_CONFIG)
+        obj = util.AMQPUtil(CONS_CONF.TEST_CONFIG)
         obj.setup_connection()
         obj.delete_queue()
