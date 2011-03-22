@@ -23,7 +23,7 @@ githook_payload = {
     'after': '68f7abf4e6f922807889f52bc043ecd31b79f814',
     'ref': 'refs/heads/master',
     'repository': {
-        'url': '',
+        'url': 'ssh://git@some.site.org/git/',
         'owner': {
             'email': '',
             'name': ''},

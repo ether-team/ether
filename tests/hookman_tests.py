@@ -78,7 +78,7 @@ class HooksAPITest(unittest.TestCase):
         self.gitrepo = os.path.join(self.root, "gitrepo")
         self.gitapi = GitHookAPI(self.gitrepo)
         self.githooks = self.gitapi.hook_names
-        githookdir = os.path.join(self.gitrepo, ".git", "hooks")
+        githookdir = os.path.join(self.gitrepo, "hooks")
         os.makedirs(githookdir)
 
         # hg

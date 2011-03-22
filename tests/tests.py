@@ -8,12 +8,15 @@ import imp
 import fixtures, dummy
 
 import ether
-from ether.hooks import git, svn
+from ether.hooks import git, svn, get_repo_url, EtherHookError
 from ether import consumer, publisher
 from ether.util import amqp as util
 
 SVN_PCOMMIT = imp.load_source("svn_postcommit_config",
                               "configs/svn_postcommit.conf")
+
+GIT_PRECEIVE = imp.load_source("git_postreceive_config",
+                               "configs/git_postreceive.conf")
 
 cons_conf = imp.load_source("test_consumer_config",
                             "configs/test_consumer.conf")
@@ -77,7 +80,7 @@ class TestGitHook(DummyTestCase):
         self.mock(git, "_get_revlistinfo", dummy.dummy_get_revlistinfo)
         self.mock(git, "_get_revtype", lambda rev: "tag")
         publ = TPublisher()
-        hook = git.GitHook(publ)
+        hook = git.GitHook(publ, GIT_PRECEIVE.REPO_CONFIG)
         hook.postreceive(dummy.generate_git_commits())
         self.assertEquals(publ.payload, fixtures.githook_payload)
         # Test behavior (not state) multiple cases
@@ -154,8 +157,8 @@ class TestSvnHook(DummyTestCase):
         svn._svnlook('log', 'bla', 1, '/bin/true')
 
     def test_get_repo_url(self):
-        self.assertRaises(svn.SvnHookError, svn.get_repo_url, [], None)
-        self.assertRaises(svn.SvnHookError, svn.get_repo_url,
+        self.assertRaises(EtherHookError, get_repo_url, [], None)
+        self.assertRaises(EtherHookError, get_repo_url,
                           ["whatever", "/some/path"],
                           (("/some/path", "url1"), ("", "url2")))
 
