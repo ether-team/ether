@@ -4,11 +4,17 @@ ether (0.7.5) unstable; urgency=low
 
  -- Anton Berezin <anton.berezin@nokia.com>  Tue, 22 Mar 2011 11:32:42 +0200
 
+ether (0.7.4) unstable; urgency=low
+
+  * Fixed variable name
+
+ -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 22 Mar 2011 10:26:13 +0200
+
 ether (0.7.3) unstable; urgency=low
 
   * SvnHookAPI: fixed basedir path
 
- -- Ed Bartosh <Ed Bartosh <eduard.bartosh@nokia.com>>  Tue, 22 Mar 2011 10:05:25 +0200
+ -- Ed Bartosh <eduard.bartosh@nokia.com>  Tue, 22 Mar 2011 10:05:25 +0200
 
 ether (0.7.2) unstable; urgency=low
   
