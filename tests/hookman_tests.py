@@ -36,8 +36,8 @@ from ether.hookman.svn import SvnHookAPI
 from ether.hookman.git import GitHookAPI
 from ether.hookman.hg import HgHookAPI
 
-class HooksAPITest(unittest.TestCase):
-    """VCS hook test sute."""
+class HooksAPIBase(unittest.TestCase):
+    """Base class for hook test suite."""
 
     @staticmethod
     def create_hook(fpath):
@@ -53,48 +53,48 @@ class HooksAPITest(unittest.TestCase):
         """Setup fixture."""
 
         self.root = tempfile.mkdtemp()
-        basedir = os.path.join(self.root, "base")
-        os.makedirs(basedir)
-        for name in ("hook1", "hook2"):
-            hpath = os.path.join(basedir, name)
-            self.create_hook(hpath)
+        self.basedir = os.path.join(self.root, "base")
 
-        # svn
+        os.makedirs(self.basedir)
+        for name in ("hook1", "hook2"):
+            self.create_hook(os.path.join(self.basedir, name))
+
+    def tearDown(self):
+        shutil.rmtree(self.root)
+
+class HooksAPITest(unittest.TestCase):
+    """Basic API test set"""
+
+    def test_abstract_class(self):
+        class IncompleteHookAPI(HookAPI):
+            pass
+        self.assertRaises(TypeError, IncompleteHookAPI, "basedir",
+                          ["pre-commit", "post-commit"])
+
+class SvnHooksTest(HooksAPIBase):
+    """svn hooks test set"""
+
+    def setUp(self):
+        """Setup fixture."""
+
+        HooksAPIBase.setUp(self)
+
         self.svnrepo = os.path.join(self.root, "svnrepo")
-        self.svnapi = SvnHookAPI(basedir)
+        self.svnapi = SvnHookAPI(self.basedir)
         self.svnhooks = self.svnapi.hook_names
+
         svnhookdir = os.path.join(self.svnrepo, "hooks")
+
         os.makedirs(svnhookdir)
-        presethook = os.path.join(svnhookdir, self.svnhooks[2])
-        self.create_hook(presethook)
+
+        self.create_hook(os.path.join(svnhookdir, self.svnhooks[2]))
+
         for hook_name in self.svnhooks:
             self.svnapi.setup(self.svnrepo, hook_name)
 
         existinghook = os.path.join(self.svnapi.hook_path(self.svnrepo,
                                     self.svnhooks[2])+'.d', self.svnhooks[2])
         self.create_hook(existinghook)
-
-        # git
-        self.gitrepo = os.path.join(self.root, "gitrepo")
-        self.gitapi = GitHookAPI(self.gitrepo)
-        self.githooks = self.gitapi.hook_names
-        githookdir = os.path.join(self.gitrepo, "hooks")
-        os.makedirs(githookdir)
-
-        # hg
-        self.hgrepo = os.path.join(self.root, "hgrepo")
-        self.hgapi = HgHookAPI(self.hgrepo)
-        self.hghooks = self.hgapi.hook_names
-        hghookdir = os.path.join(self.hgrepo, ".hg", "hooks")
-        os.makedirs(hghookdir)
-
-    def tearDown(self):
-        shutil.rmtree(self.root)
-
-    def test_abstract_class(self):
-        class IncompleteHookAPI(HookAPI):
-            pass
-        self.assertRaises(TypeError, IncompleteHookAPI, "basedir")
 
     def test_setup(self):
         self.assertRaises(HookError, self.svnapi.setup, self.svnrepo, "bla")
@@ -112,7 +112,6 @@ class HooksAPITest(unittest.TestCase):
 
         self.svnapi.setup(self.svnrepo, self.svnhooks[0])
         self.svnapi.setup(self.svnrepo, self.svnhooks[3])
-        self.gitapi.setup(self.gitrepo, self.githooks[0])
 
     def test_avail(self):
         self.assertEqual(set(self.svnapi.avail()), set(["hook1", "hook2"]))
@@ -123,8 +122,8 @@ class HooksAPITest(unittest.TestCase):
                           self.svnhooks[0], "bla")
         self.assertRaises(HookError, self.svnapi.add, self.svnrepo,
                           self.svnhooks[0], "hook1")
-        self.assertEqual(self.svnapi.lst(\
-                         self.svnrepo)[self.svnhooks[0]], ['hook1'])
+        self.assertEqual(self.svnapi.lst(self.svnrepo)[self.svnhooks[0]],
+                         ['hook1'])
 
     def test_lst(self):
         self.assertEqual(self.svnapi.lst(self.svnrepo),
@@ -136,8 +135,7 @@ class HooksAPITest(unittest.TestCase):
                           self.svnhooks[1], "hook2")
         self.svnapi.add(self.svnrepo, self.svnhooks[0], "hook1")
         self.svnapi.remove(self.svnrepo, self.svnhooks[0], "hook1")
-        self.assertFalse(self.svnhooks[0] \
-                             in self.svnapi.lst(self.svnrepo))
+        self.assertFalse(self.svnhooks[0] in self.svnapi.lst(self.svnrepo))
 
     def test_teardown(self):
         self.assertEqual(self.svnapi.teardown(self.svnrepo,
@@ -147,7 +145,38 @@ class HooksAPITest(unittest.TestCase):
         self.assertEqual(self.svnapi.teardown(self.svnrepo,
                                               self.svnhooks[2]), True)
 
-    def test_hg_setup(self):
+class GitHooksTest(HooksAPIBase):
+    """Git hooks test set"""
+
+    def setUp(self):
+        """Setup fixture."""
+
+        HooksAPIBase.setUp(self)
+
+        self.gitrepo = os.path.join(self.root, "gitrepo")
+        self.gitapi = GitHookAPI(self.gitrepo)
+        self.githooks = self.gitapi.hook_names
+
+        os.makedirs(os.path.join(self.gitrepo, "hooks"))
+
+    def test_setup(self):
+        self.gitapi.setup(self.gitrepo, self.githooks[0])
+
+class HgHooksTest(HooksAPIBase):
+    """hg hooks test set"""
+
+    def setUp(self):
+        """Setup fixture."""
+
+        HooksAPIBase.setUp(self)
+
+        self.hgrepo = os.path.join(self.root, "hgrepo")
+        self.hgapi = HgHookAPI(self.hgrepo)
+        self.hghooks = self.hgapi.hook_names
+
+        os.makedirs(os.path.join(self.hgrepo, ".hg", "hooks"))
+
+    def test_setup(self):
         self.hgapi.setup(self.hgrepo, self.hghooks[0])
         parser = ConfigParser()
         hgrc_path = os.path.join(self.hgrepo, ".hg", "hgrc")
@@ -158,11 +187,11 @@ class HooksAPITest(unittest.TestCase):
         self.assertRaises(HookError, self.hgapi.setup, self.hgrepo,
                           self.hghooks[1])
 
-    def test_hg_teardown(self):
+    def test_teardown(self):
         self.hgapi.setup(self.hgrepo, self.hghooks[0])
         self.assertTrue(self.hgapi.teardown(self.hgrepo, self.hghooks[0]))
         os.unlink(os.path.join(os.path.join(self.hgrepo, ".hg", "hgrc")))
-        self.assertEqual(self.hgapi.teardown(self.hgrepo,
-                                             self.hghooks[0]), None)
+        self.assertEqual(self.hgapi.teardown(self.hgrepo, self.hghooks[0]),
+                         None)
 
 # vim: sw=4 ts=4 expandtab ai
