@@ -25,7 +25,7 @@ def main(argv):
 
     conf = imp.load_source("conf", DEFAULT_CONFIG)
     publisher = AsyncAMQPPublisher(conf.AMQP_CONFIG)
-    SvnHook(publisher, conf.REPO_CONFIG).postcommit(args[1], args[2])
+    SvnHook(publisher, conf.REPO_CONFIG).postcommit(argv[1], argv[2])
 
     return 0
 
