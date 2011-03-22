@@ -194,7 +194,6 @@ Some One|<some.one@example.com>|Thu Mar 3 14:21:46 2011 +0200|Commit 2"""
         self.assertEquals(ref_type, "unknown")
 
     def test_wrappers(self):
-        """Make sure that the wrappers are OK."""
         self.unmock()
         git._get_allbranches()
         git._get_notcommits("branch1")
@@ -218,7 +217,6 @@ class TestSvnHook(DummyTestCase):
                           fixtures.svnhook_payload)
 
     def test_wrappers(self):
-        """Make sure that the wrappers are OK."""
         self.unmock()
         svn._svnlook('log', 'bla', 1, '/bin/true')
 
