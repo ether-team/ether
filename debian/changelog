@@ -1,3 +1,9 @@
+ether (0.7.1) unstable; urgency=low
+
+  * unified way pika.SelectConnection is used
+
+ -- Anton Berezin <anton.berezin@nokia.com>  Tue, 22 Mar 2011 11:32:42 +0200
+
 ether (0.7.0) unstable; urgency=low
 
   * Added hookman package
