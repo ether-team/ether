@@ -89,8 +89,8 @@ class AsyncAMQPConsumer(object):
 
         """Step #1: Connect to RabbitMQ."""
 
-        self._connection = pika.adapters.SelectConnection(self._parameters,
-                                                          self.on_connected)
+        self._connection = pika.SelectConnection(self._parameters,
+                                                 self.on_connected)
 
     def on_connected(self, connection):
 

@@ -193,7 +193,7 @@ class TestConsumer(DummyTestCase):
                 dummy.DummyBlockingConnection)
         self.mock(consumer.pika, "BasicProperties",
                 dummy.DummyBasicProperties)
-        self.mock(consumer.pika.adapters, "SelectConnection",
+        self.mock(consumer.pika, "SelectConnection",
                 dummy.DummySelectConnection)
 
     def test_ansync_methods(self):
@@ -222,7 +222,7 @@ class TestConsumer(DummyTestCase):
                           cons_conf.TEST_CONFIG)
 
     def test_exceptional_consume(self):
-        consumer.pika.adapters.SelectConnection = \
+        consumer.pika.SelectConnection = \
                 dummy.DummyExceptionalSelectConnection
         tconsumer = TConsumer(cons_conf.TEST_CONFIG)
         tconsumer.consume()
