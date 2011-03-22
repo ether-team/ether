@@ -38,7 +38,7 @@ class SvnHookAPI(HookAPI):
                 "pre-revprop-change", "pre-unlock",
                 "start-commit")
 
-    def __init__(self, basedir='/usr/share/ether/hookman/'):
+    def __init__(self, basedir='/usr/share/ether/hookman/svn'):
         super(SvnHookAPI, self).__init__(basedir)
 
     def get_hook_path(self, repo, hook_name):
