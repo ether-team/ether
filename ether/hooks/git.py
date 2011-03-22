@@ -6,8 +6,11 @@ Loosely modelled after the excellent contrib hook
 /usr/share/doc/git/contrib/hooks/post-receive-email
 """
 
-import os, re
+import os
+import re
 from datetime import datetime
+
+from ether.hooks import get_repo_url
 
 
 #EMAIL_RE = re.compile("^(.*) <(.*)>$")
@@ -190,13 +193,14 @@ def _gen_commit(change_type, ref_type, props):
 class GitHook(object):
     """GIT hook."""
 
-    def __init__(self, sender):
+    def __init__(self, sender, config):
         """Constructor.
 
         :param sender: a class that is supposed to send the message
             has to implement 'send_payload' method
         """
         self._sender = sender
+        self._config = config
 
     @staticmethod
     def _get_commits(old, new, ref):
@@ -294,7 +298,7 @@ class GitHook(object):
                 "after": new,
                 "ref": ref,
                 "repository": {
-                    "url": "",
+                    "url": get_repo_url([os.getcwd()], self._config),
                     "name": "",
                     "description": "",
                     "owner": {

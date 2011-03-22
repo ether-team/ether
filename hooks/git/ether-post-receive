@@ -46,9 +46,9 @@ def main(argv):
             commits = [line.split() for line in sys.stdin.readlines()]
 
     conf = imp.load_source("conf", options.config)
-    publisher = AsyncAMQPPublisher(conf.GIT_CONFIG)
+    publisher = AsyncAMQPPublisher(conf.AMQP_CONFIG)
 
-    GitHook(publisher).postreceive(commits)
+    GitHook(publisher, conf.REPO_CONFIG).postreceive(commits)
     return 0
 
 if __name__ == '__main__':

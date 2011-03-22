@@ -3,11 +3,7 @@
 """SVN hooks APIs."""
 
 import os
-
-
-class SvnHookError(Exception):
-    """Custom exception."""
-    pass
+from ether.hooks import get_repo_url
 
 
 def _svnlook(what, repos, rev, exe="svnlook"):
@@ -16,33 +12,6 @@ def _svnlook(what, repos, rev, exe="svnlook"):
     with os.popen("%s %s -r %s %s" % \
                   (exe, what, rev, repos), "r") as handler:
         return handler.readlines()
-
-
-def get_repo_url(paths, config):
-    """
-    Get svn repo url from the list of paths.
-    :param paths: list of changed paths
-    :ptype paths: list
-    :param config: configuration object which maps repository paths to urls
-    :ptype config: list of tuples (<path>, <url>)
-    :returns: repository url
-    :rtype: string
-    """
-
-    result = None
-    for path in paths:
-        for upath, url in config:
-            if path.startswith(upath):
-                if result and result != url:
-                    raise SvnHookError("get_repo_url got 2 different results: "
-                                        "%s and %s" % (result, url))
-                if not result:
-                    result = url
-                break
-    if not result:
-        raise SvnHookError("get_repo_url: Can't get repo url from %s" \
-                           % str(paths))
-    return result
 
 
 class SvnHook:
