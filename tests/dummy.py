@@ -1,6 +1,3 @@
-import fixtures
-
-
 #ether.hooks.svn._svnlook
 def dummy_svnlook(what, repos, rev):
     data = {
@@ -10,54 +7,11 @@ def dummy_svnlook(what, repos, rev):
         "date": "2011-02-10 11:33:32 +0200 (Thu, 10 Feb 2011)\n"}
     return [data[what]]
 
-
-#ether.hooks.git._get_allbranches
-def dummy_get_allbranches():
-    """
-    git for-each-ref --format='%(refname)' refs/heads/
-    """
-    return fixtures.all_branchs
-
-
-#ether.hooks.git._get_notcommits
-def dummy_get_notcommits(other_branches):
-    """
-    git rev-parse --not BRANCH1 BRANCH2 ... BRANCHN
-    """
-    return fixtures.not_commits
-
-
-#ether.hooks.git._get_ataginfo
-def dummy_get_ataginfo(ref):
-    """
-    git for-each-ref
-    --format='%(*authorname)|%(*authoremail)|%(*authordate)|%(*subject)'
-    refs/tags/TAG_NAME
-    """
-    return fixtures.ataginfo
-
-
-#ether.hooks.git._get_revlistinfo
-def dummy_get_revlistinfo(rev):
-    """
-    git rev-list --pretty=format:'%an|%ae|%ad|%s%n' refs/???
-    """
-    return fixtures.revlistinfo
-
-
-def generate_git_commits():
-    return [[
-        "aa453216d1b3e49e7f6f98441fa56946ddcd6a20",
-        "68f7abf4e6f922807889f52bc043ecd31b79f814",
-        "refs/heads/master"]]
-
-
 #pika.PlainCredentials
 class DummyPlainCridentials:
 
     def __init__(self, username, password):
         pass
-
 
 #pika.ConnectionParameters
 class DummyConnectionParameters:

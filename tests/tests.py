@@ -74,37 +74,102 @@ class TConsumer(consumer.AsyncAMQPConsumer):
 
 class TestGitHook(DummyTestCase):
 
+    @staticmethod
+    def _generate_git_commits():
+        return [[
+            "aa453216d1b3e49e7f6f98441fa56946ddcd6a20",
+            "68f7abf4e6f922807889f52bc043ecd31b79f814",
+            "refs/heads/master"]]
+
+    @staticmethod
+    def _githook_payload():
+        return {
+            'commits': [],
+            'after': '68f7abf4e6f922807889f52bc043ecd31b79f814',
+            'ref': 'refs/heads/master',
+            'repository': {
+                'url': 'ssh://git@some.site.org/git/',
+                'owner': {
+                    'email': '',
+                    'name': ''},
+                'name': '',
+                'description': ''},
+            'before': 'aa453216d1b3e49e7f6f98441fa56946ddcd6a20'
+        }
+
+    @staticmethod
+    def _dummy_get_allbranches():
+        """
+        git for-each-ref --format='%(refname)' refs/heads/
+        """
+        return """\
+refs/heads/master
+refs/heads/test
+"""
+
+    @staticmethod
+    def _dummy_get_notcommits(other_branches):
+        """
+        git rev-parse --not BRANCH1 BRANCH2 ... BRANCHN
+        """
+        return "^0db3f7da89cfb8ef301c1f4a5cb1d8cfcad13684"
+
+    @staticmethod
+    def _dummy_get_ataginfo(ref_):
+        """
+        git for-each-ref
+        --format='%(*authorname)|%(*authoremail)|%(*authordate)|%(*subject)'
+        refs/tags/TAG_NAME
+        """
+        return """\
+Some One|<some.one@example.com>|Sat Feb 19 14:27:55 2011 +0200|changelog updated
+"""
+
+    @staticmethod
+    def _dummy_get_revlistinfo(rev_):
+        """
+        git rev-list --pretty=format:'%an|%ae|%ad|%s%n' refs/???
+        """
+        return """\
+commit 9442f7cdd33e93e7cf0add43bd9bc4be1bfbdb72
+Some One|<some.one@example.com>|Thu Mar 3 16:21:11 2011 +0200|Commit 1
+
+commit ee43557cdc68039e13bdddb3dd270028334eb5a1
+Some One|<some.one@example.com>|Thu Mar 3 14:21:46 2011 +0200|Commit 2"""
+
     def test_postreceive(self):
-        self.mock(git, "_get_allbranches", dummy.dummy_get_allbranches)
-        self.mock(git, "_get_notcommits", dummy.dummy_get_notcommits)
-        self.mock(git, "_get_ataginfo", dummy.dummy_get_ataginfo)
-        self.mock(git, "_get_revlistinfo", dummy.dummy_get_revlistinfo)
+        self.mock(git, "_get_allbranches", self._dummy_get_allbranches)
+        self.mock(git, "_get_notcommits", self._dummy_get_notcommits)
+        self.mock(git, "_get_ataginfo", self._dummy_get_ataginfo)
+        self.mock(git, "_get_revlistinfo", self._dummy_get_revlistinfo)
         self.mock(git, "_get_revtype", lambda rev: "tag")
-        publ = TPublisher()
-        hook = git.GitHook(publ, GIT_PRECEIVE.REPO_CONFIG)
-        hook.postreceive(dummy.generate_git_commits())
-        self.assertEquals(publ.payload, fixtures.githook_payload)
+
+        publisher = TPublisher()
+        hook = git.GitHook(publisher, GIT_PRECEIVE.REPO_CONFIG)
+        hook.postreceive(self._generate_git_commits())
+        self.assertEquals(publisher.payload, self._githook_payload())
+
         # Test behavior (not state) multiple cases
         self.mock(git, "_get_types", lambda old, new, ref: ("create",
                                                             "unannotated tag"))
-        hook.postreceive(dummy.generate_git_commits())
+        hook.postreceive(self._generate_git_commits())
 
         self.mock(git, "_get_types", lambda old, new, ref: ("create",
                                                             "annotated tag"))
-        hook.postreceive(dummy.generate_git_commits())
+        hook.postreceive(self._generate_git_commits())
         self.mock(git, "_get_types", lambda old, new, ref: ("delete",
                                                             "annotated tag"))
-        hook.postreceive(dummy.generate_git_commits())
+        hook.postreceive(self._generate_git_commits())
 
         self.mock(git, "_get_types", lambda old, new, ref: ("delete",
                                                             "branch"))
-        hook.postreceive(dummy.generate_git_commits())
+        hook.postreceive(self._generate_git_commits())
         self.mock(git, "_get_types", lambda old, new, ref: ("update",
                                                             "branch"))
-        hook.postreceive(dummy.generate_git_commits())
+        hook.postreceive(self._generate_git_commits())
         self.mock(git, "_get_types", lambda old, new, ref: ("create",
                                                             "branch"))
-        hook.postreceive(dummy.generate_git_commits())
+        hook.postreceive(self._generate_git_commits())
 
     def test_get_types(self):
         # Case 1
