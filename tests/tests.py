@@ -171,25 +171,29 @@ Some One|<some.one@example.com>|Thu Mar 3 14:21:46 2011 +0200|Commit 2"""
                                                             "branch"))
         hook.postreceive(self._generate_git_commits())
 
-    def test_get_types(self):
-        # Case 1
+    def test_get_types_1(self):
         self.mock(git, "_get_revtype", lambda rev: "tag")
-        change_type, ref_type = git._get_types(
-            "0000", "0000", "refs/tags/TAG_NAME")
+        change_type, ref_type = git._get_types("0000", "0000",
+                                               "refs/tags/TAG_NAME")
         self.assertEquals(change_type, "create")
         self.assertEquals(ref_type, "annotated tag")
-        # Case 2
+
+    def test_get_types_2(self):
         self.mock(git, "_get_revtype", lambda rev: "commit")
-        change_type, ref_type = git._get_types(
-            "1111", "0000", "refs/tags/TAG_NAME")
+        change_type, ref_type = git._get_types("1111", "0000",
+                                               "refs/tags/TAG_NAME")
         self.assertEquals(change_type, "delete")
         self.assertEquals(ref_type, "unannotated tag")
-        # Case 3
-        change_type, ref_type = git._get_types(
-            "1111", "1111", "refs/heads/master")
+
+    def test_get_types_3(self):
+        self.mock(git, "_get_revtype", lambda rev: "commit")
+        change_type, ref_type = git._get_types("1111", "1111",
+                                               "refs/heads/master")
         self.assertEquals(change_type, "update")
         self.assertEquals(ref_type, "branch")
-        # Case 4
+
+    def test_get_types_4(self):
+        self.mock(git, "_get_revtype", lambda rev: "commit")
         change_type, ref_type = git._get_types("xxxx", "xxxx", "bugaga")
         self.assertEquals(ref_type, "unknown")
 
