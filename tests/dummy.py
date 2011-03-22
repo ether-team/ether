@@ -1,11 +1,3 @@
-#ether.hooks.svn._svnlook
-def dummy_svnlook(what, repos, rev):
-    data = {
-        "changed": "U   test\n",
-        "log": "commit 20\n",
-        "author": "ed\n",
-        "date": "2011-02-10 11:33:32 +0200 (Thu, 10 Feb 2011)\n"}
-    return [data[what]]
 
 #pika.PlainCredentials
 class DummyPlainCridentials:

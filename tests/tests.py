@@ -7,7 +7,7 @@ import imp
 
 from collections import defaultdict
 
-import fixtures, dummy
+import dummy
 
 import ether
 from ether.hooks import git, svn, get_repo_url, EtherHookError
@@ -204,8 +204,42 @@ Some One|<some.one@example.com>|Thu Mar 3 14:21:46 2011 +0200|Commit 2"""
 
 class TestSvnHook(DummyTestCase):
 
+    @staticmethod
+    def _dummy_svnlook(what, repos, rev):
+        data = {
+            "changed": "U   test\n",
+            "log": "commit 20\n",
+            "author": "ed\n",
+            "date": "2011-02-10 11:33:32 +0200 (Thu, 10 Feb 2011)\n"
+        }
+        return [data[what]]
+
+    @staticmethod
+    def _get_svnhook_payload():
+        return {
+            'data': {},
+            'payload': {
+                'commits': [
+                    {'added': [],
+                    'author': {
+                        'name': ['ed\n'],
+                        'email': ''},
+                    'timestamp': ['2011-02-10 11:33:32 +0200 (Thu, 10 Feb 2011)\n'],
+                    'modified': ['test'],
+                    'message': ['commit 20\n'],
+                    'removed': [],
+                    'id': '/var/svn/repo'}
+                ],
+                'repository': {
+                    'url': 'https://some.site.org/svn/',
+                    'owner': '',
+                    'name': ''
+                }
+            }
+        }
+
     def setUp(self):
-        self.mock(svn, "_svnlook", dummy.dummy_svnlook)
+        self.mock(svn, "_svnlook", self._dummy_svnlook)
 
     def test_postcommit(self):
         publisher = TPublisher()
@@ -214,7 +248,7 @@ class TestSvnHook(DummyTestCase):
             "17",
             "/var/svn/repo")
         self.assertEquals(publisher.payload,
-                          fixtures.svnhook_payload)
+                          self._get_svnhook_payload())
 
     def test_wrappers(self):
         self.unmock()
