@@ -36,6 +36,7 @@ from ether.hookman.svn import SvnHookAPI
 from ether.hookman.git import GitHookAPI
 from ether.hookman.hg import HgHookAPI
 
+
 class HooksAPIBase(unittest.TestCase):
     """Base class for hook test suite."""
 
@@ -62,6 +63,7 @@ class HooksAPIBase(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self.root)
 
+
 class HooksAPITest(unittest.TestCase):
     """Basic API test set"""
 
@@ -70,6 +72,7 @@ class HooksAPITest(unittest.TestCase):
             pass
         self.assertRaises(TypeError, IncompleteHookAPI, "basedir",
                           ["pre-commit", "post-commit"])
+
 
 class SvnHooksTest(HooksAPIBase):
     """svn hooks test set"""
@@ -145,6 +148,7 @@ class SvnHooksTest(HooksAPIBase):
         self.assertEqual(self.svnapi.teardown(self.svnrepo,
                                               self.svnhooks[2]), True)
 
+
 class GitHooksTest(HooksAPIBase):
     """Git hooks test set"""
 
@@ -161,6 +165,7 @@ class GitHooksTest(HooksAPIBase):
 
     def test_setup(self):
         self.gitapi.setup(self.gitrepo, self.githooks[0])
+
 
 class HgHooksTest(HooksAPIBase):
     """hg hooks test set"""

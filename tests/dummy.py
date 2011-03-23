@@ -1,9 +1,9 @@
-
 #pika.PlainCredentials
 class DummyPlainCridentials:
 
     def __init__(self, username, password):
         pass
+
 
 #pika.ConnectionParameters
 class DummyConnectionParameters:
@@ -43,7 +43,6 @@ class DummyChannel:
         pass
 
 
-
 #pika.BlockingConnection
 class DummyBlockingConnection:
 
@@ -69,6 +68,7 @@ class DummyIOLoop:
 
     def start(self):
         pass
+
 
 #pika's ioloop
 class DummyExceptionalIOLoop(DummyIOLoop):
@@ -100,6 +100,3 @@ class DummyExceptionalSelectConnection(DummySelectConnection):
 #ether.consumer.amqp.BaseAMQPConsumer.receive_payload
 class DummyMethod:
     routing_key = "the_key"
-
-
-

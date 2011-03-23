@@ -73,6 +73,7 @@ class TConsumer(consumer.AsyncAMQPConsumer):
         self.payload = payload
         self.routing_key = routing_key
 
+
 class TestGeneralHook(unittest.TestCase):
 
     def test_get_repo_url(self):
@@ -80,6 +81,7 @@ class TestGeneralHook(unittest.TestCase):
         self.assertRaises(EtherHookError, get_repo_url,
                           ["whatever", "/some/path"],
                           (("/some/path", "url1"), ("", "url2")))
+
 
 class TestGitHook(DummyTestCase):
 
@@ -269,6 +271,7 @@ class TestSvnHook(DummyTestCase):
         self.unmock()
         svn._svnlook('log', 'bla', 1, '/bin/true')
 
+
 class TestPublisher(DummyTestCase):
 
     def setUp(self):
@@ -294,6 +297,7 @@ class TestPublisher(DummyTestCase):
         reload(ether)
         self.assertTrue(hasattr(ether, "VERSION"))
         self.assertTrue(hasattr(ether, "VERSION_STR"))
+
 
 class TestConsumer(DummyTestCase):
 
