@@ -25,16 +25,16 @@ GIT_PRECEIVE = imp.load_source("git_postreceive_config",
 CONS_CONF = imp.load_source("test_consumer_config",
                             "configs/test_consumer.conf")
 
-class DummyTestCase(unittest.TestCase):
+class ModuleMocker(unittest.TestCase):
     """A test case that provides an easy way to mock the modules."""
 
     def __init__(self, *args, **kwargs):
         """Constructor."""
-        super(DummyTestCase, self).__init__(*args, **kwargs)
+        super(ModuleMocker, self).__init__(*args, **kwargs)
         self._originals = defaultdict(dict)
 
     def mock(self, module_imported, original, stub):
-        """Mocks the module.
+        """mocks the module.
 
         :param module_imported: module where the substitution has to occur
         :param original: string name of the module to substitute
@@ -77,13 +77,14 @@ class TConsumer(consumer.AsyncAMQPConsumer):
 class TestGeneralHook(unittest.TestCase):
 
     def test_get_repo_url(self):
+        """ TestGeneralHook: test get repo url """
         self.assertRaises(EtherHookError, get_repo_url, [], None)
         self.assertRaises(EtherHookError, get_repo_url,
                           ["whatever", "/some/path"],
                           (("/some/path", "url1"), ("", "url2")))
 
 
-class TestGitHook(DummyTestCase):
+class TestGitHook(ModuleMocker):
 
     @staticmethod
     def _generate_git_commits():
@@ -149,6 +150,7 @@ commit ee43557cdc68039e13bdddb3dd270028334eb5a1
 Some One|<some.one@example.com>|Thu Mar 3 14:21:46 2011 +0200|Commit 2"""
 
     def test_postreceive(self):
+        """ TestGitHook: test postreceive """
         self.mock(git, "_get_allbranches", self._dummy_get_allbranches)
         self.mock(git, "_get_notcommits", self._dummy_get_notcommits)
         self.mock(git, "_get_ataginfo", self._dummy_get_ataginfo)
@@ -182,33 +184,38 @@ Some One|<some.one@example.com>|Thu Mar 3 14:21:46 2011 +0200|Commit 2"""
                                                             "branch"))
         hook.postreceive(self._generate_git_commits())
 
-    def test_get_types_1(self):
+    def test_get_types_create_annotated_tag(self):
+        """ TestGitHook: test get types -> create + annotated tag """
         self.mock(git, "_get_revtype", lambda rev: "tag")
         change_type, ref_type = git._get_types("0000", "0000",
                                                "refs/tags/TAG_NAME")
         self.assertEquals(change_type, "create")
         self.assertEquals(ref_type, "annotated tag")
 
-    def test_get_types_2(self):
+    def test_get_types_delete_unannotated_tag(self):
+        """ TestGitHook: test get types -> delete + unannotated tag """
         self.mock(git, "_get_revtype", lambda rev: "commit")
         change_type, ref_type = git._get_types("1111", "0000",
                                                "refs/tags/TAG_NAME")
         self.assertEquals(change_type, "delete")
         self.assertEquals(ref_type, "unannotated tag")
 
-    def test_get_types_3(self):
+    def test_get_types_update_branch(self):
+        """ TestGitHook: test get types -> update + branch """
         self.mock(git, "_get_revtype", lambda rev: "commit")
         change_type, ref_type = git._get_types("1111", "1111",
                                                "refs/heads/master")
         self.assertEquals(change_type, "update")
         self.assertEquals(ref_type, "branch")
 
-    def test_get_types_4(self):
+    def test_get_types_unknown(self):
+        """ TestGitHook: test get types -> unknown """
         self.mock(git, "_get_revtype", lambda rev: "commit")
         change_type, ref_type = git._get_types("xxxx", "xxxx", "bugaga")
         self.assertEquals(ref_type, "unknown")
 
     def test_wrappers(self):
+        """ TestGitHook: test wrappers """
         self.unmock()
         git._get_allbranches()
         git._get_notcommits("branch1")
@@ -217,7 +224,7 @@ Some One|<some.one@example.com>|Thu Mar 3 14:21:46 2011 +0200|Commit 2"""
         git._get_revtype("rev")
 
 
-class TestSvnHook(DummyTestCase):
+class TestSvnHook(ModuleMocker):
 
     @staticmethod
     def _dummy_svnlook(what, repos_, rev_):
@@ -259,6 +266,7 @@ class TestSvnHook(DummyTestCase):
         self.mock(svn, "_svnlook", self._dummy_svnlook)
 
     def test_postcommit(self):
+        """ TestSvnHook: test postcommit """
         publisher = TPublisher()
         hook = svn.SvnHook(publisher, SVN_PCOMMIT.REPO_CONFIG)
         hook.postcommit(
@@ -268,25 +276,33 @@ class TestSvnHook(DummyTestCase):
                           self._get_svnhook_payload())
 
     def test_wrappers(self):
+        """ TestSvnHook: test wrappers """
         self.unmock()
         svn._svnlook('log', 'bla', 1, '/bin/true')
 
 
-class TestPublisher(DummyTestCase):
+class PikaMocker(ModuleMocker):
 
-    def setUp(self):
-        self.mock(publisher.pika, "PlainCredentials",
+    def mock_pika(self, pika_module):
+        self.mock(pika_module, "PlainCredentials",
                   dummy.DummyPlainCridentials)
-        self.mock(publisher.pika, "ConnectionParameters",
+        self.mock(pika_module, "ConnectionParameters",
                   dummy.DummyConnectionParameters)
-        self.mock(publisher.pika, "BlockingConnection",
+        self.mock(pika_module, "BlockingConnection",
                   dummy.DummyBlockingConnection)
-        self.mock(publisher.pika, "BasicProperties",
+        self.mock(pika_module, "BasicProperties",
                   dummy.DummyBasicProperties)
-        self.mock(publisher.pika, "SelectConnection",
+        self.mock(pika_module, "SelectConnection",
                   dummy.DummySelectConnection)
 
+
+class TestPublisher(PikaMocker):
+
+    def setUp(self):
+        self.mock_pika(publisher.pika)
+
     def test_send_async_payload(self):
+        """ TestPublisher: test sending asyncronous payload """
         tpublisher = publisher.AsyncAMQPPublisher(SVN_PCOMMIT.AMQP_CONFIG)
         tpublisher.send_payload({"payload":"payload"})
         # Test callbacks
@@ -294,26 +310,19 @@ class TestPublisher(DummyTestCase):
         tpublisher.on_channel_open(dummy.DummyChannel())
 
     def test_version(self):
+        """ TestPublisher: test version """
         reload(ether)
         self.assertTrue(hasattr(ether, "VERSION"))
         self.assertTrue(hasattr(ether, "VERSION_STR"))
 
 
-class TestConsumer(DummyTestCase):
+class TestConsumer(PikaMocker):
 
     def setUp(self):
-        self.mock(consumer.pika, "PlainCredentials",
-                dummy.DummyPlainCridentials)
-        self.mock(consumer.pika, "ConnectionParameters",
-                dummy.DummyConnectionParameters)
-        self.mock(consumer.pika, "BlockingConnection",
-                dummy.DummyBlockingConnection)
-        self.mock(consumer.pika, "BasicProperties",
-                dummy.DummyBasicProperties)
-        self.mock(consumer.pika, "SelectConnection",
-                dummy.DummySelectConnection)
+        self.mock_pika(consumer.pika)
 
     def test_ansync_methods(self):
+        """ TestConsumer: test asyncronous methods """
         tconsumer = TConsumer(CONS_CONF.TEST_CONFIG)
         tconsumer.consume()
         # Test callbacks
@@ -324,40 +333,38 @@ class TestConsumer(DummyTestCase):
         tconsumer.on_queue_bound("some_frame")
 
     def test_receive_payload(self):
+        """ TestConsumer: test receive payload """
         tconsumer = TConsumer(CONS_CONF.TEST_CONFIG)
         tconsumer.receive_payload(None, dummy.DummyMethod(),
                                  None, '{"payload":{"data":"data"}}')
 
     def test_abstract_method(self):
+        """ TestConsumer: test abstract method """
         tconsumer = TConsumer(CONS_CONF.TEST_CONFIG)
         self.assertRaises(NotImplementedError,
                           consumer.AsyncAMQPConsumer.process_payload,
                           tconsumer, None, None)
 
     def test_receive_payload_exception(self):
+        """ TestConsumer: test receive payload exception """
         self.assertRaises(TypeError, consumer.AsyncAMQPConsumer,
                           CONS_CONF.TEST_CONFIG)
 
     def test_exceptional_consume(self):
+        """ TestConsumer: test exceptional consume """
         consumer.pika.SelectConnection = \
                 dummy.DummyExceptionalSelectConnection
         tconsumer = TConsumer(CONS_CONF.TEST_CONFIG)
         tconsumer.consume()
 
 
-class TestUtils(DummyTestCase):
+class TestUtils(PikaMocker):
 
     def setUp(self):
-        self.mock(consumer.pika, "PlainCredentials",
-                dummy.DummyPlainCridentials)
-        self.mock(consumer.pika, "ConnectionParameters",
-                dummy.DummyConnectionParameters)
-        self.mock(consumer.pika, "BlockingConnection",
-                dummy.DummyBlockingConnection)
-        self.mock(consumer.pika, "BasicProperties",
-                dummy.DummyBasicProperties)
+        self.mock_pika(consumer.pika)
 
     def test_amqp_util(self):
+        """ TestUtils: test amqp util """
         obj = util.AMQPUtil(CONS_CONF.TEST_CONFIG)
         obj.setup_connection()
         obj.delete_queue()

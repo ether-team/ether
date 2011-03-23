@@ -68,6 +68,7 @@ class HooksAPITest(unittest.TestCase):
     """Basic API test set"""
 
     def test_abstract_class(self):
+        """ HooksAPITest: test abstract class """
         class IncompleteHookAPI(HookAPI):
             pass
         self.assertRaises(TypeError, IncompleteHookAPI, "basedir",
@@ -100,6 +101,7 @@ class SvnHooksTest(HooksAPIBase):
         self.create_hook(existinghook)
 
     def test_setup(self):
+        """ SvnHooksTest: test setup """
         self.assertRaises(HookError, self.svnapi.setup, self.svnrepo, "bla")
         self.assertRaises(HookError, self.svnapi.hook_path,
                           self.svnrepo, "Unkonwn hook")
@@ -117,9 +119,11 @@ class SvnHooksTest(HooksAPIBase):
         self.svnapi.setup(self.svnrepo, self.svnhooks[3])
 
     def test_avail(self):
+        """ SvnHooksTest: test avail """
         self.assertEqual(set(self.svnapi.avail()), set(["hook1", "hook2"]))
 
     def test_add(self):
+        """ SvnHooksTest: test add """
         self.svnapi.add(self.svnrepo, self.svnhooks[0], "hook1")
         self.assertRaises(HookError, self.svnapi.add, self.svnrepo,
                           self.svnhooks[0], "bla")
@@ -129,11 +133,13 @@ class SvnHooksTest(HooksAPIBase):
                          ['hook1'])
 
     def test_lst(self):
+        """ SvnHooksTest: test lst """
         self.assertEqual(self.svnapi.lst(self.svnrepo),
                    {self.svnhooks[2]: [self.svnhooks[2]]})
                     #self.svnhooks[3]: [self.svnhooks[3]]})
 
     def test_remove(self):
+        """ SvnHooksTest: test remove """
         self.assertRaises(HookError, self.svnapi.remove, self.svnrepo,
                           self.svnhooks[1], "hook2")
         self.svnapi.add(self.svnrepo, self.svnhooks[0], "hook1")
@@ -141,6 +147,7 @@ class SvnHooksTest(HooksAPIBase):
         self.assertFalse(self.svnhooks[0] in self.svnapi.lst(self.svnrepo))
 
     def test_teardown(self):
+        """ SvnHooksTest: test teardown """
         self.assertEqual(self.svnapi.teardown(self.svnrepo,
                                               self.svnhooks[1]), True)
         self.assertRaises(HookError, self.svnapi.teardown, self.svnrepo,
@@ -164,6 +171,7 @@ class GitHooksTest(HooksAPIBase):
         os.makedirs(os.path.join(self.gitrepo, "hooks"))
 
     def test_setup(self):
+        """ GitHooksTest: test setup """
         self.gitapi.setup(self.gitrepo, self.githooks[0])
 
 
@@ -182,6 +190,7 @@ class HgHooksTest(HooksAPIBase):
         os.makedirs(os.path.join(self.hgrepo, ".hg", "hooks"))
 
     def test_setup(self):
+        """ HgHooksTest: test setup """
         self.hgapi.setup(self.hgrepo, self.hghooks[0])
         parser = ConfigParser()
         hgrc_path = os.path.join(self.hgrepo, ".hg", "hgrc")
@@ -193,6 +202,7 @@ class HgHooksTest(HooksAPIBase):
                           self.hghooks[1])
 
     def test_teardown(self):
+        """ HgHooksTest: test teardown """
         self.hgapi.setup(self.hgrepo, self.hghooks[0])
         self.assertTrue(self.hgapi.teardown(self.hgrepo, self.hghooks[0]))
         os.unlink(os.path.join(os.path.join(self.hgrepo, ".hg", "hgrc")))
