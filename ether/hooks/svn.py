@@ -60,13 +60,10 @@ class SvnHook:
         url, commits = self._get_commits(repos, rev)
 
         self._sender.send_payload({
-            "data": {},
-            "payload": {
-                "repository": {
-                    "name": "",
-                    "url": url,
-                    "owner": ""
-                    },
-                "commits": commits
-            }
+            "repository": {
+                "name": "",
+                "url": url,
+                "owner": ""
+            },
+            "commits": commits
         })
