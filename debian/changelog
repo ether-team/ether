@@ -1,3 +1,9 @@
+ether (0.7.7) unstable; urgency=low
+
+  * re-vamped test cases
+
+ -- Mikhail Sobolev <mikhail.sobolev@nokia.com>  Wed, 23 Mar 2011 10:54:59 +0200
+
 ether (0.7.6) unstable; urgency=low
 
   * Fixed testcases
