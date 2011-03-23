@@ -1,3 +1,9 @@
+ether (0.7.8) unstable; urgency=low
+
+  * Made payload structure equal for svn and git publishers
+
+ -- Ed Bartosh <Ed Bartosh <eduard.bartosh@nokia.com>>  Wed, 23 Mar 2011 16:02:09 +0200
+
 ether (0.7.7) unstable; urgency=low
 
   * re-vamped test cases
