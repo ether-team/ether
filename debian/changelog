@@ -1,3 +1,9 @@
+ether (0.7.8) unstable; urgency=low
+
+  * Moved lines for mocking pika into a separate class.
+
+ -- Anton Berezin <anton.berezin@nokia.com>  Wed, 23 Mar 2011 13:34:27 +0200
+
 ether (0.7.7) unstable; urgency=low
 
   * re-vamped test cases
