@@ -10,6 +10,8 @@ multiprocessing module is used to workaround a design limitation in pika:
 """
 
 import sys
+import imp
+
 from multiprocessing import Process, Queue
 
 try:
@@ -24,9 +26,10 @@ except ImportError:
 #import pika.log
 #pika.log.setup(level=pika.log.DEBUG)
 
-from ether.publishers.amqp import AsyncAMQPPublisher
-from ether.consumers.amqp import AsyncAMQPConsumer
-from ether.configs.github import SOURCE, TARGET
+from ether.publisher import AsyncAMQPPublisher
+from ether.consumer import AsyncAMQPConsumer
+
+DEFAULT_CONFIG = "/etc/ether/github.conf"
 
 class GithubConsumer(AsyncAMQPConsumer):
     """github consumer based on Async AMQP consumer."""
@@ -41,22 +44,22 @@ class GithubConsumer(AsyncAMQPConsumer):
         print payload
         self._queue.put(payload.payload)
 
-def consumer(queue):
+def consumer(config, queue):
     """ Wrapper function used by Process """
 
     setproctitle("github-consumer")
 
     #print "Creating consumer"
-    con = GithubConsumer(SOURCE, queue)
+    con = GithubConsumer(config, queue)
     #print "running consumer"
     con.consume()
 
-def publisher(queue):
+def publisher(config, queue):
     """ Wrapper function used by Process """
 
     setproctitle("amqp-publisher")
 
-    pub = AsyncAMQPPublisher(TARGET)
+    pub = AsyncAMQPPublisher(config)
     while True:
         #print "Blocking in publisher thread"
         try:
@@ -73,11 +76,13 @@ def main():
 
     setproctitle("github launcher")
 
+    config = imp.load_source("conf", DEFAULT_CONFIG)
+
     try:
         queue = Queue()
-        pprocess = Process(target=publisher, args=(queue,))
+        pprocess = Process(target=publisher, args=(config.TARGET, queue))
         pprocess.start()
-        cprocess = Process(target=consumer, args=(queue,))
+        cprocess = Process(target=consumer, args=(config.SOURCE, queue))
         cprocess.start()
         pprocess.join()
         cprocess.join()
