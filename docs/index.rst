@@ -10,8 +10,7 @@ Ether's documentation!
    :maxdepth: 2
 
    overview
-   design
-   implementation
+   ether/index
    hacking
 
 Indices and tables
