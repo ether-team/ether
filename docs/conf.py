@@ -98,6 +98,10 @@ pygments_style = 'sphinx'
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
 
+# A ReST string to be added at the end of every source file that is read.
+rst_epilog = """
+.. |ether| replace:: *ether*
+"""
 
 # -- Options for HTML output ---------------------------------------------------
 
