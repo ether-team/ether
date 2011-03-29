@@ -18,7 +18,7 @@ We created a system around `RabbitMQ`_ using `pika`_ framework.
 
 This project delivers two frameworks:
 
-* a framework to write change handlers (the main delivery)
+* a framework to write change handlers; see :ref:`ether`
 * a framework to create and handle hooks for supported VCSes
 
 .. _RabbitMQ: http://www.rabbitmq.com
