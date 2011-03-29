@@ -11,6 +11,7 @@ Ether's documentation!
 
    overview
    ether/index
+   hookman/index
    hacking
 
 Indices and tables
