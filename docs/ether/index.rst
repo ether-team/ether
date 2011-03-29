@@ -7,5 +7,6 @@
 .. toctree::
    :maxdepth: 2
 
+   setup
    design
    implementation
