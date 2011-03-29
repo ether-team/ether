@@ -8,5 +8,6 @@
    :maxdepth: 2
 
    setup
+   usage
    design
    implementation
