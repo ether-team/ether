@@ -2,6 +2,10 @@
 Ether's documentation!
 ======================
 
+.. only:: html
+
+   A PDF copy of this documentation is available as :download:`ether.pdf`
+
 .. toctree::
    :maxdepth: 2
 

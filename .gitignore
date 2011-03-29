@@ -5,6 +5,7 @@
 *.confc
 build/
 docs/_build/
+docs/ether.pdf
 debian/files
 debian/python-ether.debhelper.log
 debian/python-ether.postinst.debhelper
